@@ -3,4 +3,11 @@
   <groupId>cn.newtouch</groupId>
   <artifactId>javaExercise</artifactId>
   <version>1.0</version>
+  <dependencies>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib-nodep</artifactId>
+			<version>3.0</version>
+		</dependency>
+	</dependencies>
 </project>
