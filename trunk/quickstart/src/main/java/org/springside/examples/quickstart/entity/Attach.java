@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.google.common.collect.Lists;
+
 @Entity
 @Table(name = "ss_attach")
 public class Attach extends IdEntity
@@ -22,11 +24,11 @@ public class Attach extends IdEntity
 
     private String            name;
 
-    private List<Attach>      children;
+    private List<Attach>      children         = Lists.newArrayList();
 
     private Attach            parent;
 
-    private List<User>        users;
+    private List<User>        users            = Lists.newArrayList();
 
     public String getName()
     {
