@@ -91,6 +91,11 @@ public class AttachController
         if (null != parentId)
         {
             parent = attachService.getAttach(parentId);
+            newAttach.setType(Attach.TYPE_BRANCH);
+        }
+        else
+        {
+            newAttach.setType(Attach.TYPE_AREA);
         }
         newAttach.setParent(parent);
         attachService.saveAttach(newAttach);

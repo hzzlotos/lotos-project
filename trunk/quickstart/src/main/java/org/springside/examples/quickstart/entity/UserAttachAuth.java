@@ -7,6 +7,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * 某个用户可以对某个归属地可以操作的权限(查看和修改)
+ * 
+ * @author zzHe
+ * @version 1.0
+ * @since 2013-7-25
+ */
 @Entity
 @Table(name = "ss_user_attach_auth")
 public class UserAttachAuth extends IdEntity
