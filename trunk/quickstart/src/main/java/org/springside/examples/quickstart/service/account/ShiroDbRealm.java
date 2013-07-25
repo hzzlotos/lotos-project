@@ -19,6 +19,7 @@
 package org.springside.examples.quickstart.service.account;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -38,6 +39,7 @@ import org.springside.examples.quickstart.entity.User;
 import org.springside.modules.utils.Encodes;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 
 public class ShiroDbRealm extends AuthorizingRealm
 {
@@ -76,7 +78,9 @@ public class ShiroDbRealm extends AuthorizingRealm
         ShiroUser shiroUser = (ShiroUser) principals.getPrimaryPrincipal();
         User user = accountService.findUserByLoginName(shiroUser.loginName);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        info.addRoles(user.getRoleList());
+        List<String> roles = Lists.newArrayList();
+        roles.add(user.getRole().getName());
+        info.addRoles(roles);
         return info;
     }
 

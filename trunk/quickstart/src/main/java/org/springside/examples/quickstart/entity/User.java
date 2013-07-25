@@ -3,17 +3,19 @@ package org.springside.examples.quickstart.entity;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.common.collect.ImmutableList;
 
 @Entity
 @Table(name = "ss_user")
@@ -34,9 +36,11 @@ public class User extends IdEntity
 
     private String            salt;
 
-    private String            roles;
+    private Role              role;
 
     private Date              registerDate;
+
+    private List<Attach>      attachs;
 
     public User()
     {
@@ -102,22 +106,16 @@ public class User extends IdEntity
         this.salt = salt;
     }
 
-    public String getRoles()
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id")
+    public Role getRole()
     {
-        return roles;
+        return role;
     }
 
-    public void setRoles(String roles)
+    public void setRole(Role role)
     {
-        this.roles = roles;
-    }
-
-    @Transient
-    @JsonIgnore
-    public List<String> getRoleList()
-    {
-        // 角色列表在数据库中实际以逗号分隔字符串存储，因此返回不能修改的List.
-        return ImmutableList.copyOf(StringUtils.split(roles, ","));
+        this.role = role;
     }
 
     // 设定JSON序列化时的日期格式

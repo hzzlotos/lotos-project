@@ -63,7 +63,7 @@ public class AccountService
     public void registerUser(User user)
     {
         entryptPassword(user);
-        user.setRoles("user");
+        // user.setRoles("user");
         user.setRegisterDate(dateProvider.getDate());
 
         userDao.save(user);
