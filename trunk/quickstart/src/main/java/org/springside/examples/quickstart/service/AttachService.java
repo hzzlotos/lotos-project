@@ -50,12 +50,10 @@ public class AttachService extends BaseService<Attach, Long>
         return (List<Attach>) attachDao.findAll();
     }
 
-    public Page<Attach> getUserAttach(Long parentId,
-            Map<String, Object> searchParams, int pageNumber, int pageSize,
-            String sortType)
+    public Page<Attach> getAttachPage(Long parentId,
+            Map<String, Object> searchParams, int pageNumber, int pageSize)
     {
-        PageRequest pageRequest = buildPageRequest(pageNumber, pageSize,
-                sortType);
+        PageRequest pageRequest = buildPageRequest(pageNumber, pageSize);
         if (null != parentId)
         {
             searchParams.put("EQL_parent.id", parentId);
@@ -72,20 +70,9 @@ public class AttachService extends BaseService<Attach, Long>
     /**
      * 创建分页请求.
      */
-    private PageRequest buildPageRequest(int pageNumber, int pagzSize,
-            String sortType)
+    private PageRequest buildPageRequest(int pageNumber, int pagzSize)
     {
-        Sort sort = null;
-        if ("auto".equals(sortType))
-        {
-            sort = new Sort(Direction.DESC, "id");
-        }
-        else
-            if ("title".equals(sortType))
-            {
-                sort = new Sort(Direction.ASC, "title");
-            }
-
+        Sort sort = new Sort(Direction.DESC, "id");
         return new PageRequest(pageNumber - 1, pagzSize, sort);
     }
 

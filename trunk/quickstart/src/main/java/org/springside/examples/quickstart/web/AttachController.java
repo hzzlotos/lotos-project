@@ -21,8 +21,6 @@ import org.springside.examples.quickstart.service.AttachService;
 import org.springside.examples.quickstart.service.account.ShiroDbRealm.ShiroUser;
 import org.springside.modules.web.Servlets;
 
-import com.google.common.collect.Maps;
-
 /**
  * Attach管理的Controller, 使用Restful风格的Urls:
  * 
@@ -37,22 +35,13 @@ import com.google.common.collect.Maps;
 public class AttachController
 {
 
-    private static final int           PAGE_SIZE = 3;
-
-    private static Map<String, String> sortTypes = Maps.newLinkedHashMap();
-    static
-    {
-        sortTypes.put("auto", "自动");
-        sortTypes.put("title", "标题");
-    }
+    private static final int PAGE_SIZE = 5;
 
     @Autowired
-    private AttachService              attachService;
+    private AttachService    attachService;
 
     @RequestMapping(value = "")
-    public String list(
-            @RequestParam(required = false) Long parentId,
-            @RequestParam(value = "sortType", defaultValue = "auto") String sortType,
+    public String list(@RequestParam(required = false) Long parentId,
             @RequestParam(value = "page", defaultValue = "1") int pageNumber,
             Model model, ServletRequest request)
     {
@@ -67,12 +56,10 @@ public class AttachController
         }
         Map<String, Object> searchParams = Servlets.getParametersStartingWith(
                 request, "search_");
-        Page<Attach> attachs = attachService.getUserAttach(parentId,
-                searchParams, pageNumber, PAGE_SIZE, sortType);
+        Page<Attach> attachs = attachService.getAttachPage(parentId,
+                searchParams, pageNumber, PAGE_SIZE);
         model.addAttribute("parentId", parentId);
         model.addAttribute("attachs", attachs);
-        model.addAttribute("sortType", sortType);
-        model.addAttribute("sortTypes", sortTypes);
         // 将搜索条件编码成字符串，用于排序，分页的URL
         model.addAttribute("searchParams", Servlets
                 .encodeParameterStringWithPrefix(searchParams, "search_"));
