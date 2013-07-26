@@ -1,7 +1,5 @@
 package org.springside.examples.quickstart.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -27,17 +25,6 @@ public class MaterialService extends BaseService<Attach, Long>
     public void saveAttach(Attach entity)
     {
         attachDao.save(entity);
-    }
-
-    @Transactional(readOnly = false)
-    public void deleteAttach(Long id)
-    {
-        attachDao.delete(id);
-    }
-
-    public List<Attach> getAllAttach()
-    {
-        return (List<Attach>) attachDao.findAll();
     }
 
     /**

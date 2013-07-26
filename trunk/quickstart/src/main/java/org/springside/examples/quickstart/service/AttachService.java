@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springside.examples.quickstart.entity.Attach;
 import org.springside.examples.quickstart.repository.AttachDao;
-import org.springside.examples.quickstart.repository.BaseDao;
 import org.springside.examples.quickstart.util.SearchFilter;
 
 /**
@@ -85,15 +84,12 @@ public class AttachService extends BaseService<Attach, Long>
     @Override
     protected Class getEntityClass()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return Attach.class;
     }
 
     @Override
-    protected BaseDao<Attach, Long> getEntityDao()
+    protected AttachDao getEntityDao()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return attachDao;
     }
-
 }
