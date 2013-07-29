@@ -8,10 +8,18 @@
 	
 	<script>
 		$(document).ready(function() {
-			//聚焦第一个输入框
-			$("#task_title").focus();
-			//为inputForm注册validate函数
-			$("#inputForm").validate();
+			$("#inputForm").validate({
+				rules: {
+					name: {
+						remote: "${ctx}/attach/checkName?oldName="++encodeURIComponent('${attach.name}')
+					}
+				},
+				messages: {
+					name: {
+						remote: "该地区名称已存在"
+					}
+				}
+			});
 		});
 	</script>
 </head>
@@ -33,7 +41,7 @@
 			<div class="control-group">
 				<label for="task_title" class="control-label">地区名称:</label>
 				<div class="controls">
-					<input type="text" id="attach" name="name" value="${attach.name}" class="input-large required" minlength="3"/>
+					<input type="text" id="name" name="name" value="${attach.name}" class="input-large required" minlength="3"/>
 				</div>
 			</div>	
 			<div class="form-actions">

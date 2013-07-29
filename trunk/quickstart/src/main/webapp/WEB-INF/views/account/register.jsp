@@ -23,6 +23,28 @@
 					}
 				}
 			});
+			$('#attahArea').change(function () {
+				var id = $(this).val();
+				if (id) {
+					$.ajax({
+						url: "${ctx}/register/attahList?parentId=" + id,
+						success: function (response) {
+							if (response) {
+								$("#attahBranch option[value!='']").remove();
+								if (null != response && response.length > 0) {
+									for (var i = 0; i < response.length; i++) {
+										if (null != response[i]) {
+											$("#attahBranch").append("<option value='" + response[i].key + "'>" + response[i].value + "</option>");
+										}
+									}
+								}
+							}
+						}
+					});
+				} else {
+					$("#attahBranch option[value!='']").remove();
+				}
+			});
 		});
 	</script>
 </head>
@@ -51,22 +73,37 @@
 			</div>
 			<div class="control-group">
 				<label for="plainPassword" class="control-label">角色:</label>
-				<select class="dropdown-menu" id="role" name="role">
-					<c:forEach items="${questionTypeList}" var="type">
-						<option value="${type.id}">${type.name}</option>
-					</c:forEach>
-				</select>
+				<div class="controls">
+					<select id="role" name="role">
+						<c:forEach items="${roleList}" var="role">
+							<option value="${role.key}">${role.value}</option>
+						</c:forEach>
+					</select>
+				</div>
 			</div>
 			<div class="control-group">
 				<label for="plainPassword" class="control-label">所属地区:</label>
 				<div class="controls">
-					<input type="text" id="plainPassword" name="plainPassword" class="input-large required"/>
+					<select id="attahArea" name="attahArea">
+						<c:forEach items="${attahAreaList}" var="attahArea">
+							<option value="${attahArea.id}">${attahArea.name}</option>
+						</c:forEach>
+					</select>
+					<select id="attahBranch" name="attahBranch">
+						<c:forEach items="${attahBranchList}" var="attahBranch">
+							<option value="${attahBranch.id}">${attahBranch.name}</option>
+						</c:forEach>
+					</select>
 				</div>
 			</div>			
 			<div class="control-group">
 				<label for="plainPassword" class="control-label">权限:</label>
 				<div class="controls">
-					<input type="text" id="plainPassword" name="plainPassword" class="input-large required"/>
+					<select id="auth" name="auth">
+						<c:forEach items="${authList}" var="auth">
+							<option value="${auth.key}">${auth.value}</option>
+						</c:forEach>
+					</select>
 				</div>
 			</div>
 			<!-- 
