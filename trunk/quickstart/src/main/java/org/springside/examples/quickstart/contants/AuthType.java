@@ -2,6 +2,8 @@ package org.springside.examples.quickstart.contants;
 
 import java.util.List;
 
+import org.springside.examples.quickstart.vo.KeyValue;
+
 import com.google.common.collect.Lists;
 
 public class AuthType

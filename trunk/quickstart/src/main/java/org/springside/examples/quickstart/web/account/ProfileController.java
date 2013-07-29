@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springside.examples.quickstart.entity.User;
 import org.springside.examples.quickstart.service.account.AccountService;
 import org.springside.examples.quickstart.service.account.ShiroDbRealm.ShiroUser;
+import org.springside.examples.quickstart.web.BaseController;
 
 /**
  * 用户修改自己资料的Controller.
@@ -21,7 +22,7 @@ import org.springside.examples.quickstart.service.account.ShiroDbRealm.ShiroUser
  */
 @Controller
 @RequestMapping(value = "/profile")
-public class ProfileController
+public class ProfileController extends BaseController<User, Long>
 {
 
     @Autowired
@@ -36,14 +37,14 @@ public class ProfileController
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String update(@Valid @ModelAttribute("preloadUser") User user)
+    public String update(@Valid @ModelAttribute("preload") User user)
     {
         accountService.updateUser(user);
         updateCurrentUserName(user.getName());
         return "redirect:/";
     }
 
-    @ModelAttribute("preloadUser")
+    @ModelAttribute("preload")
     public User getUser(@RequestParam(value = "id", required = false) Long id)
     {
         if (id != null)
@@ -54,20 +55,23 @@ public class ProfileController
     }
 
     /**
-     * 取出Shiro中的当前用户Id.
-     */
-    private Long getCurrentUserId()
-    {
-        ShiroUser user = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
-        return user.id;
-    }
-
-    /**
      * 更新Shiro中当前用户的用户名.
      */
     private void updateCurrentUserName(String userName)
     {
         ShiroUser user = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
         user.name = userName;
+    }
+
+    @Override
+    protected Class getEntityClass()
+    {
+        return User.class;
+    }
+
+    @Override
+    protected AccountService getEntityService()
+    {
+        return accountService;
     }
 }

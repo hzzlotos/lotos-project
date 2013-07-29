@@ -1,13 +1,9 @@
-package org.springside.examples.quickstart.web;
-
-import java.util.Map;
+package org.springside.examples.quickstart.web.attach;
 
 import javax.servlet.ServletRequest;
 import javax.validation.Valid;
 
-import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,10 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springside.examples.quickstart.entity.Attach;
-import org.springside.examples.quickstart.service.AttachService;
-import org.springside.examples.quickstart.service.account.ShiroDbRealm.ShiroUser;
-import org.springside.examples.quickstart.util.SearchFilter;
-import org.springside.modules.web.Servlets;
+import org.springside.examples.quickstart.service.attach.AttachService;
+import org.springside.examples.quickstart.vo.TreeNode;
+import org.springside.examples.quickstart.web.BaseController;
 
 /**
  * Attach管理的Controller, 使用Restful风格的Urls:
@@ -33,48 +28,16 @@ import org.springside.modules.web.Servlets;
  * @author calvin
  */
 @Controller
-@RequestMapping(value = "/attach")
-public class AttachController
+@RequestMapping(value = "/material")
+public class MaterialController extends BaseController<Attach, Long>
 {
-
-    private static final int PAGE_SIZE = 5;
-
     @Autowired
-    private AttachService    attachService;
+    private AttachService attachService;
 
     @RequestMapping(value = "")
-    public String list(@RequestParam(required = false) Long parentId,
-            @RequestParam(value = "page", defaultValue = "1") int pageNumber,
-            Model model, ServletRequest request)
+    public String list(Model model, ServletRequest request)
     {
-        Attach parent;
-        if (null != parentId)
-        {
-            parent = attachService.get(parentId);
-            String parentName = attachService.get(parentId).getName();
-            model.addAttribute("theParentId", null == parent.getParent() ? null
-                    : parent.getParent().getId());
-            model.addAttribute("parentName", parentName);
-        }
-        Map<String, Object> searchParams = Servlets.getParametersStartingWith(
-                request, "search_");
-        if (null == parentId)
-        {
-            searchParams.put("EQL_parent.id", SearchFilter.IS_NULL);
-        }
-        else
-        {
-            searchParams.put("EQL_parent.id", parentId);
-        }
-
-        Page<Attach> attachs = attachService.search(pageNumber, PAGE_SIZE,
-                searchParams);
-        model.addAttribute("parentId", parentId);
-        model.addAttribute("attachs", attachs);
-        // 将搜索条件编码成字符串，用于排序，分页的URL
-        model.addAttribute("searchParams", Servlets
-                .encodeParameterStringWithPrefix(searchParams, "search_"));
-
+        TreeNode tn = new TreeNode();
         return "attach/attachList";
     }
 
@@ -131,7 +94,7 @@ public class AttachController
     }
 
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public String update(@Valid @ModelAttribute("preloadAttach") Attach attach,
+    public String update(@Valid @ModelAttribute("preload") Attach attach,
             @RequestParam(required = false) Long parentId,
             RedirectAttributes redirectAttributes)
     {
@@ -177,28 +140,15 @@ public class AttachController
         }
     }
 
-    /**
-     * 使用@ModelAttribute, 实现Struts2
-     * Preparable二次部分绑定的效果,先根据form的id从数据库查出Attach对象,再把Form提交的内容绑定到该对象上。
-     * 因为仅update()方法的form中有id属性，因此本方法在该方法中执行.
-     */
-    @ModelAttribute("preloadAttach")
-    public Attach getAttach(
-            @RequestParam(value = "id", required = false) Long id)
+    @Override
+    protected Class getEntityClass()
     {
-        if (id != null)
-        {
-            return attachService.get(id);
-        }
-        return null;
+        return Attach.class;
     }
 
-    /**
-     * 取出Shiro中的当前用户Id.
-     */
-    private Long getCurrentUserId()
+    @Override
+    protected AttachService getEntityService()
     {
-        ShiroUser user = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
-        return user.id;
+        return attachService;
     }
 }

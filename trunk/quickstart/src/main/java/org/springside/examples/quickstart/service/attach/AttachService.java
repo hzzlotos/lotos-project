@@ -1,4 +1,4 @@
-package org.springside.examples.quickstart.service;
+package org.springside.examples.quickstart.service.attach;
 
 import java.util.List;
 import java.util.Map;
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springside.examples.quickstart.entity.Attach;
 import org.springside.examples.quickstart.repository.AttachDao;
+import org.springside.examples.quickstart.service.BaseService;
 import org.springside.examples.quickstart.util.SearchFilter;
 
 import com.google.common.collect.Maps;

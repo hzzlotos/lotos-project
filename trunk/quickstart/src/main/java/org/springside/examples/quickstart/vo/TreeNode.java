@@ -24,23 +24,21 @@
 // SPECIFICALLY DISCLAIMS ANY EXPRESS OR IMPLIED WARRANTY OF FITNESS FOR
 // HIGH RISK ACTIVITIES.
 //-------------------------------------------------------------------------
-package org.springside.examples.quickstart.contants;
+package org.springside.examples.quickstart.vo;
 
-public class KeyValue
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
+public class TreeNode
 {
-    private String value;
+    private String         key;
 
-    private String key;
+    private String         value;
 
-    public KeyValue()
-    {
-    }
+    private String         parentKey;
 
-    public KeyValue(String key, String value)
-    {
-        this.key = key;
-        this.value = value;
-    }
+    private List<TreeNode> children = Lists.newArrayList();
 
     public String getKey()
     {
@@ -60,5 +58,25 @@ public class KeyValue
     public void setValue(String value)
     {
         this.value = value;
+    }
+
+    public String getParentKey()
+    {
+        return parentKey;
+    }
+
+    public void setParentKey(String parentKey)
+    {
+        this.parentKey = parentKey;
+    }
+
+    public List<TreeNode> getChildren()
+    {
+        return children;
+    }
+
+    public void setChildren(List<TreeNode> children)
+    {
+        this.children = children;
     }
 }
