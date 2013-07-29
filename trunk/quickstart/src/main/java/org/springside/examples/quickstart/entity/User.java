@@ -35,9 +35,35 @@ public class User extends IdEntity
 
     private String            salt;
 
-    private Role              role;
+    private int               role;
 
-    private Date              registerDate;
+    private int               auth;
+
+    private Attach            attach;
+
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "attach_id")
+    public Attach getAttach()
+    {
+        return attach;
+    }
+
+    public void setAttach(Attach attach)
+    {
+        this.attach = attach;
+    }
+
+    private Date registerDate;
+
+    public int getAuth()
+    {
+        return auth;
+    }
+
+    public void setAuth(int auth)
+    {
+        this.auth = auth;
+    }
 
     public User()
     {
@@ -103,14 +129,12 @@ public class User extends IdEntity
         this.salt = salt;
     }
 
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id")
-    public Role getRole()
+    public int getRole()
     {
         return role;
     }
 
-    public void setRole(Role role)
+    public void setRole(int role)
     {
         this.role = role;
     }
