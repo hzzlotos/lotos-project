@@ -4,7 +4,7 @@
 
 <html>
 <head>
-	<title>用户注册</title>
+	<title>添加用户</title>
 	
 	<script>
 		$(document).ready(function() {
@@ -46,15 +46,37 @@
 			<div class="control-group">
 				<label for="plainPassword" class="control-label">密码:</label>
 				<div class="controls">
-					<input type="password" id="plainPassword" name="plainPassword" class="input-large required"/>
+					<input type="text" id="plainPassword" name="plainPassword" class="input-large required"/>
 				</div>
 			</div>
+			<div class="control-group">
+				<label for="plainPassword" class="control-label">角色:</label>
+				<select class="dropdown-menu" id="role" name="role">
+					<c:forEach items="${questionTypeList}" var="type">
+						<option value="${type.id}">${type.name}</option>
+					</c:forEach>
+				</select>
+			</div>
+			<div class="control-group">
+				<label for="plainPassword" class="control-label">所属地区:</label>
+				<div class="controls">
+					<input type="text" id="plainPassword" name="plainPassword" class="input-large required"/>
+				</div>
+			</div>			
+			<div class="control-group">
+				<label for="plainPassword" class="control-label">权限:</label>
+				<div class="controls">
+					<input type="text" id="plainPassword" name="plainPassword" class="input-large required"/>
+				</div>
+			</div>
+			<!-- 
 			<div class="control-group">
 				<label for="confirmPassword" class="control-label">确认密码:</label>
 				<div class="controls">
 					<input type="password" id="confirmPassword" name="confirmPassword" class="input-large required" equalTo="#plainPassword"/>
 				</div>
 			</div>
+			 -->
 			<div class="form-actions">
 				<input id="submit_btn" class="btn btn-primary" type="submit" value="提交"/>&nbsp;	
 				<input id="cancel_btn" class="btn" type="button" value="返回" onclick="history.back()"/>
