@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springside.examples.quickstart.entity.Attach;
 import org.springside.examples.quickstart.service.AttachService;
 import org.springside.examples.quickstart.service.account.ShiroDbRealm.ShiroUser;
+import org.springside.examples.quickstart.util.SearchFilter;
 import org.springside.modules.web.Servlets;
 
 /**
@@ -48,16 +49,25 @@ public class AttachController
         Attach parent;
         if (null != parentId)
         {
-            parent = attachService.getAttach(parentId);
-            String parentName = attachService.getAttach(parentId).getName();
+            parent = attachService.get(parentId);
+            String parentName = attachService.get(parentId).getName();
             model.addAttribute("theParentId", null == parent.getParent() ? null
                     : parent.getParent().getId());
             model.addAttribute("parentName", parentName);
         }
         Map<String, Object> searchParams = Servlets.getParametersStartingWith(
                 request, "search_");
-        Page<Attach> attachs = attachService.getAttachPage(parentId,
-                searchParams, pageNumber, PAGE_SIZE);
+        if (null == parentId)
+        {
+            searchParams.put("EQL_parent.id", SearchFilter.IS_NULL);
+        }
+        else
+        {
+            searchParams.put("EQL_parent.id", parentId);
+        }
+
+        Page<Attach> attachs = attachService.search(pageNumber, PAGE_SIZE,
+                searchParams);
         model.addAttribute("parentId", parentId);
         model.addAttribute("attachs", attachs);
         // 将搜索条件编码成字符串，用于排序，分页的URL
@@ -76,7 +86,7 @@ public class AttachController
         model.addAttribute("parentId", parentId);
         if (null != parentId)
         {
-            String parentName = attachService.getAttach(parentId).getName();
+            String parentName = attachService.get(parentId).getName();
             model.addAttribute("parentName", parentName);
         }
         return "attach/attachForm";
@@ -90,7 +100,7 @@ public class AttachController
         Attach parent = null;
         if (null != parentId)
         {
-            parent = attachService.getAttach(parentId);
+            parent = attachService.get(parentId);
             newAttach.setType(Attach.TYPE_BRANCH);
         }
         else
@@ -98,15 +108,16 @@ public class AttachController
             newAttach.setType(Attach.TYPE_AREA);
         }
         newAttach.setParent(parent);
-        attachService.saveAttach(newAttach);
-        redirectAttributes.addFlashAttribute("message", "创建归属地成功");
-        return "redirect:/attach?parentId=" + parentId;
+        attachService.save(newAttach);
+        redirectAttributes.addFlashAttribute("message", "创建地区成功");
+        return "redirect:/attach?parentId="
+                + (null == parentId ? "" : parentId);
     }
 
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String updateForm(@PathVariable("id") Long id, Model model)
     {
-        Attach attach = attachService.getAttach(id);
+        Attach attach = attachService.get(id);
         if (null != attach.getParent())
         {
             model.addAttribute("parentName", attach.getParent().getName());
@@ -123,18 +134,21 @@ public class AttachController
             @RequestParam(required = false) Long parentId,
             RedirectAttributes redirectAttributes)
     {
-        attachService.saveAttach(attach);
-        redirectAttributes.addFlashAttribute("message", "更新归属地成功");
-        return "redirect:/attach?parentId=" + parentId;
+        attachService.save(attach);
+        redirectAttributes.addFlashAttribute("message", "更新地区成功");
+        return "redirect:/attach?parentId="
+                + (null == parentId ? "" : parentId);
     }
 
     @RequestMapping(value = "delete/{id}")
     public String delete(@PathVariable("id") Long id,
             RedirectAttributes redirectAttributes)
     {
-        attachService.deleteAttach(id);
-        redirectAttributes.addFlashAttribute("message", "删除任务成功");
-        return "redirect:/attach/";
+        Attach attach = attachService.get(id);
+        attachService.delete(id);
+        redirectAttributes.addFlashAttribute("message", "删除地区成功");
+        return "redirect:/attach/?parentId="
+                + (null == attach.getParent() ? "" : attach.getParent().getId());
     }
 
     /**
@@ -148,7 +162,7 @@ public class AttachController
     {
         if (id != null)
         {
-            return attachService.getAttach(id);
+            return attachService.get(id);
         }
         return null;
     }

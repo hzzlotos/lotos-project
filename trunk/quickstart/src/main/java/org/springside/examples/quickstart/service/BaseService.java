@@ -5,8 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
 import org.springside.examples.quickstart.repository.BaseDao;
@@ -80,11 +81,31 @@ public abstract class BaseService<T, PK extends Serializable>
      * @return
      */
     @Transactional(readOnly = true)
-    public Page<T> search(final Pageable pageable,
-            final Map<String, Object> searchParams)
+    public Page<T> search(int pageNumber, int pagzSize, String sortStr,
+            boolean asc, Map<String, Object> searchParams)
     {
         Specification<T> spec = buildSpecification(searchParams);
-        return getEntityDao().findAll(spec, pageable);
+        PageRequest pageRequest = buildPageRequest(pageNumber, pagzSize,
+                sortStr, asc);
+        return getEntityDao().findAll(spec, pageRequest);
+    }
+
+    /**
+     * 带参数分页查询
+     * 
+     * @param pageable
+     * @param searchParams
+     *            查询条件map
+     * @param clazz
+     * @return
+     */
+    @Transactional(readOnly = true)
+    public Page<T> search(int pageNumber, int pagzSize,
+            Map<String, Object> searchParams)
+    {
+        Specification<T> spec = buildSpecification(searchParams);
+        PageRequest pageRequest = buildPageRequest(pageNumber, pagzSize);
+        return getEntityDao().findAll(spec, pageRequest);
     }
 
     /**
@@ -94,9 +115,25 @@ public abstract class BaseService<T, PK extends Serializable>
      * @return
      */
     @Transactional(readOnly = true)
-    public Page<T> search(Pageable pageable)
+    public Page<T> search(int pageNumber, int pagzSize, String sortStr,
+            boolean asc)
     {
-        return getEntityDao().findAll(pageable);
+        PageRequest pageRequest = buildPageRequest(pageNumber, pagzSize,
+                sortStr, asc);
+        return getEntityDao().findAll(pageRequest);
+    }
+
+    /**
+     * 分页查询
+     * 
+     * @param pageable
+     * @return
+     */
+    @Transactional(readOnly = true)
+    public Page<T> search(int pageNumber, int pagzSize)
+    {
+        PageRequest pageRequest = buildPageRequest(pageNumber, pagzSize);
+        return getEntityDao().findAll(pageRequest);
     }
 
     /**
@@ -117,6 +154,24 @@ public abstract class BaseService<T, PK extends Serializable>
     public void delete(final PK id)
     {
         getEntityDao().delete(id);
+    }
+
+    /**
+     * 创建分页请求.
+     */
+    public PageRequest buildPageRequest(int pageNumber, int pagzSize,
+            String sortStr, boolean asc)
+    {
+        Sort sort = new Sort(asc ? Direction.ASC : Direction.DESC, sortStr);
+        return new PageRequest(pageNumber - 1, pagzSize, sort);
+    }
+
+    /**
+     * 创建分页请求.
+     */
+    public PageRequest buildPageRequest(int pageNumber, int pagzSize)
+    {
+        return buildPageRequest(pageNumber, pagzSize, "id", false);
     }
 
     /**

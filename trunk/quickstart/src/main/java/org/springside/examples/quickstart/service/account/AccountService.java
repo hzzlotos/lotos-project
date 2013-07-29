@@ -1,7 +1,5 @@
 package org.springside.examples.quickstart.service.account;
 
-import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.hibernate.service.spi.ServiceException;
@@ -11,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springside.examples.quickstart.entity.User;
-import org.springside.examples.quickstart.repository.TaskDao;
 import org.springside.examples.quickstart.repository.UserDao;
+import org.springside.examples.quickstart.service.BaseService;
 import org.springside.examples.quickstart.service.account.ShiroDbRealm.ShiroUser;
 import org.springside.modules.security.utils.Digests;
 import org.springside.modules.utils.DateProvider;
@@ -26,7 +24,7 @@ import org.springside.modules.utils.Encodes;
 // Spring Service Bean的标识.
 @Component
 @Transactional(readOnly = true)
-public class AccountService
+public class AccountService extends BaseService<User, Long>
 {
 
     public static final String HASH_ALGORITHM   = "SHA-1";
@@ -40,19 +38,7 @@ public class AccountService
 
     private UserDao            userDao;
 
-    private TaskDao            taskDao;
-
     private DateProvider       dateProvider     = DateProvider.DEFAULT;
-
-    public List<User> getAllUser()
-    {
-        return (List<User>) userDao.findAll();
-    }
-
-    public User getUser(Long id)
-    {
-        return userDao.findOne(id);
-    }
 
     public User findUserByLoginName(String loginName)
     {
@@ -88,7 +74,6 @@ public class AccountService
             throw new ServiceException("不能删除超级管理员用户");
         }
         userDao.delete(id);
-        taskDao.deleteByUserId(id);
 
     }
 
@@ -128,14 +113,20 @@ public class AccountService
         this.userDao = userDao;
     }
 
-    @Autowired
-    public void setTaskDao(TaskDao taskDao)
-    {
-        this.taskDao = taskDao;
-    }
-
     public void setDateProvider(DateProvider dateProvider)
     {
         this.dateProvider = dateProvider;
+    }
+
+    @Override
+    protected Class getEntityClass()
+    {
+        return User.class;
+    }
+
+    @Override
+    protected UserDao getEntityDao()
+    {
+        return userDao;
     }
 }

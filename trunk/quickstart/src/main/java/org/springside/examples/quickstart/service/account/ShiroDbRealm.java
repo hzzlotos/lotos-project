@@ -35,6 +35,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springside.examples.quickstart.contants.RoleType;
 import org.springside.examples.quickstart.entity.User;
 import org.springside.modules.utils.Encodes;
 
@@ -79,8 +80,7 @@ public class ShiroDbRealm extends AuthorizingRealm
         User user = accountService.findUserByLoginName(shiroUser.loginName);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         List<String> roles = Lists.newArrayList();
-        roles.add("admin");
-        // roles.add(user.getRole().getName());
+        roles.add(RoleType.getTypeName(user.getRole()));
         info.addRoles(roles);
         return info;
     }

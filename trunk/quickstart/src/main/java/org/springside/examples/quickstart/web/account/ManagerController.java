@@ -22,8 +22,8 @@ import org.springside.examples.quickstart.service.account.AccountService;
  * @author calvin
  */
 @Controller
-@RequestMapping(value = "/admin/user")
-public class UserAdminController
+@RequestMapping(value = "/manager")
+public class ManagerController
 {
 
     @Autowired
@@ -32,17 +32,16 @@ public class UserAdminController
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model)
     {
-        List<User> users = accountService.getAllUser();
+        List<User> users = accountService.getAll();
         model.addAttribute("users", users);
-
-        return "account/adminUserList";
+        return "account/managerList";
     }
 
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String updateForm(@PathVariable("id") Long id, Model model)
     {
-        model.addAttribute("user", accountService.getUser(id));
-        return "account/adminUserForm";
+        model.addAttribute("user", accountService.get(id));
+        return "account/managerForm";
     }
 
     @RequestMapping(value = "update", method = RequestMethod.POST)
@@ -52,18 +51,18 @@ public class UserAdminController
         accountService.updateUser(user);
         redirectAttributes.addFlashAttribute("message", "更新用户"
                 + user.getLoginName() + "成功");
-        return "redirect:/admin/user";
+        return "redirect:/manager";
     }
 
     @RequestMapping(value = "delete/{id}")
     public String delete(@PathVariable("id") Long id,
             RedirectAttributes redirectAttributes)
     {
-        User user = accountService.getUser(id);
+        User user = accountService.get(id);
         accountService.deleteUser(id);
         redirectAttributes.addFlashAttribute("message", "删除用户"
                 + user.getLoginName() + "成功");
-        return "redirect:/admin/user";
+        return "redirect:/manager";
     }
 
     /**
@@ -76,7 +75,7 @@ public class UserAdminController
     {
         if (id != null)
         {
-            return accountService.getUser(id);
+            return accountService.get(id);
         }
         return null;
     }
