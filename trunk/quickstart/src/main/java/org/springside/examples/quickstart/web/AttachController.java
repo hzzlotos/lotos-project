@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springside.examples.quickstart.entity.Attach;
 import org.springside.examples.quickstart.service.AttachService;
@@ -149,6 +150,31 @@ public class AttachController
         redirectAttributes.addFlashAttribute("message", "删除地区成功");
         return "redirect:/attach/?parentId="
                 + (null == attach.getParent() ? "" : attach.getParent().getId());
+    }
+
+    /**
+     * Ajax请求校验name是否唯一。
+     * 
+     * @throws Exception
+     */
+    @RequestMapping(value = "checkName")
+    @ResponseBody
+    public String checkName(@RequestParam("name") String name,
+            @RequestParam("name") String oldName) throws Exception
+    {
+        name = new String(name.getBytes("ISO-8859-1"), "UTF-8");
+        if (name.equals(oldName))
+        {
+            return "true";
+        }
+        if (attachService.findByName(name) == null)
+        {
+            return "true";
+        }
+        else
+        {
+            return "false";
+        }
     }
 
     /**
