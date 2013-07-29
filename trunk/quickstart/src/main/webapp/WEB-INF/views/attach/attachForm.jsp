@@ -4,7 +4,7 @@
 
 <html>
 <head>
-	<title>归属地管理</title>
+	<title>地区管理</title>
 	
 	<script>
 		$(document).ready(function() {
@@ -21,7 +21,7 @@
 		<input type="hidden" name="id" value="${attach.id}"/>
 		<input type="hidden" name="parentId" value="${parentId}"/>
 		<fieldset>
-			<legend><small>归属地</small></legend>
+			<legend><small>地区</small></legend>
 			<c:if test="${not empty parentId}">
 			<div class="control-group">
 				<label for="task_title" class="control-label">上级:</label>
@@ -31,7 +31,7 @@
 			</div>
 			</c:if>
 			<div class="control-group">
-				<label for="task_title" class="control-label">任务名称:</label>
+				<label for="task_title" class="control-label">地区名称:</label>
 				<div class="controls">
 					<input type="text" id="attach" name="name" value="${attach.name}" class="input-large required" minlength="3"/>
 				</div>

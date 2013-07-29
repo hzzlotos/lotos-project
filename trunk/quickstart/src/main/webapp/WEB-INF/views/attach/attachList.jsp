@@ -5,7 +5,7 @@
 
 <html>
 <head>
-	<title>归属地管理</title>
+	<title>地区管理</title>
 </head>
 
 <body>
@@ -14,9 +14,10 @@
 	</c:if>
 	<div class="row">
 		<div class="span4 offset7">
-			<form class="form-search" action="#">
-				<label>名称：</label> <input type="text" name="search_LIKE_title" class="input-medium" value="${param.search_LIKE_title}"> 
-				<button type="submit" class="btn" id="search_btn">Search</button>
+			<form class="form-search" action="${ctx}/attach" method="post">
+				<label>名称：</label> <input type="text" name="search_LIKES_name" class="input-medium" value="${param.search_LIKES_name}">
+				<input type="hidden" name="parentId" value="${parentId}"> 
+				<button type="submit" class="btn" id="search_btn">查找</button>
 		    </form>
 	    </div>
 	    <tags:sort/>
@@ -25,12 +26,12 @@
 		<a href="${ctx}/attach?parentId=${theParentId}">返回上级管理【${parentName}】</a>
 	</c:if>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
-		<thead><tr><th>归属地</th><th>管理</th></tr></thead>
+		<thead><tr><th>地区</th><th>管理</th></tr></thead>
 		<tbody>
 		<c:forEach items="${attachs.content}" var="attach">
 			<tr>
 				<td><a href="${ctx}/attach/update/${attach.id}">${attach.name}</a></td>
-				<td><a href="${ctx}/attach?parentId=${attach.id}">管理下级</a>
+				<td><c:if test="${attach.type<2}"> <a href="${ctx}/attach?parentId=${attach.id}">管理下级</a></c:if>
 				&nbsp;&nbsp;&nbsp;<a href="${ctx}/attach/delete/${attach.id}">删除</a></td>
 			</tr>
 		</c:forEach>
@@ -39,6 +40,6 @@
 	
 	<tags:pagination page="${attachs}" paginationSize="5"/>
 
-	<div><a class="btn" href="${ctx}/attach/create?parentId=${parentId}"">创建归属地</a></div>
+	<div><a class="btn" href="${ctx}/attach/create?parentId=${parentId}"">创建地区</a></div>
 </body>
 </html>
