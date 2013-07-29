@@ -8,10 +8,11 @@
 	
 	<script>
 		$(document).ready(function() {
+			$("#name").focus();
 			$("#inputForm").validate({
 				rules: {
 					name: {
-						remote: "${ctx}/attach/checkName?oldName="++encodeURIComponent('${attach.name}')
+						remote: "${ctx}/attach/checkName?oldName="+encodeURIComponent('${attach.name}')
 					}
 				},
 				messages: {

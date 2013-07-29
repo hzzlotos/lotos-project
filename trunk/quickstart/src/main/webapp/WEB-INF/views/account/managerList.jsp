@@ -18,16 +18,16 @@
 		<tbody>
 		<c:forEach items="${users}" var="user">
 			<tr>
-				<td><a href="${ctx}/admin/user/update/${user.id}">${user.loginName}</a></td>
+				<td><a href="${ctx}/manager/update/${user.id}">${user.loginName}</a></td>
 				<td>${user.name}</td>
 				<td>
 					<fmt:formatDate value="${user.registerDate}" pattern="yyyy年MM月dd日  HH时mm分ss秒" />
 				</td>
-				<td><a href="${ctx}/admin/user/delete/${user.id}">删除</a></td>
+				<td><a href="${ctx}/manager/delete/${user.id}">删除</a></td>
 			</tr>
 		</c:forEach>
 		</tbody>
 	</table>
-	<a class="btn" href="${ctx}/register">添加</a>
+	<a class="btn" href="${ctx}/manager/create">添加</a>
 </body>
 </html>
