@@ -11,7 +11,7 @@ import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
-import org.springside.modules.utils.Collections3;
+import cn.newtouch.util.utils.Collections3;
 
 import com.google.common.collect.Lists;
 
