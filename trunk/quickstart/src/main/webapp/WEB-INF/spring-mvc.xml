@@ -24,5 +24,5 @@
 	</bean>
 	
 	<!-- 定义无Controller的path<->view直接映射 -->
-	<mvc:view-controller path="/" view-name="redirect:/attach"/>
+	<mvc:view-controller path="/" view-name="redirect:/material"/>
 </beans>
