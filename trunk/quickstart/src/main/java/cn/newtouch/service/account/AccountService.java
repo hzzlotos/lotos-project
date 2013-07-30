@@ -8,13 +8,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
 import cn.newtouch.entity.User;
 import cn.newtouch.repository.UserDao;
 import cn.newtouch.service.BaseService;
 import cn.newtouch.service.account.ShiroDbRealm.ShiroUser;
-import org.springside.modules.security.utils.Digests;
-import org.springside.modules.utils.DateProvider;
-import org.springside.modules.utils.Encodes;
+import cn.newtouch.util.security.utils.Digests;
+import cn.newtouch.util.utils.DateProvider;
+import cn.newtouch.util.utils.Encodes;
 
 /**
  * 用户管理类.
