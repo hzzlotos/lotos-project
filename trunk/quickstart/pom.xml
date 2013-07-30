@@ -10,7 +10,6 @@
 
 	<properties>
 		<!-- 主要依赖库的版本定义 -->
-		<springside.version>4.0.1.GA</springside.version>
 		<spring.version>3.1.3.RELEASE</spring.version>
 		<hibernate.version>4.1.8.Final</hibernate.version>
 		<spring-data-jpa.version>1.2.0.RELEASE</spring-data-jpa.version>
@@ -73,13 +72,6 @@
 
 	<!-- 依赖项定义 -->
 	<dependencies>
-		<!-- SPRINGSIDE -->
-		<dependency>
-			<groupId>org.springside</groupId>
-			<artifactId>springside-core</artifactId>
-			<version>${springside.version}</version>
-		</dependency>
-
 		<!-- AOP begin -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -271,14 +263,6 @@
 		</dependency>
 		<!-- GENERAL UTILS end -->
 
-		<!-- TEST begin -->
-		<dependency>
-			<groupId>org.springside</groupId>
-			<artifactId>springside-test</artifactId>
-			<version>${springside.version}</version>
-			<scope>test</scope>
-		</dependency>
-
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -360,6 +344,12 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- TEST end -->
+		
+		<dependency>
+			<groupId>net.sf.dozer</groupId>
+			<artifactId>dozer</artifactId>
+			<version>5.4.0</version>
+		</dependency>
 	</dependencies>
 	
 	<dependencyManagement>
@@ -615,38 +605,6 @@
 							</systemPropertyVariables>
 						</configuration>
 					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		
-		<!-- 执行@Category(Smoke.class)的TestCase -->
-		<profile>
-			<id>run-smoke</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<configuration>
-							<includedGroups>org.springside.modules.test.category.Smoke</includedGroups>
-						</configuration>
-					</plugin>				
-				</plugins>
-			</build>
-		</profile>
-		
-		<!-- 忽略所有@Category(UnStable.class)的TestCase -->
-		<profile>
-			<id>skip-unstable</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<configuration>
-							<excludedGroups>org.springside.modules.test.category.UnStable</excludedGroups>
-						</configuration>
-					</plugin>				
 				</plugins>
 			</build>
 		</profile>
