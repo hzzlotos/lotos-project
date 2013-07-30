@@ -27,7 +27,7 @@
 				/logout = logout
 				/static/** = anon
 				/api/** = anon
-				/manager/** = roles[admin]
+				/manager/** = roles[admin]<!-- anon --> 
 				/attach/** = roles[admin]
 				/** = authc
 			</value>
