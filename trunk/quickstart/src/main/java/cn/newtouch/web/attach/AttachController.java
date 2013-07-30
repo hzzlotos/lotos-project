@@ -163,6 +163,7 @@ public class AttachController extends BaseController<Attach, Long>
             @RequestParam("name") String oldName) throws Exception
     {
         name = new String(name.getBytes("ISO-8859-1"), "UTF-8");
+        oldName = new String(oldName.getBytes("ISO-8859-1"), "UTF-8");
         if (name.equals(oldName))
         {
             return "true";

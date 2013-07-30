@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import cn.newtouch.contants.AuthType;
 import cn.newtouch.contants.RoleType;
 import cn.newtouch.entity.Attach;
@@ -60,8 +61,10 @@ public class ManagerController extends BaseController<User, Long>
         model.addAttribute("attahAreaList", attachService.getAreaList());
         try
         {
-            model.addAttribute("attahBranchList", attachService
-                    .getBranchList(attachService.getAreaList().get(0).getId()));
+            model.addAttribute(
+                    "attahBranchList",
+                    attachService.getBranchList(attachService.getAreaList()
+                            .get(0).getId()));
         }
         catch (Exception e)
         {
@@ -73,13 +76,17 @@ public class ManagerController extends BaseController<User, Long>
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
     public String register(@Valid @ModelAttribute("preload") User user,
-            @RequestParam Long attahArea, @RequestParam Long attahBranch,
+            @RequestParam(required = false) Long attahArea,
+            @RequestParam(required = false) Long attahBranch,
             RedirectAttributes redirectAttributes)
     {
-        Attach attach;
+        Attach attach = null;
         if (null == attahBranch)
         {
-            attach = attachService.get(attahArea);
+            if (null != attahArea)
+            {
+                attach = attachService.get(attahArea);
+            }
         }
         else
         {
@@ -87,8 +94,8 @@ public class ManagerController extends BaseController<User, Long>
         }
         user.setAttach(attach);
         accountService.registerUser(user);
-        redirectAttributes.addFlashAttribute("message", "添加用户"
-                + user.getLoginName() + "成功");
+        redirectAttributes.addFlashAttribute("message",
+                "添加用户" + user.getLoginName() + "成功");
         return "redirect:/manager";
     }
 
@@ -104,16 +111,20 @@ public class ManagerController extends BaseController<User, Long>
         {
             model.addAttribute("attahBranch", null);
             model.addAttribute("attahArea", user.getAttach().getId());
-            model.addAttribute("attahBranchList", attachService
-                    .getBranchList(attachService.getAreaList().get(0).getId()));
+            model.addAttribute(
+                    "attahBranchList",
+                    attachService.getBranchList(attachService.getAreaList()
+                            .get(0).getId()));
         }
         try
         {
             model.addAttribute("attahBranch", user.getAttach().getId());
             model.addAttribute("attahArea", user.getAttach().getParent()
                     .getId());
-            model.addAttribute("attahBranchList", attachService
-                    .getBranchList(user.getAttach().getParent().getId()));
+            model.addAttribute(
+                    "attahBranchList",
+                    attachService.getBranchList(user.getAttach().getParent()
+                            .getId()));
         }
         catch (Exception e)
         {
@@ -140,8 +151,8 @@ public class ManagerController extends BaseController<User, Long>
         }
         user.setAttach(attach);
         accountService.updateUser(user);
-        redirectAttributes.addFlashAttribute("message", "更新用户"
-                + user.getLoginName() + "成功");
+        redirectAttributes.addFlashAttribute("message",
+                "更新用户" + user.getLoginName() + "成功");
         return "redirect:/manager";
     }
 
@@ -151,8 +162,8 @@ public class ManagerController extends BaseController<User, Long>
     {
         User user = accountService.get(id);
         accountService.deleteUser(id);
-        redirectAttributes.addFlashAttribute("message", "删除用户"
-                + user.getLoginName() + "成功");
+        redirectAttributes.addFlashAttribute("message",
+                "删除用户" + user.getLoginName() + "成功");
         return "redirect:/manager";
     }
 
@@ -167,6 +178,7 @@ public class ManagerController extends BaseController<User, Long>
             @RequestParam("oldName") String oldName) throws Exception
     {
         loginName = new String(loginName.getBytes("ISO-8859-1"), "UTF-8");
+        oldName = new String(oldName.getBytes("ISO-8859-1"), "UTF-8");
         if (loginName.equals(oldName))
         {
             return "true";
