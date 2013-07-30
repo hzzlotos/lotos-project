@@ -26,54 +26,41 @@
 //-------------------------------------------------------------------------
 package org.springside.examples.quickstart.vo;
 
-
 public class TreeNode
 {
-    private String key;
+    private String id;
 
-    private String value;
+    private String name;
 
-    private String parentKey;
+    private String pId;
 
-    // private List<TreeNode> children = Lists.newArrayList();
-
-    public String getKey()
+    public String getId()
     {
-        return key;
+        return id;
     }
 
-    public void setKey(String key)
+    public void setId(String id)
     {
-        this.key = key;
+        this.id = id;
     }
 
-    public String getValue()
+    public String getName()
     {
-        return value;
+        return name;
     }
 
-    public void setValue(String value)
+    public void setName(String name)
     {
-        this.value = value;
+        this.name = name;
     }
 
-    public String getParentKey()
+    public String getpId()
     {
-        return parentKey;
+        return pId;
     }
 
-    public void setParentKey(String parentKey)
+    public void setpId(String pId)
     {
-        this.parentKey = parentKey;
+        this.pId = pId;
     }
-
-    // public List<TreeNode> getChildren()
-    // {
-    // return children;
-    // }
-    //
-    // public void setChildren(List<TreeNode> children)
-    // {
-    // this.children = children;
-    // }
 }

@@ -10,7 +10,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springside.examples.quickstart.contants.RoleType;
 import org.springside.examples.quickstart.entity.Attach;
@@ -61,23 +63,22 @@ public class MaterialController extends BaseController<Attach, Long>
         if (RoleType.ROLE_ADMIN == user.getRole())
         {
             tn = new TreeNode();
-            tn.setParentKey("0");
-            tn.setKey("key");
-            tn.setValue("总公司");
+            tn.setId("0");
+            tn.setName("总公司");
             tree.add(tn);
             List<Attach> attachs = attachService.getAll();
             for (Attach temp : attachs)
             {
                 tn = new TreeNode();
-                tn.setKey(String.valueOf(temp.getId()));
-                tn.setValue(temp.getName());
+                tn.setId(String.valueOf(temp.getId()));
+                tn.setName(temp.getName());
                 if (null == temp.getParent())
                 {
-                    tn.setParentKey("key");
+                    tn.setpId("0");
                 }
                 else
                 {
-                    tn.setParentKey(String.valueOf(temp.getParent().getId()));
+                    tn.setpId(String.valueOf(temp.getParent().getId()));
                 }
                 tree.add(tn);
             }
@@ -86,23 +87,29 @@ public class MaterialController extends BaseController<Attach, Long>
         {
             tn = new TreeNode();
             attach = user.getAttach();
-            tn.setKey(String.valueOf(attach.getId()));
-            tn.setValue(attach.getName());
-            tn.setParentKey("0");
+            tn.setId(String.valueOf(attach.getId()));
+            tn.setName(attach.getName());
             tree.add(tn);
             if (null != attach.getChildren() && !attach.getChildren().isEmpty())
             {
                 for (Attach temp : attach.getChildren())
                 {
                     tn = new TreeNode();
-                    tn.setKey(String.valueOf(temp.getId()));
-                    tn.setValue(temp.getName());
-                    tn.setParentKey(String.valueOf(temp.getParent().getId()));
+                    tn.setId(String.valueOf(temp.getId()));
+                    tn.setName(temp.getName());
+                    tn.setpId(String.valueOf(temp.getParent().getId()));
                     tree.add(tn);
                 }
             }
         }
         return new ResponseEntity(tree, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "show/{id}", method = RequestMethod.GET)
+    public String registerForm(@PathVariable("id") Long id, Model model)
+    {
+        model.addAttribute("id", id);
+        return "attach/material-show";
     }
 
     @Override
