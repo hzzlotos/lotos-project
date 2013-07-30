@@ -26,19 +26,16 @@
 //-------------------------------------------------------------------------
 package org.springside.examples.quickstart.vo;
 
-import java.util.List;
-
-import com.google.common.collect.Lists;
 
 public class TreeNode
 {
-    private String         key;
+    private String key;
 
-    private String         value;
+    private String value;
 
-    private String         parentKey;
+    private String parentKey;
 
-    private List<TreeNode> children = Lists.newArrayList();
+    // private List<TreeNode> children = Lists.newArrayList();
 
     public String getKey()
     {
@@ -70,13 +67,13 @@ public class TreeNode
         this.parentKey = parentKey;
     }
 
-    public List<TreeNode> getChildren()
-    {
-        return children;
-    }
-
-    public void setChildren(List<TreeNode> children)
-    {
-        this.children = children;
-    }
+    // public List<TreeNode> getChildren()
+    // {
+    // return children;
+    // }
+    //
+    // public void setChildren(List<TreeNode> children)
+    // {
+    // this.children = children;
+    // }
 }

@@ -87,7 +87,8 @@ public class ManagerController extends BaseController<User, Long>
         }
         user.setAttach(attach);
         accountService.registerUser(user);
-        redirectAttributes.addFlashAttribute("username", user.getLoginName());
+        redirectAttributes.addFlashAttribute("message", "添加用户"
+                + user.getLoginName() + "成功");
         return "redirect:/manager";
     }
 
