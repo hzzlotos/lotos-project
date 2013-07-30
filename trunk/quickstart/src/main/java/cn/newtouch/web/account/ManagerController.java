@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springside.examples.quickstart.contants.AuthType;
-import org.springside.examples.quickstart.contants.RoleType;
-import org.springside.examples.quickstart.entity.Attach;
-import org.springside.examples.quickstart.entity.User;
-import org.springside.examples.quickstart.service.account.AccountService;
-import org.springside.examples.quickstart.service.attach.AttachService;
-import org.springside.examples.quickstart.vo.KeyValue;
-import org.springside.examples.quickstart.web.BaseController;
+import cn.newtouch.contants.AuthType;
+import cn.newtouch.contants.RoleType;
+import cn.newtouch.entity.Attach;
+import cn.newtouch.entity.User;
+import cn.newtouch.service.account.AccountService;
+import cn.newtouch.service.attach.AttachService;
+import cn.newtouch.vo.KeyValue;
+import cn.newtouch.web.BaseController;
 
 import com.google.common.collect.Lists;
 

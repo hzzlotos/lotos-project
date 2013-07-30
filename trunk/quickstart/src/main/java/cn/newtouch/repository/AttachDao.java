@@ -1,6 +1,6 @@
 package cn.newtouch.repository;
 
-import org.springside.examples.quickstart.entity.Attach;
+import cn.newtouch.entity.Attach;
 
 public interface AttachDao extends BaseDao<Attach, Long>
 {

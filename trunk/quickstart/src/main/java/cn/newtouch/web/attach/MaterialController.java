@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springside.examples.quickstart.contants.RoleType;
-import org.springside.examples.quickstart.entity.Attach;
-import org.springside.examples.quickstart.entity.User;
-import org.springside.examples.quickstart.service.account.AccountService;
-import org.springside.examples.quickstart.service.attach.AttachService;
-import org.springside.examples.quickstart.vo.TreeNode;
-import org.springside.examples.quickstart.web.BaseController;
+import cn.newtouch.contants.RoleType;
+import cn.newtouch.entity.Attach;
+import cn.newtouch.entity.User;
+import cn.newtouch.service.account.AccountService;
+import cn.newtouch.service.attach.AttachService;
+import cn.newtouch.vo.TreeNode;
+import cn.newtouch.web.BaseController;
 
 import com.google.common.collect.Lists;
 

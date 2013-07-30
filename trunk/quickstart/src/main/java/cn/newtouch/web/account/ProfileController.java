@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springside.examples.quickstart.entity.User;
-import org.springside.examples.quickstart.service.account.AccountService;
-import org.springside.examples.quickstart.service.account.ShiroDbRealm.ShiroUser;
-import org.springside.examples.quickstart.web.BaseController;
+import cn.newtouch.entity.User;
+import cn.newtouch.service.account.AccountService;
+import cn.newtouch.service.account.ShiroDbRealm.ShiroUser;
+import cn.newtouch.web.BaseController;
 
 /**
  * 用户修改自己资料的Controller.

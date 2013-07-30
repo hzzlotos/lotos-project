@@ -6,8 +6,8 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springside.examples.quickstart.service.BaseService;
-import org.springside.examples.quickstart.service.account.ShiroDbRealm.ShiroUser;
+import cn.newtouch.service.BaseService;
+import cn.newtouch.service.account.ShiroDbRealm.ShiroUser;
 
 /**
  * Attach管理的Controller, 使用Restful风格的Urls:

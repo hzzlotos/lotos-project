@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriComponentsBuilder;
-import org.springside.examples.quickstart.entity.Task;
-import org.springside.examples.quickstart.service.task.TaskService;
+import cn.newtouch.entity.Task;
+import cn.newtouch.service.task.TaskService;
 import org.springside.modules.beanvalidator.BeanValidators;
 
 /**

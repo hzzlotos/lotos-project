@@ -6,10 +6,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.examples.quickstart.entity.Attach;
-import org.springside.examples.quickstart.repository.AttachDao;
-import org.springside.examples.quickstart.service.BaseService;
-import org.springside.examples.quickstart.util.SearchFilter;
+import cn.newtouch.entity.Attach;
+import cn.newtouch.repository.AttachDao;
+import cn.newtouch.service.BaseService;
+import cn.newtouch.util.SearchFilter;
 
 import com.google.common.collect.Maps;
 

@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springside.examples.quickstart.entity.Task;
-import org.springside.examples.quickstart.entity.User;
-import org.springside.examples.quickstart.service.account.ShiroDbRealm.ShiroUser;
-import org.springside.examples.quickstart.service.task.TaskService;
+import cn.newtouch.entity.Task;
+import cn.newtouch.entity.User;
+import cn.newtouch.service.account.ShiroDbRealm.ShiroUser;
+import cn.newtouch.service.task.TaskService;
 import org.springside.modules.web.Servlets;
 
 import com.google.common.collect.Maps;

@@ -10,9 +10,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.examples.quickstart.repository.BaseDao;
-import org.springside.examples.quickstart.util.DynamicSpecifications;
-import org.springside.examples.quickstart.util.SearchFilter;
+import cn.newtouch.repository.BaseDao;
+import cn.newtouch.util.DynamicSpecifications;
+import cn.newtouch.util.SearchFilter;
 
 import com.google.common.collect.Maps;
 

@@ -1,6 +1,6 @@
 package cn.newtouch.repository;
 
-import org.springside.examples.quickstart.entity.User;
+import cn.newtouch.entity.User;
 
 public interface UserDao extends BaseDao<User, Long>
 {

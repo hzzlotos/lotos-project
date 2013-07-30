@@ -11,11 +11,11 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.examples.quickstart.entity.Task;
-import org.springside.examples.quickstart.repository.TaskDao;
-import org.springside.examples.quickstart.util.DynamicSpecifications;
-import org.springside.examples.quickstart.util.SearchFilter;
-import org.springside.examples.quickstart.util.SearchFilter.Operator;
+import cn.newtouch.entity.Task;
+import cn.newtouch.repository.TaskDao;
+import cn.newtouch.util.DynamicSpecifications;
+import cn.newtouch.util.SearchFilter;
+import cn.newtouch.util.SearchFilter.Operator;
 
 //Spring Bean的标识.
 @Component

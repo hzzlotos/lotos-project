@@ -35,8 +35,8 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springside.examples.quickstart.contants.RoleType;
-import org.springside.examples.quickstart.entity.User;
+import cn.newtouch.contants.RoleType;
+import cn.newtouch.entity.User;
 import org.springside.modules.utils.Encodes;
 
 import com.google.common.base.Objects;

@@ -2,7 +2,7 @@ package cn.newtouch.contants;
 
 import java.util.List;
 
-import org.springside.examples.quickstart.vo.KeyValue;
+import cn.newtouch.vo.KeyValue;
 
 import com.google.common.collect.Lists;
 
