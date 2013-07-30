@@ -27,10 +27,9 @@
 				/logout = logout
 				/static/** = anon
 				/api/** = anon
-				/register/** = authc
-				/attach/** = authc
-				/admin/** = roles[admin]
-				/** = user
+				/manager/** = roles[admin]
+				/attach/** = roles[admin]
+				/** = authc
 			</value>
 		</property>
 	</bean>

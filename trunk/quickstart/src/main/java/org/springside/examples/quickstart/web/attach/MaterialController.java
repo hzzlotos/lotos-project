@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springside.examples.quickstart.contants.RoleType;
 import org.springside.examples.quickstart.entity.Attach;
 import org.springside.examples.quickstart.entity.User;
 import org.springside.examples.quickstart.service.account.AccountService;
@@ -55,32 +56,52 @@ public class MaterialController extends BaseController<Attach, Long>
     {
         List<TreeNode> tree = Lists.newArrayList();
         User user = accountService.get(getCurrentUserId());
-        if (null == user.getAttach())
+        TreeNode tn = null;
+        Attach attach = null;
+        if (RoleType.ROLE_ADMIN == user.getRole())
         {
-            TreeNode tn = new TreeNode();
+            tn = new TreeNode();
             tn.setParentKey("0");
             tn.setKey("key");
             tn.setValue("总公司");
             tree.add(tn);
             List<Attach> attachs = attachService.getAll();
-
-            for (Attach attach : attachs)
+            for (Attach temp : attachs)
             {
                 tn = new TreeNode();
-                tn.setKey(String.valueOf(attach.getId()));
-                tn.setValue(attach.getName());
-                if (null == attach.getParent())
+                tn.setKey(String.valueOf(temp.getId()));
+                tn.setValue(temp.getName());
+                if (null == temp.getParent())
                 {
                     tn.setParentKey("key");
                 }
                 else
                 {
-                    tn.setParentKey(String.valueOf(attach.getParent().getId()));
+                    tn.setParentKey(String.valueOf(temp.getParent().getId()));
                 }
                 tree.add(tn);
             }
         }
-
+        else
+        {
+            tn = new TreeNode();
+            attach = user.getAttach();
+            tn.setKey(String.valueOf(attach.getId()));
+            tn.setValue(attach.getName());
+            tn.setParentKey("0");
+            tree.add(tn);
+            if (null != attach.getChildren() && !attach.getChildren().isEmpty())
+            {
+                for (Attach temp : attach.getChildren())
+                {
+                    tn = new TreeNode();
+                    tn.setKey(String.valueOf(temp.getId()));
+                    tn.setValue(temp.getName());
+                    tn.setParentKey(String.valueOf(temp.getParent().getId()));
+                    tree.add(tn);
+                }
+            }
+        }
         return new ResponseEntity(tree, HttpStatus.OK);
     }
 

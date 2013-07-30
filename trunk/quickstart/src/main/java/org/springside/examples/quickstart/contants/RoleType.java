@@ -16,6 +16,8 @@ public class RoleType
 
     public static List<KeyValue> ROLE_TYPE_LIST      = Lists.newArrayList();
 
+    public static List<KeyValue> ROLE_BASE_TYPE_LIST = Lists.newArrayList();
+
     static
     {
         ROLE_TYPE_LIST.add(new KeyValue(String.valueOf(ROLE_ADMIN), "超级管理员"));
@@ -23,11 +25,30 @@ public class RoleType
                 "地区管理员"));
         ROLE_TYPE_LIST.add(new KeyValue(String.valueOf(ROLE_BRANCH_MANAGER),
                 "分公司管理员"));
+
+        ROLE_BASE_TYPE_LIST.add(new KeyValue(String.valueOf(ROLE_ADMIN),
+                "admin"));
+        ROLE_BASE_TYPE_LIST.add(new KeyValue(String.valueOf(ROLE_AREA_MANAGER),
+                "area"));
+        ROLE_BASE_TYPE_LIST.add(new KeyValue(String
+                .valueOf(ROLE_BRANCH_MANAGER), "branch"));
     }
 
     public static String getTypeName(int type)
     {
         for (KeyValue keyValue : ROLE_TYPE_LIST)
+        {
+            if (Integer.valueOf(keyValue.getKey()) == type)
+            {
+                return keyValue.getValue();
+            }
+        }
+        return null;
+    }
+
+    public static String getBaseTypeName(int type)
+    {
+        for (KeyValue keyValue : ROLE_BASE_TYPE_LIST)
         {
             if (Integer.valueOf(keyValue.getKey()) == type)
             {
