@@ -16,11 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import cn.newtouch.entity.Attach;
 import cn.newtouch.service.attach.AttachService;
 import cn.newtouch.util.SearchFilter;
+import cn.newtouch.util.web.Servlets;
 import cn.newtouch.web.BaseController;
-import org.springside.modules.web.Servlets;
 
 /**
  * Attach管理的Controller, 使用Restful风格的Urls:
