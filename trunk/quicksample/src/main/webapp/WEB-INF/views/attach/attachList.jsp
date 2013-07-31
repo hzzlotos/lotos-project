@@ -23,7 +23,7 @@
 	    <tags:sort/>
 	</div>
 	<c:if test="${not empty parentId}">
-		<a href="${ctx}/attach?parentId=${theParentId}">返回上级管理【${parentName}】</a>
+		<h4>【${parentName}】</h4>
 	</c:if>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead><tr><th>地区</th><th>管理</th></tr></thead>
@@ -39,7 +39,11 @@
 	</table>
 	
 	<tags:pagination page="${attachs}" paginationSize="5"/>
-
-	<div><a class="btn" href="${ctx}/attach/create?parentId=${parentId}"">创建地区</a></div>
+	<div>
+	<c:if test="${not empty parentId}">
+		<a class="btn" href="${ctx}/attach?parentId=${theParentId}">返回上级管理</a>
+	</c:if>
+	<a class="btn" href="${ctx}/attach/create?parentId=${parentId}"">创建地区</a>
+	</div>
 </body>
 </html>
