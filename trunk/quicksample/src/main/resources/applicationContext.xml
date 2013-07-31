@@ -15,6 +15,9 @@
 	default-lazy-init="true">
 
 	<description>Spring公共配置 </description>
+	
+	<context:property-placeholder ignore-unresolvable="true"
+			location="classpath*:/application.properties" />
 
 	<!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
 	<context:component-scan base-package="cn.newtouch">
@@ -24,24 +27,23 @@
 	<!-- Jpa Entity Manager 配置 -->
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"> 
 		<property name="dataSource" ref="dataSource"/>
-		<property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="database" value="${database.product}"/>
+				<property name="showSql" value="true"/>
+				<property name="generateDdl" value="true"/>
+            </bean>
+		</property>
 		<property name="packagesToScan" value="cn.newtouch"/>
 		<property name="jpaProperties">
 			<props>
-				<!-- 命名规则 My_NAME->MyName -->
-				<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
-			</props>
+                <prop key="cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+                <prop key="hibernate.cache.provider_configuration">classpath:ehcache.xml</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+            </props>
 		</property>
-	</bean>
-	
-	<bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-		<property name="databasePlatform">
-			<bean factory-method="getDialect" class="cn.newtouch.util.persistence.Hibernates">
-				<constructor-arg ref="dataSource"/>
-			</bean>
-		</property>
-		<property name="showSql" value="true"/>
-		<property name="generateDdl" value="true"/>
 	</bean>
 
 	<!-- Spring Data Jpa配置 -->
@@ -60,8 +62,7 @@
 	
 	<!-- production环境 -->
  	<beans profile="production">
- 		<context:property-placeholder ignore-unresolvable="true"
-			location="classpath*:/application.properties" />	
+ 			
 		
 		<!-- 数据源配置, 使用DBCP数据库连接池 -->
 		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
