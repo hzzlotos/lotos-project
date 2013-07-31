@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import com.google.common.collect.Lists;
 
 @Entity
-@Table(name = "ss_attach")
+@Table(name = "qs_attach")
 public class Attach extends IdEntity
 {
     /**
@@ -28,10 +28,6 @@ public class Attach extends IdEntity
     private Attach            parent;
 
     private int               type;
-
-    public static final int   TYPE_AREA        = 1;
-
-    public static final int   TYPE_BRANCH      = 2;
 
     public int getType()
     {

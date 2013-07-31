@@ -3,6 +3,7 @@ package cn.newtouch.entity;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -17,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "ss_user")
+@Table(name = "qs_user")
 public class User extends IdEntity
 {
     /**
@@ -25,45 +26,23 @@ public class User extends IdEntity
      */
     private static final long serialVersionUID = 1L;
 
+    private Attach            attach;
+
+    private int               auth;
+
     private String            loginName;
 
     private String            name;
 
-    private String            plainPassword;
-
     private String            password;
 
-    private String            salt;
+    private String            plainPassword;
+
+    private Date              registerDate;
 
     private int               role;
 
-    private int               auth;
-
-    private Attach            attach;
-
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "attach_id")
-    public Attach getAttach()
-    {
-        return attach;
-    }
-
-    public void setAttach(Attach attach)
-    {
-        this.attach = attach;
-    }
-
-    private Date registerDate;
-
-    public int getAuth()
-    {
-        return auth;
-    }
-
-    public void setAuth(int auth)
-    {
-        this.auth = auth;
-    }
+    private String            salt;
 
     public User()
     {
@@ -74,15 +53,23 @@ public class User extends IdEntity
         this.id = id;
     }
 
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "attach_id")
+    public Attach getAttach()
+    {
+        return attach;
+    }
+
+    public int getAuth()
+    {
+        return auth;
+    }
+
     @NotBlank
+    @Column(name = "login_name")
     public String getLoginName()
     {
         return loginName;
-    }
-
-    public void setLoginName(String loginName)
-    {
-        this.loginName = loginName;
     }
 
     @NotBlank
@@ -91,9 +78,9 @@ public class User extends IdEntity
         return name;
     }
 
-    public void setName(String name)
+    public String getPassword()
     {
-        this.name = name;
+        return password;
     }
 
     // 不持久化到数据库，也不显示在Restful接口的属性.
@@ -104,29 +91,12 @@ public class User extends IdEntity
         return plainPassword;
     }
 
-    public void setPlainPassword(String plainPassword)
+    // 设定JSON序列化时的日期格式
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
+    @Column(name = "register_date")
+    public Date getRegisterDate()
     {
-        this.plainPassword = plainPassword;
-    }
-
-    public String getPassword()
-    {
-        return password;
-    }
-
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
-
-    public String getSalt()
-    {
-        return salt;
-    }
-
-    public void setSalt(String salt)
-    {
-        this.salt = salt;
+        return registerDate;
     }
 
     public int getRole()
@@ -134,21 +104,54 @@ public class User extends IdEntity
         return role;
     }
 
-    public void setRole(int role)
+    public String getSalt()
     {
-        this.role = role;
+        return salt;
     }
 
-    // 设定JSON序列化时的日期格式
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
-    public Date getRegisterDate()
+    public void setAttach(Attach attach)
     {
-        return registerDate;
+        this.attach = attach;
+    }
+
+    public void setAuth(int auth)
+    {
+        this.auth = auth;
+    }
+
+    public void setLoginName(String loginName)
+    {
+        this.loginName = loginName;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
+
+    public void setPlainPassword(String plainPassword)
+    {
+        this.plainPassword = plainPassword;
     }
 
     public void setRegisterDate(Date registerDate)
     {
         this.registerDate = registerDate;
+    }
+
+    public void setRole(int role)
+    {
+        this.role = role;
+    }
+
+    public void setSalt(String salt)
+    {
+        this.salt = salt;
     }
 
     @Override
