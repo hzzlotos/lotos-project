@@ -20,6 +20,7 @@
 	<%
 	String error = (String) request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
 	if(error != null){
+	    System.out.print(error);
 	%>
 		<div class="alert alert-error input-medium controls">
 			<button class="close" data-dismiss="alert">×</button>登录失败，请重试.
