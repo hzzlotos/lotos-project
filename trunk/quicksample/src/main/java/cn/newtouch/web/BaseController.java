@@ -6,18 +6,10 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import cn.newtouch.service.BaseService;
 import cn.newtouch.service.account.ShiroDbRealm.ShiroUser;
 
-/**
- * Attach管理的Controller, 使用Restful风格的Urls:
- * 
- * List page : GET /Attach/ Create page : GET /Attach/create Create action :
- * POST /Attach/create Update page : GET /Attach/update/{id} Update action :
- * POST /Attach/update Delete action : GET /Attach/delete/{id}
- * 
- * @author calvin
- */
 @Controller
 public abstract class BaseController<T, PK extends Serializable>
 {

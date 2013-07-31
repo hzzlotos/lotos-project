@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import cn.newtouch.contants.RoleType;
 import cn.newtouch.entity.Attach;
 import cn.newtouch.entity.User;
@@ -24,15 +25,6 @@ import cn.newtouch.web.BaseController;
 
 import com.google.common.collect.Lists;
 
-/**
- * Attach管理的Controller, 使用Restful风格的Urls:
- * 
- * List page : GET /Attach/ Create page : GET /Attach/create Create action :
- * POST /Attach/create Update page : GET /Attach/update/{id} Update action :
- * POST /Attach/update Delete action : GET /Attach/delete/{id}
- * 
- * @author calvin
- */
 @Controller
 @RequestMapping(value = "/material")
 public class MaterialController extends BaseController<Attach, Long>
@@ -49,9 +41,6 @@ public class MaterialController extends BaseController<Attach, Long>
         return "attach/material";
     }
 
-    /**
-     * Ajax请求校验loginName是否唯一。
-     */
     @RequestMapping(value = "attahTree", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<?> getAttahList()

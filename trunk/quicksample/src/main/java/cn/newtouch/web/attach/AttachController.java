@@ -24,15 +24,6 @@ import cn.newtouch.util.SearchFilter;
 import cn.newtouch.util.web.Servlets;
 import cn.newtouch.web.BaseController;
 
-/**
- * Attach管理的Controller, 使用Restful风格的Urls:
- * 
- * List page : GET /Attach/ Create page : GET /Attach/create Create action :
- * POST /Attach/create Update page : GET /Attach/update/{id} Update action :
- * POST /Attach/update Delete action : GET /Attach/delete/{id}
- * 
- * @author calvin
- */
 @Controller
 @RequestMapping(value = "/attach")
 public class AttachController extends BaseController<Attach, Long>
@@ -153,11 +144,6 @@ public class AttachController extends BaseController<Attach, Long>
                 + (null == attach.getParent() ? "" : attach.getParent().getId());
     }
 
-    /**
-     * Ajax请求校验name是否唯一。
-     * 
-     * @throws Exception
-     */
     @RequestMapping(value = "checkName")
     @ResponseBody
     public String checkName(@RequestParam("name") String name,

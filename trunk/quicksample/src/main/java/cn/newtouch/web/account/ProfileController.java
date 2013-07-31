@@ -10,16 +10,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import cn.newtouch.entity.User;
 import cn.newtouch.service.account.AccountService;
 import cn.newtouch.service.account.ShiroDbRealm.ShiroUser;
 import cn.newtouch.web.BaseController;
 
-/**
- * 用户修改自己资料的Controller.
- * 
- * @author calvin
- */
 @Controller
 @RequestMapping(value = "/profile")
 public class ProfileController extends BaseController<User, Long>
@@ -54,9 +50,6 @@ public class ProfileController extends BaseController<User, Long>
         return null;
     }
 
-    /**
-     * 更新Shiro中当前用户的用户名.
-     */
     private void updateCurrentUserName(String userName)
     {
         ShiroUser user = (ShiroUser) SecurityUtils.getSubject().getPrincipal();

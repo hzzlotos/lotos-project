@@ -30,11 +30,6 @@ import cn.newtouch.web.BaseController;
 
 import com.google.common.collect.Lists;
 
-/**
- * 管理员管理用户的Controller.
- * 
- * @author calvin
- */
 @Controller
 @RequestMapping(value = "/manager")
 public class ManagerController extends BaseController<User, Long>
@@ -62,8 +57,10 @@ public class ManagerController extends BaseController<User, Long>
         model.addAttribute("attahAreaList", attachService.getAreaList());
         try
         {
-            model.addAttribute("attahBranchList", attachService
-                    .getBranchList(attachService.getAreaList().get(0).getId()));
+            model.addAttribute(
+                    "attahBranchList",
+                    attachService.getBranchList(attachService.getAreaList()
+                            .get(0).getId()));
         }
         catch (Exception e)
         {
@@ -93,8 +90,8 @@ public class ManagerController extends BaseController<User, Long>
         }
         user.setAttach(attach);
         accountService.registerUser(user);
-        redirectAttributes.addFlashAttribute("message", "添加用户"
-                + user.getLoginName() + "成功");
+        redirectAttributes.addFlashAttribute("message",
+                "添加用户" + user.getLoginName() + "成功");
         return "redirect:/manager";
     }
 
@@ -110,16 +107,20 @@ public class ManagerController extends BaseController<User, Long>
         {
             model.addAttribute("attahBranch", null);
             model.addAttribute("attahArea", user.getAttach().getId());
-            model.addAttribute("attahBranchList", attachService
-                    .getBranchList(attachService.getAreaList().get(0).getId()));
+            model.addAttribute(
+                    "attahBranchList",
+                    attachService.getBranchList(attachService.getAreaList()
+                            .get(0).getId()));
         }
         try
         {
             model.addAttribute("attahBranch", user.getAttach().getId());
             model.addAttribute("attahArea", user.getAttach().getParent()
                     .getId());
-            model.addAttribute("attahBranchList", attachService
-                    .getBranchList(user.getAttach().getParent().getId()));
+            model.addAttribute(
+                    "attahBranchList",
+                    attachService.getBranchList(user.getAttach().getParent()
+                            .getId()));
         }
         catch (Exception e)
         {
@@ -146,8 +147,8 @@ public class ManagerController extends BaseController<User, Long>
         }
         user.setAttach(attach);
         accountService.updateUser(user);
-        redirectAttributes.addFlashAttribute("message", "更新用户"
-                + user.getLoginName() + "成功");
+        redirectAttributes.addFlashAttribute("message",
+                "更新用户" + user.getLoginName() + "成功");
         return "redirect:/manager";
     }
 
@@ -157,16 +158,11 @@ public class ManagerController extends BaseController<User, Long>
     {
         User user = accountService.get(id);
         accountService.deleteUser(id);
-        redirectAttributes.addFlashAttribute("message", "删除用户"
-                + user.getLoginName() + "成功");
+        redirectAttributes.addFlashAttribute("message",
+                "删除用户" + user.getLoginName() + "成功");
         return "redirect:/manager";
     }
 
-    /**
-     * Ajax请求校验loginName是否唯一。
-     * 
-     * @throws Exception
-     */
     @RequestMapping(value = "checkLoginName")
     @ResponseBody
     public String checkLoginName(@RequestParam("loginName") String loginName,
@@ -188,9 +184,6 @@ public class ManagerController extends BaseController<User, Long>
         }
     }
 
-    /**
-     * Ajax请求校验loginName是否唯一。
-     */
     @RequestMapping(value = "attahList", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<?> getAttahList(
