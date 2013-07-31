@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import cn.newtouch.contants.AttachType;
 import cn.newtouch.contants.AuthType;
 import cn.newtouch.contants.RoleType;
 import cn.newtouch.entity.Attach;
@@ -61,10 +62,8 @@ public class ManagerController extends BaseController<User, Long>
         model.addAttribute("attahAreaList", attachService.getAreaList());
         try
         {
-            model.addAttribute(
-                    "attahBranchList",
-                    attachService.getBranchList(attachService.getAreaList()
-                            .get(0).getId()));
+            model.addAttribute("attahBranchList", attachService
+                    .getBranchList(attachService.getAreaList().get(0).getId()));
         }
         catch (Exception e)
         {
@@ -94,8 +93,8 @@ public class ManagerController extends BaseController<User, Long>
         }
         user.setAttach(attach);
         accountService.registerUser(user);
-        redirectAttributes.addFlashAttribute("message",
-                "添加用户" + user.getLoginName() + "成功");
+        redirectAttributes.addFlashAttribute("message", "添加用户"
+                + user.getLoginName() + "成功");
         return "redirect:/manager";
     }
 
@@ -107,24 +106,20 @@ public class ManagerController extends BaseController<User, Long>
         model.addAttribute("roleList", RoleType.ROLE_TYPE_LIST);
         model.addAttribute("authList", AuthType.AUTH_TYPE_LIST);
         model.addAttribute("attahAreaList", attachService.getAreaList());
-        if (user.getAttach().getType() == Attach.TYPE_AREA)
+        if (user.getAttach().getType() == AttachType.TYPE_AREA)
         {
             model.addAttribute("attahBranch", null);
             model.addAttribute("attahArea", user.getAttach().getId());
-            model.addAttribute(
-                    "attahBranchList",
-                    attachService.getBranchList(attachService.getAreaList()
-                            .get(0).getId()));
+            model.addAttribute("attahBranchList", attachService
+                    .getBranchList(attachService.getAreaList().get(0).getId()));
         }
         try
         {
             model.addAttribute("attahBranch", user.getAttach().getId());
             model.addAttribute("attahArea", user.getAttach().getParent()
                     .getId());
-            model.addAttribute(
-                    "attahBranchList",
-                    attachService.getBranchList(user.getAttach().getParent()
-                            .getId()));
+            model.addAttribute("attahBranchList", attachService
+                    .getBranchList(user.getAttach().getParent().getId()));
         }
         catch (Exception e)
         {
@@ -151,8 +146,8 @@ public class ManagerController extends BaseController<User, Long>
         }
         user.setAttach(attach);
         accountService.updateUser(user);
-        redirectAttributes.addFlashAttribute("message",
-                "更新用户" + user.getLoginName() + "成功");
+        redirectAttributes.addFlashAttribute("message", "更新用户"
+                + user.getLoginName() + "成功");
         return "redirect:/manager";
     }
 
@@ -162,8 +157,8 @@ public class ManagerController extends BaseController<User, Long>
     {
         User user = accountService.get(id);
         accountService.deleteUser(id);
-        redirectAttributes.addFlashAttribute("message",
-                "删除用户" + user.getLoginName() + "成功");
+        redirectAttributes.addFlashAttribute("message", "删除用户"
+                + user.getLoginName() + "成功");
         return "redirect:/manager";
     }
 

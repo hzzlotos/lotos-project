@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import cn.newtouch.contants.AttachType;
 import cn.newtouch.entity.Attach;
 import cn.newtouch.service.attach.AttachService;
 import cn.newtouch.util.SearchFilter;
@@ -102,11 +103,11 @@ public class AttachController extends BaseController<Attach, Long>
         if (null != parentId)
         {
             parent = attachService.get(parentId);
-            newAttach.setType(Attach.TYPE_BRANCH);
+            newAttach.setType(AttachType.TYPE_BRANCH);
         }
         else
         {
-            newAttach.setType(Attach.TYPE_AREA);
+            newAttach.setType(AttachType.TYPE_AREA);
         }
         newAttach.setParent(parent);
         attachService.save(newAttach);
