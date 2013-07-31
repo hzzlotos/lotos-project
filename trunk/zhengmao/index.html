@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>公司主页</title>
+<link href="Css/skin.css" type="text/css" rel="stylesheet"/>
+<link href="Css/Main.css" type="text/css" rel="stylesheet"/>
+<link href="Css/jquery.jcarousel.css" type="text/css" rel="stylesheet"/>
+<script type="text/javascript" src="Css/jquery-1.2.3.pack.js"></script>
+<script type="text/javascript" src="Css/jquery.jcarousel.pack.js"></script>
+<script type="text/javascript">
+jQuery.easing['BounceEaseOut'] = function(p, t, b, c, d) {
+	if ((t/=d) < (1/2.75)) {
+		return c*(7.5625*t*t) + b;
+	} else if (t < (2/2.75)) {
+		return c*(7.5625*(t-=(1.5/2.75))*t + .75) + b;
+	} else if (t < (2.5/2.75)) {
+		return c*(7.5625*(t-=(2.25/2.75))*t + .9375) + b;
+	} else {
+		return c*(7.5625*(t-=(2.625/2.75))*t + .984375) + b;
+	}
+};
+
+jQuery(document).ready(function() {
+    jQuery('#mycarousel').jcarousel({
+        easing: 'BounceEaseOut',
+        animation: 1000
+    });
+});
+
+</script>
+
+
+</head>
+
+<body class="oneColElsCtrHdr">
+<div id="container">
+  <div id="header">
+    <marquee align="right" onmousemove="this.stop()" onmouseout="this.start()" scrollamount="3">江苏省东台市正茂建筑建材销售租赁有限公司</marquee>
+  </div>
+  <div class="banner">
+    <a href="#"> </a>
+  </div>
+  <div id="navsub">
+       <ul>
+         <li class="sub01"><a href="./index.html">网站首页</a></li>
+         <li><a href="./company.html">企业简介</a></li>
+         <li><a href="./display.html">产品展示</a></li>
+         <li><a href="./forUs.html">关于我们</a></li>
+         <li><a href="./contact.html">联系我们</a></li>
+       </ul>
+  </div>
+ 
+  <div id="mainContent">
+    <div class="leftContent">
+     <div class="left">
+     <p>产品分类导航</p>
+     <ul>
+       <li><a href="#">安全网</a></li>
+       <li><a href="#">钢管扣件</a></li>
+       <li><a href="#">脚手架、钢管</a></li>
+       <li><a href="#">轮盘式吊篮</a></li>
+       <li  class="no_bottom"><a href="#">丝杠、步步紧</a></li>
+     </ul>
+     </div>
+     <div class="left">
+       <p>联系方式</p>
+       <p class="p1 p2">公司：江苏省东台市正茂建筑建材销售租赁有限公司</p>
+       <p class="p1 p2">联系人：王经理</p>
+       <p class="p1 p2"> 电话传真：0515-85721580</p>
+       <p class="p1 p2">手机：187529173676</p>
+       <p class="p1">地址：东台市沿海经济区海龙路</p>
+    </div>
+    <!--
+    <div class="notice">
+       <p class="consult"><a href="#" >在 线 咨 询</a></p>
+    </div>
+    -->
+    </div>
+    <div class="rightContent">
+       <div class="commessage">
+          <div class="tit">
+            <p>公司简介</p>
+          </div>
+          <div class="content">
+            江苏省东台市正茂建筑建材销售租赁有限公司是一家钢管扣件生产及建材销售的企业，主要从事碗扣式脚手架、普通脚手架、安全网、钢管、扣件、丝杠租赁等。
+          </div>
+       </div>
+       <div class="commessage">
+         <div class="tit">
+             <p>本站公告</p>
+         </div>
+         <div class="content">
+           “以人为本，诚实守信，团结历进，追求卓越”是我们企业的发展宗旨，”诚信、高效、求实、创新“是我们企业经营的理念。欢迎光临江苏省东台市正茂建筑建材销售租赁有限公司企业网站！
+         </div>
+       </div>
+      <div class="commessage">
+         <div class="tit">
+           <p>图片展示</p>
+         </div>
+         <div class="Pic">
+            <div class="wrap">
+              <ul id="mycarousel" class="jcarousel-skin-tango">
+                <li><img src="img/png-0001.png" alt="" /></li>
+                <li><img src="img/png-0002.png" alt="" /></li>
+                <li><img src="img/png-0003.png" alt="" /></li>
+                <li><img src="img/png-0004.png" alt="" /></li>
+                <li><img src="img/png-0005.png" alt="" /></li>
+                <li><img src="img/png-0006.png" alt="" /></li>
+              </ul>
+            </div>
+         </div>
+     </div>
+    </div>
+  </div>
+  <div id="footer">
+    <p>
+      <span class="company">江苏省东台市正茂建筑建材销售租赁有限公司</span> 
+            版权所有 电话:0515-85721580 
+    </p>
+    <p>Copyright © 2013 Auto Parts All Right Reserved. </p>
+  </div>
+</div>
+</body>
+</html>
