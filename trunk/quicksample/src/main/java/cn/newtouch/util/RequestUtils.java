@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import cn.newtouch.contants.Contants;
+
 public class RequestUtils
 {
 
@@ -38,9 +40,9 @@ public class RequestUtils
             throws FileNotFoundException
     {
         // Interpret location as relative to the web application root directory.
-        if (!path.startsWith("/"))
+        if (!path.startsWith(Contants.SLASH))
         {
-            path = "/" + path;
+            path = Contants.SLASH + path;
         }
         String realPath = servletContext.getRealPath(path);
         if (realPath == null)

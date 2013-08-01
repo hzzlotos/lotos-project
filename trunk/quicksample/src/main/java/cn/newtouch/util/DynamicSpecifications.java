@@ -11,6 +11,8 @@ import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
+
+import cn.newtouch.contants.Contants;
 import cn.newtouch.util.utils.Collections3;
 
 import com.google.common.collect.Lists;
@@ -37,10 +39,11 @@ public class DynamicSpecifications
                         if (filter.operator == SearchFilter.Operator.EQOR)
                         {
                             String[] orName = StringUtils.split(
-                                    filter.fieldName, "%OR%");
+                                    filter.fieldName, SearchFilter.OR_TAG);
                             for (String name : orName)
                             {
-                                String[] names = StringUtils.split(name, ".");
+                                String[] names = StringUtils.split(name,
+                                        Contants.POINT);
                                 Path expression = root.get(names[0]);
                                 for (int i = 1; i < names.length; i++)
                                 {
@@ -65,7 +68,7 @@ public class DynamicSpecifications
                         else
                         {
                             String[] names = StringUtils.split(
-                                    filter.fieldName, ".");
+                                    filter.fieldName, Contants.POINT);
                             Path expression = root.get(names[0]);
                             for (int i = 1; i < names.length; i++)
                             {

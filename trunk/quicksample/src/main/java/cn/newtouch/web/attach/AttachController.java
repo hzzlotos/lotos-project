@@ -52,7 +52,7 @@ public class AttachController extends BaseController<Attach, Long>
                 request, "search_");
         if (null == parentId)
         {
-            searchParams.put("EQL_parent.id", SearchFilter.IS_NULL);
+            searchParams.put("EQL_parent.id", SearchFilter.IS_NULL_TAG);
         }
         else
         {

@@ -8,13 +8,17 @@ import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringUtils;
 
+import cn.newtouch.contants.Contants;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 public class SearchFilter
 {
 
-    public static String IS_NULL = "null";
+    public static final String IS_NULL_TAG = "null";
+
+    public static final String OR_TAG      = "%OR%";
 
     public enum Operator {
         EQ, LIKE, GT, LT, GTE, LTE, IN, EQOR
@@ -78,13 +82,14 @@ public class SearchFilter
             {
                 continue;
             }
-            String[] names = StringUtils.split(key, "_");
+            String[] names = StringUtils.split(key, Contants.UNDERLINE);
             if (names.length != 2)
             {
                 throw new IllegalArgumentException(key
                         + " is not a valid search filter name");
             }
-            String firstPart = StringUtils.substringBefore(key, "_");
+            String firstPart = StringUtils.substringBefore(key,
+                    Contants.UNDERLINE);
             String matchTypeCode = StringUtils.substring(firstPart, 0,
                     firstPart.length() - 1);
             String propertyTypeCode = StringUtils.substring(firstPart,
@@ -148,7 +153,7 @@ public class SearchFilter
             {
                 if (null != propertyClass)
                 {
-                    if (!IS_NULL.equals(value))
+                    if (!IS_NULL_TAG.equals(value))
                     {
                         filter = new SearchFilter(name, operator, ConvertUtils
                                 .convertStringToObject(value.toString(),

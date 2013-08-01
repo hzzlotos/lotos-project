@@ -10,10 +10,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import com.google.common.collect.Lists;
 
 @Entity
 @Table(name = "qs_attach")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Attach extends IdEntity
 {
     /**
@@ -21,33 +26,13 @@ public class Attach extends IdEntity
      */
     private static final long serialVersionUID = 1L;
 
-    private String            name;
-
     private List<Attach>      children         = Lists.newArrayList();
+
+    private String            name;
 
     private Attach            parent;
 
     private int               type;
-
-    public int getType()
-    {
-        return type;
-    }
-
-    public void setType(int type)
-    {
-        this.type = type;
-    }
-
-    public String getName()
-    {
-        return name;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
 
     @OneToMany(mappedBy = "parent")
     public List<Attach> getChildren()
@@ -55,9 +40,9 @@ public class Attach extends IdEntity
         return children;
     }
 
-    public void setChildren(List<Attach> children)
+    public String getName()
     {
-        this.children = children;
+        return name;
     }
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
@@ -67,8 +52,52 @@ public class Attach extends IdEntity
         return parent;
     }
 
+    public int getType()
+    {
+        return type;
+    }
+
+    public void setChildren(List<Attach> children)
+    {
+        this.children = children;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
     public void setParent(Attach parent)
     {
         this.parent = parent;
+    }
+
+    public void setType(int type)
+    {
+        this.type = type;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null || !(obj instanceof Attach))
+        {
+            return false;
+        }
+        Attach now = (Attach) obj;
+        if (this.id.equals(now.getId()))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    @Override
+    public String toString()
+    {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

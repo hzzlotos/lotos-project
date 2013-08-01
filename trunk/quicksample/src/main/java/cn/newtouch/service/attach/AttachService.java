@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
 import cn.newtouch.entity.Attach;
 import cn.newtouch.repository.AttachDao;
 import cn.newtouch.service.BaseService;
@@ -22,7 +23,7 @@ public class AttachService extends BaseService<Attach, Long>
     public List<Attach> getAreaList()
     {
         Map<String, Object> searchParams = Maps.newHashMap();
-        searchParams.put("EQL_parent.id", SearchFilter.IS_NULL);
+        searchParams.put("EQL_parent.id", SearchFilter.IS_NULL_TAG);
         return this.search(searchParams);
     }
 

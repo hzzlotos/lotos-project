@@ -12,6 +12,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -19,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "qs_user")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User extends IdEntity
 {
     /**
@@ -152,6 +155,24 @@ public class User extends IdEntity
     public void setSalt(String salt)
     {
         this.salt = salt;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null || !(obj instanceof User))
+        {
+            return false;
+        }
+        User now = (User) obj;
+        if (this.id.equals(now.getId()))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     @Override

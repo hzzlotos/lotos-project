@@ -6,7 +6,6 @@ import javax.servlet.ServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,7 +40,7 @@ public class MaterialController extends BaseController<Attach, Long>
         return "attach/material";
     }
 
-    @RequestMapping(value = "attahTree", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "attahTree")
     @ResponseBody
     public ResponseEntity<?> getAttahList()
     {
