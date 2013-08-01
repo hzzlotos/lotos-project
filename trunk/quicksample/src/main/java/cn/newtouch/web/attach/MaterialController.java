@@ -37,7 +37,7 @@ public class MaterialController extends BaseController<Attach, Long>
     @RequestMapping(value = "")
     public String list(Model model, ServletRequest request)
     {
-        return "attach/material";
+        return "material/materialList";
     }
 
     @RequestMapping(value = "attahTree")
@@ -97,7 +97,7 @@ public class MaterialController extends BaseController<Attach, Long>
     public String registerForm(@PathVariable("id") Long id, Model model)
     {
         model.addAttribute("id", id);
-        return "attach/material-show";
+        return "material/material-show";
     }
 
     @Override

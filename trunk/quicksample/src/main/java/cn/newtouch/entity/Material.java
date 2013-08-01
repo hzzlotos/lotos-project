@@ -1,7 +1,7 @@
 package cn.newtouch.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -24,13 +24,13 @@ public class Material extends IdEntity
 
     private String            name;
 
-    @OneToMany(mappedBy = "file_name")
+    @Column(name = "file_name")
     public String getFileName()
     {
         return fileName;
     }
 
-    @OneToMany(mappedBy = "file_path")
+    @Column(name = "file_path")
     public String getFilePath()
     {
         return filePath;
