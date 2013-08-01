@@ -15,7 +15,7 @@
 <script src="${ctx}/static/jquery-ajaxfileupload/2.1/ajaxfileupload.js" type="text/javascript"></script>
 
 	<script>
-	var fileName,filePath;
+	var fileName='',filePath='';
 	$(document).ready(function(){
 		$( "#dialog_add" ).click(function( event ) {
 			$("#fileToUpload").val("");
@@ -26,28 +26,29 @@
 					{
 						text: "确认",
 						click: function() {
+							if(fileName==''){
+								$("#message").html("请上传文件！");
+								$("#showMessage").show();
+								return;
+							}
 							$.ajax({
 								url: '${ctx}/material/save',
 								method: 'POST',
-								//async:false,
+								async:false,
 								data: {name:name, filePath:filePath,attachId:$("#attachId").val()} ,
 								dataType: 'json',
-								success: function (response) {
-									alert(123)
-									//$("#mainField").append(
-									//'<div class="control-group"><label for="task_title" class="control-label">'
-									//+ name
-									//+'<a onclick="">删除</a></label><div class="controls"><img width="100px" height="60px"'
-									//+'alt="'+name+'" src="${ctx}/image/material/'+response+'" ></div></div>')
-									$("#dialog").dialog( "close" );
-								}
+								success: doSuccess
 							});
-							
+							fileName='';
+							filePath='';
+							$("#dialog").dialog( "close" );
 						}
 					},
 					{
 						text: "取消",
 						click: function() {
+							fileName='';
+							filePath='';
 							$( this ).dialog( "close" );
 						}
 					}
@@ -79,6 +80,14 @@
 			})
 		});		
 	});
+	function doSuccess(response){
+		alert(123)
+		//$("#mainField").append(
+		//'<div class="control-group"><label for="task_title" class="control-label">'
+		//+ name
+		//+'<a onclick="">删除</a></label><div class="controls"><img width="100px" height="60px"'
+		//+'alt="'+name+'" src="${ctx}/image/material/'+response+'" ></div></div>')
+	}
 	function doClose(){
 		$("#showMessage").hide();
 	}
