@@ -16,7 +16,8 @@
 
 	<script>
 	$(document).ready(function(){
-		$( "#dialog-link" ).click(function( event ) {
+		$( "#dialog_add" ).click(function( event ) {
+			$("#fileToUpload").val("");
 			$( "#dialog" ).dialog({
 				autoOpen: true,
 				width: 400,
@@ -24,7 +25,6 @@
 					{
 						text: "确认",
 						click: function() {
-							ajaxFileUpload();
 							$( this ).dialog( "close" );
 						}
 					},
@@ -36,51 +36,34 @@
 					}
 				]
 			});
-			event.preventDefault();
+		});
+		$( "#submit_file" ).click(function( event ) {
+			$.ajaxFileUpload({
+				url:'${ctx}/fileupload',
+				secureuri:false,
+				fileElementId:'fileToUpload',
+				dataType: 'json',
+				success: function (data, status)
+				{
+					alert("上传成功");
+				},
+				error: function (data, status, e)
+				{
+					alert(e);
+				}
+			})
 		});		
 	});
-	function ajaxFileUpload()
-	{
-		//$.ajaxStart(function(){
-		//	alert(111);
-		//})
-		//$.ajaxComplete(function(){
-		//	alert(222);
-		//});
-		$.ajaxFileUpload({
-			url:'${ctx}/fileupload',
-			secureuri:false,
-			fileElementId:'fileToUpload',
-			dataType: 'json',
-			success: function (data, status)
-			{
-				if(typeof(data.error) != 'undefined')
-				{
-					if(data.error != '')
-					{
-						alert(data.error);
-					}else
-					{
-						alert(data.msg);
-					}
-				}
-			},
-			error: function (data, status, e)
-			{
-				alert(e);
-			}
-		})
-		return false;
-	}
 	</script>
 </head>
 
 <body>
-	<a class="btn" id="dialog-link">添加资源</a>
+	<a class="btn" id="dialog_add">添加资源</a>
 	<fieldset>
 	</fieldset>
 	<div id="dialog" title="上传资源" style="display:none;">
-		<input id="fileToUpload" type="file" name="fileToUpload">
+		<input id="fileToUpload"  class="btn" type="file" name="fileToUpload">
+		<input id="submit_file" class="btn" type="button" value="上传"/>
 	</div>
 </body>
 </html>
