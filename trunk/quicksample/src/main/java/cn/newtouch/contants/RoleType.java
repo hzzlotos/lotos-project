@@ -40,7 +40,7 @@ public class RoleType
         {
             if (Integer.valueOf(keyValue.getKey()) == type)
             {
-                return keyValue.getValue();
+                return keyValue.getValue().toString();
             }
         }
         return null;
@@ -52,7 +52,7 @@ public class RoleType
         {
             if (Integer.valueOf(keyValue.getKey()) == type)
             {
-                return keyValue.getValue();
+                return keyValue.getValue().toString();
             }
         }
         return null;

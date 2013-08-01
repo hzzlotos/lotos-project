@@ -4,4 +4,10 @@ public class Contants
 {
     public final static String MATERIAL_PATH = "material";
 
+    public static final String UNDERLINE     = "_";
+
+    public static final String POINT         = ".";
+
+    public static final String SLASH         = "/";
+
 }
