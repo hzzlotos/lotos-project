@@ -84,12 +84,12 @@
 
 <body>
 <div style="height:610px">
-	<TABLE border=0 height=600px align=left>
+	<TABLE border=0 align=left>
 	<TR>
-		<TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+		<TD width=150px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
 			<ul id="tree" class="ztree" style="width:260px; overflow:auto;"></ul>
 		</TD>
-		<TD width=770px align=left valign=top><IFRAME style="margin-top: 5px" ID="testIframe" Name="testIframe" FRAMEBORDER=0 SCROLLING=AUTO width=100%  height=600px SRC=""></IFRAME></TD>
+		<TD width=700px align=left valign=top><IFRAME style="margin-top: 5px" ID="testIframe" Name="testIframe" FRAMEBORDER=0 SCROLLING=AUTO width=95%  height=600px SRC=""></IFRAME></TD>
 	</TR>
 	</TABLE>
 </div>
