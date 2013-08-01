@@ -40,7 +40,7 @@ public class AttachService extends BaseService<Attach, Long>
     }
 
     @Autowired
-    public void setattachDao(AttachDao attachDao)
+    public void setAttachDao(AttachDao attachDao)
     {
         this.attachDao = attachDao;
     }

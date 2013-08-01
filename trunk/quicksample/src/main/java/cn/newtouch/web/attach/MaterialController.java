@@ -1,9 +1,13 @@
 package cn.newtouch.web.attach;
 
+import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,27 +16,36 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.newtouch.contants.Contants;
 import cn.newtouch.contants.RoleType;
 import cn.newtouch.entity.Attach;
+import cn.newtouch.entity.Material;
 import cn.newtouch.entity.User;
 import cn.newtouch.service.account.AccountService;
 import cn.newtouch.service.attach.AttachService;
+import cn.newtouch.service.attach.MaterialService;
+import cn.newtouch.util.RequestUtils;
 import cn.newtouch.vo.TreeNode;
 import cn.newtouch.web.BaseController;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 @Controller
 @RequestMapping(value = "/material")
 public class MaterialController extends BaseController<Attach, Long>
 {
     @Autowired
-    private AttachService  attachService;
+    private AttachService   attachService;
 
     @Autowired
-    private AccountService accountService;
+    private AccountService  accountService;
+
+    @Autowired
+    private MaterialService materialService;
 
     @RequestMapping(value = "")
     public String list(Model model, ServletRequest request)
@@ -93,11 +106,37 @@ public class MaterialController extends BaseController<Attach, Long>
         return new ResponseEntity(tree, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "show/{id}", method = RequestMethod.GET)
-    public String registerForm(@PathVariable("id") Long id, Model model)
+    @RequestMapping(value = "save")
+    @ResponseBody
+    public String save(@RequestParam("name") String name,
+            @RequestParam("filePath") String filePath,
+            @RequestParam("attachId") Long attachId, HttpServletRequest request)
+            throws Exception
     {
-        model.addAttribute("id", id);
-        return "material/material-show";
+        File temp = new File(filePath);
+        String path = RequestUtils.getRealPath(request.getSession()
+                .getServletContext(), Contants.IMAGE_PATH + File.separator
+                + Contants.MATERIAL_PATH);
+        File file = new File(path + File.separator + temp.getName());
+        FileUtils.copyFile(temp, file);
+        // FileUtils.copyDirectory(file, temp);
+        System.out.println("===================" + file.getAbsolutePath());
+        Material material = new Material(file.getName(),
+                file.getAbsolutePath(), name, attachService.get(attachId));
+        materialService.save(material);
+        return material.getFileName();
+    }
+
+    @RequestMapping(value = "show/{attachId}", method = RequestMethod.GET)
+    public String registerForm(@PathVariable("attachId") Long attachId,
+            Model model)
+    {
+        model.addAttribute("attachId", attachId);
+        Map<String, Object> searchParams = Maps.newHashMap();
+        searchParams.put("EQL_attach.id", attachId);
+        List<Material> materials = materialService.search(searchParams);
+        model.addAttribute("materials", materials);
+        return "material/material-manage";
     }
 
     @Override
