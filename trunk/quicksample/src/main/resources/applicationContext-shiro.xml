@@ -27,8 +27,10 @@
 				/logout = logout
 				/static/** = anon
 				/api/** = anon
+				/fileupload/** = anon
 				/manager/** = roles[admin]<!-- anon --> 
 				/attach/** = roles[admin]
+				<!--/material/** = authc-->
 				/** = authc
 			</value>
 		</property>
