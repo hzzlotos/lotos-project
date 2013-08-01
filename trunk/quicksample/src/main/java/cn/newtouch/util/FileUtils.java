@@ -37,14 +37,12 @@ public class FileUtils
     public static String getFileExtension(String fileName)
     {
         int idx = fileName.lastIndexOf(Contants.POINT);
+        String result = fileName;
         if (idx >= 0)
         {
-            return fileName.substring(idx + 1);
+            result = fileName.substring(idx + 1).toLowerCase();
         }
-        else
-        {
-            return fileName;
-        }
+        return result;
     }
 
     public static String getFileNameWithoutExtension(String fileName)
