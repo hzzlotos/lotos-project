@@ -61,7 +61,7 @@
 					t = $.fn.zTree.init(t, setting, zNodes);
 					zTree = $.fn.zTree.getZTreeObj("tree");
 					demoIframe = $("#testIframe");
-					demoIframe.bind("load", loadReady);
+					//demoIframe.bind("load", loadReady);
 				} else {
 					MSG.error(response.message, true);
 				}
