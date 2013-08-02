@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.newtouch.contants.AuthType;
 import cn.newtouch.contants.Contants;
 import cn.newtouch.contants.RoleType;
 import cn.newtouch.entity.Attach;
@@ -108,11 +109,12 @@ public class MaterialController extends BaseController<Attach, Long>
 
     @RequestMapping(value = "save")
     @ResponseBody
-    public String save(@RequestParam("name") String name,
+    public Map<String, Object> save(@RequestParam("name") String name,
             @RequestParam("filePath") String filePath,
             @RequestParam("attachId") Long attachId, HttpServletRequest request)
             throws Exception
     {
+        name = new String(name.getBytes("ISO-8859-1"), "UTF-8");
         File temp = new File(filePath);
         String path = RequestUtils.getRealPath(request.getSession()
                 .getServletContext(), Contants.IMAGE_PATH + File.separator
@@ -124,19 +126,48 @@ public class MaterialController extends BaseController<Attach, Long>
         Material material = new Material(file.getName(),
                 file.getAbsolutePath(), name, attachService.get(attachId));
         materialService.save(material);
-        return material.getFileName();
+        Map<String, Object> result = Maps.newHashMap();
+        result.put("id", material.getId());
+        result.put("name", material.getName());
+        result.put("fileName", material.getFileName());
+        return result;
+    }
+
+    @RequestMapping(value = "delete")
+    @ResponseBody
+    public String delete(@RequestParam("id") Long id) throws Exception
+    {
+        materialService.delete(id);
+        return "true";
     }
 
     @RequestMapping(value = "show/{attachId}", method = RequestMethod.GET)
     public String registerForm(@PathVariable("attachId") Long attachId,
             Model model)
     {
+        String result = "";
+        User manager = accountService.get(getCurrentUserId());
+        if (manager.getRole() == RoleType.ROLE_ADMIN)
+        {
+            result = "material/material-manage";
+        }
+        else
+        {
+            if (manager.getAuth() == AuthType.AUTH_MANAGE)
+            {
+                result = "material/material-manage";
+            }
+            else
+            {
+                result = "material/material-show";
+            }
+        }
         model.addAttribute("attachId", attachId);
         Map<String, Object> searchParams = Maps.newHashMap();
         searchParams.put("EQL_attach.id", attachId);
         List<Material> materials = materialService.search(searchParams);
         model.addAttribute("materials", materials);
-        return "material/material-manage";
+        return result;
     }
 
     @Override
