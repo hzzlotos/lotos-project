@@ -11,16 +11,34 @@
 		$(document).ready(function() {
 			//聚焦第一个输入框
 			$("#loginName").focus();
+			$.validator.addMethod("checkAttahBranch", function(value, element) {
+				if ($("#role").val()==3 && $("#attahBranch").val()=='' ) {
+					return false;
+				}
+			    return true;
+			}, "分公司管理员必须选择分公司！");
 			<c:if test="${empty user.id}">
 			$("#inputForm").validate({
 				rules: {
 					loginName: {
 						remote: "${ctx}/manager/checkLoginName?oldName="+encodeURIComponent('${user.loginName}')
+					},
+					attahBranch: {
+						checkAttahBranch: true
 					}
 				},
 				messages: {
 					loginName: {
 						remote: "用户登录名已存在"
+					}
+				}
+			});
+			</c:if>
+			<c:if test="${not empty user.id}">
+			$("#inputForm").validate({
+				rules: {
+					attahBranch: {
+						checkAttahBranch: true
 					}
 				}
 			});

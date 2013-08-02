@@ -52,7 +52,7 @@
 
 	$(document).ready(function(){
 		$.ajax({
-			url: '${ctx}/material/attahTree',
+			url: '${ctx}/attach/attahTree',
 			method: 'POST',
 			success: function (response) {
 				if (response) {
