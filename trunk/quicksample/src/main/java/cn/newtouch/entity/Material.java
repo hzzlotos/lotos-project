@@ -17,9 +17,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Material extends IdEntity
 {
-    /**
-     * serialVersionUID long
-     */
     private static final long serialVersionUID = 1L;
 
     private String            fileName;
@@ -28,25 +25,19 @@ public class Material extends IdEntity
 
     private String            name;
 
-    private Attach            attach;
+    private Project           project;
 
     public Material()
     {
     }
 
-    public Material(String fileName, String filePath, String name, Attach attach)
+    public Material(String fileName, String filePath, String name,
+            Project project)
     {
         this.fileName = fileName;
         this.filePath = filePath;
         this.name = name;
-        this.attach = attach;
-    }
-
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "attach_id")
-    public Attach getAttach()
-    {
-        return attach;
+        this.project = project;
     }
 
     @Column(name = "file_name")
@@ -66,9 +57,11 @@ public class Material extends IdEntity
         return name;
     }
 
-    public void setAttach(Attach attach)
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id")
+    public Project getProject()
     {
-        this.attach = attach;
+        return project;
     }
 
     public void setFileName(String fileName)
@@ -84,6 +77,11 @@ public class Material extends IdEntity
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    public void setProject(Project project)
+    {
+        this.project = project;
     }
 
     @Override

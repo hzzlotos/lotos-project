@@ -23,8 +23,8 @@ import cn.newtouch.contants.AuthType;
 import cn.newtouch.contants.RoleType;
 import cn.newtouch.entity.Attach;
 import cn.newtouch.entity.User;
+import cn.newtouch.service.AttachService;
 import cn.newtouch.service.account.AccountService;
-import cn.newtouch.service.attach.AttachService;
 import cn.newtouch.vo.KeyValue;
 import cn.newtouch.web.BaseController;
 
@@ -103,17 +103,18 @@ public class ManagerController extends BaseController<User, Long>
         model.addAttribute("roleList", RoleType.ROLE_TYPE_LIST);
         model.addAttribute("authList", AuthType.AUTH_TYPE_LIST);
         model.addAttribute("attahAreaList", attachService.getAreaList());
-        if (user.getAttach().getType() == AttachType.TYPE_AREA)
-        {
-            model.addAttribute("attahBranch", null);
-            model.addAttribute("attahArea", user.getAttach().getId());
-            model.addAttribute(
-                    "attahBranchList",
-                    attachService.getBranchList(attachService.getAreaList()
-                            .get(0).getId()));
-        }
         try
         {
+            if (user.getAttach().getType() == AttachType.TYPE_AREA)
+            {
+                model.addAttribute("attahBranch", null);
+                model.addAttribute("attahArea", user.getAttach().getId());
+                model.addAttribute(
+                        "attahBranchList",
+                        attachService.getBranchList(attachService.getAreaList()
+                                .get(0).getId()));
+            }
+
             model.addAttribute("attahBranch", user.getAttach().getId());
             model.addAttribute("attahArea", user.getAttach().getParent()
                     .getId());
@@ -157,7 +158,7 @@ public class ManagerController extends BaseController<User, Long>
             RedirectAttributes redirectAttributes)
     {
         User user = accountService.get(id);
-        accountService.deleteUser(id);
+        accountService.delete(id);
         redirectAttributes.addFlashAttribute("message",
                 "删除用户" + user.getLoginName() + "成功");
         return "redirect:/manager";

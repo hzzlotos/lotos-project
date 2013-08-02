@@ -18,6 +18,8 @@ public abstract class BaseController<T, PK extends Serializable>
 
     protected abstract Class getEntityClass();
 
+    protected static final int PAGE_SIZE = 5;
+
     @ModelAttribute("preload")
     public T getEntity(@RequestParam(value = "id", required = false) PK id)
             throws Exception

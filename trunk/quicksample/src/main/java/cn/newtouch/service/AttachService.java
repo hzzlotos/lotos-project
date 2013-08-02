@@ -1,4 +1,4 @@
-package cn.newtouch.service.attach;
+package cn.newtouch.service;
 
 import java.util.List;
 import java.util.Map;
@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.newtouch.entity.Attach;
 import cn.newtouch.repository.AttachDao;
-import cn.newtouch.service.BaseService;
 import cn.newtouch.util.SearchFilter;
 
 import com.google.common.collect.Maps;

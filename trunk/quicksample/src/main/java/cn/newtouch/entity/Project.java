@@ -1,40 +1,32 @@
 package cn.newtouch.entity;
 
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.google.common.collect.Lists;
-
 @Entity
-@Table(name = "qs_attach")
+@Table(name = "qs_project")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Attach extends IdEntity
+public class Project extends IdEntity
 {
     private static final long serialVersionUID = 1L;
 
-    private List<Attach>      children         = Lists.newArrayList();
-
     private String            name;
 
-    private Attach            parent;
+    private Attach            attach;
 
-    private int               type;
-
-    @OneToMany(mappedBy = "parent")
-    public List<Attach> getChildren()
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "attach_id")
+    public Attach getAttach()
     {
-        return children;
+        return attach;
     }
 
     public String getName()
@@ -42,21 +34,9 @@ public class Attach extends IdEntity
         return name;
     }
 
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
-    public Attach getParent()
+    public void setAttach(Attach attach)
     {
-        return parent;
-    }
-
-    public int getType()
-    {
-        return type;
-    }
-
-    public void setChildren(List<Attach> children)
-    {
-        this.children = children;
+        this.attach = attach;
     }
 
     public void setName(String name)
@@ -64,24 +44,14 @@ public class Attach extends IdEntity
         this.name = name;
     }
 
-    public void setParent(Attach parent)
-    {
-        this.parent = parent;
-    }
-
-    public void setType(int type)
-    {
-        this.type = type;
-    }
-
     @Override
     public boolean equals(Object obj)
     {
-        if (obj == null || !(obj instanceof Attach))
+        if (obj == null || !(obj instanceof Project))
         {
             return false;
         }
-        Attach now = (Attach) obj;
+        Project now = (Project) obj;
         if (this.id.equals(now.getId()))
         {
             return true;

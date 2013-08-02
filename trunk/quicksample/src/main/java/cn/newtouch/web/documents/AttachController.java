@@ -1,5 +1,6 @@
-package cn.newtouch.web.attach;
+package cn.newtouch.web.documents;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletRequest;
@@ -7,6 +8,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,21 +21,28 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cn.newtouch.contants.AttachType;
+import cn.newtouch.contants.RoleType;
 import cn.newtouch.entity.Attach;
-import cn.newtouch.service.attach.AttachService;
+import cn.newtouch.entity.User;
+import cn.newtouch.service.AttachService;
+import cn.newtouch.service.account.AccountService;
 import cn.newtouch.util.SearchFilter;
 import cn.newtouch.util.web.Servlets;
+import cn.newtouch.vo.TreeNode;
 import cn.newtouch.web.BaseController;
+
+import com.google.common.collect.Lists;
 
 @Controller
 @RequestMapping(value = "/attach")
 public class AttachController extends BaseController<Attach, Long>
 {
 
-    private static final int PAGE_SIZE = 5;
+    @Autowired
+    private AttachService  attachService;
 
     @Autowired
-    private AttachService    attachService;
+    private AccountService accountService;
 
     @RequestMapping(value = "")
     public String list(@RequestParam(required = false) Long parentId,
@@ -86,7 +96,7 @@ public class AttachController extends BaseController<Attach, Long>
     }
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public String create(@Valid Attach newAttach,
+    public String create(@Valid @ModelAttribute("preload") Attach newAttach,
             @RequestParam(required = false) Long parentId,
             RedirectAttributes redirectAttributes)
     {
@@ -147,7 +157,7 @@ public class AttachController extends BaseController<Attach, Long>
     @RequestMapping(value = "checkName")
     @ResponseBody
     public String checkName(@RequestParam("name") String name,
-            @RequestParam("name") String oldName) throws Exception
+            @RequestParam("oldName") String oldName) throws Exception
     {
         name = new String(name.getBytes("ISO-8859-1"), "UTF-8");
         oldName = new String(oldName.getBytes("ISO-8859-1"), "UTF-8");
@@ -163,6 +173,65 @@ public class AttachController extends BaseController<Attach, Long>
         {
             return "false";
         }
+    }
+
+    @RequestMapping(value = "show")
+    public String list()
+    {
+        return "attach/attachShowList";
+    }
+
+    @RequestMapping(value = "attahTree")
+    @ResponseBody
+    public ResponseEntity<?> getAttahList()
+    {
+        List<TreeNode> tree = Lists.newArrayList();
+        User user = accountService.get(getCurrentUserId());
+        TreeNode tn = null;
+        Attach attach = null;
+        if (RoleType.ROLE_ADMIN == user.getRole())
+        {
+            tn = new TreeNode();
+            tn.setId("0");
+            tn.setName("总公司");
+            tree.add(tn);
+            List<Attach> attachs = attachService.getAll();
+            for (Attach temp : attachs)
+            {
+                tn = new TreeNode();
+                tn.setId(String.valueOf(temp.getId()));
+                tn.setName(temp.getName());
+                if (null == temp.getParent())
+                {
+                    tn.setpId("0");
+                }
+                else
+                {
+                    tn.setpId(String.valueOf(temp.getParent().getId()));
+                }
+                tree.add(tn);
+            }
+        }
+        else
+        {
+            tn = new TreeNode();
+            attach = user.getAttach();
+            tn.setId(String.valueOf(attach.getId()));
+            tn.setName(attach.getName());
+            tree.add(tn);
+            if (null != attach.getChildren() && !attach.getChildren().isEmpty())
+            {
+                for (Attach temp : attach.getChildren())
+                {
+                    tn = new TreeNode();
+                    tn.setId(String.valueOf(temp.getId()));
+                    tn.setName(temp.getName());
+                    tn.setpId(String.valueOf(temp.getParent().getId()));
+                    tree.add(tn);
+                }
+            }
+        }
+        return new ResponseEntity(tree, HttpStatus.OK);
     }
 
     @Override

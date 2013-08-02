@@ -46,7 +46,9 @@ import com.google.common.collect.Lists;
 public class ShiroDbRealm extends AuthorizingRealm
 {
 
-    protected AccountService accountService;
+    public static final String HASH_ALGORITHM = "SHA-1";
+
+    protected AccountService   accountService;
 
     /**
      * 认证回调函数,登录时调用.
@@ -93,7 +95,7 @@ public class ShiroDbRealm extends AuthorizingRealm
     public void initCredentialsMatcher()
     {
         HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(
-                AccountService.HASH_ALGORITHM);
+                HASH_ALGORITHM);
         matcher.setHashIterations(AccountService.HASH_INTERATIONS);
 
         setCredentialsMatcher(matcher);

@@ -1,8 +1,9 @@
 package cn.newtouch.service.account;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
-import org.hibernate.service.spi.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,6 @@ import cn.newtouch.repository.UserDao;
 import cn.newtouch.service.BaseService;
 import cn.newtouch.service.account.ShiroDbRealm.ShiroUser;
 import cn.newtouch.util.security.utils.Digests;
-import cn.newtouch.util.utils.DateProvider;
 import cn.newtouch.util.utils.Encodes;
 
 /**
@@ -28,18 +28,14 @@ import cn.newtouch.util.utils.Encodes;
 public class AccountService extends BaseService<User, Long>
 {
 
-    public static final String HASH_ALGORITHM   = "SHA-1";
+    public static final int  HASH_INTERATIONS = 1024;
 
-    public static final int    HASH_INTERATIONS = 1024;
+    private static final int SALT_SIZE        = 8;
 
-    private static final int   SALT_SIZE        = 8;
+    private static Logger    logger           = LoggerFactory
+                                                      .getLogger(AccountService.class);
 
-    private static Logger      logger           = LoggerFactory
-                                                        .getLogger(AccountService.class);
-
-    private UserDao            userDao;
-
-    private DateProvider       dateProvider     = DateProvider.DEFAULT;
+    private UserDao          userDao;
 
     public User findUserByLoginName(String loginName)
     {
@@ -50,8 +46,7 @@ public class AccountService extends BaseService<User, Long>
     public void registerUser(User user)
     {
         entryptPassword(user);
-        // user.setRoles("user");
-        user.setRegisterDate(dateProvider.getDate());
+        user.setRegisterDate(new Date());
 
         userDao.save(user);
     }
@@ -64,26 +59,6 @@ public class AccountService extends BaseService<User, Long>
             entryptPassword(user);
         }
         userDao.save(user);
-    }
-
-    @Transactional(readOnly = false)
-    public void deleteUser(Long id)
-    {
-        if (isSupervisor(id))
-        {
-            logger.warn("操作员{}尝试删除超级管理员用户", getCurrentUserName());
-            throw new ServiceException("不能删除超级管理员用户");
-        }
-        userDao.delete(id);
-
-    }
-
-    /**
-     * 判断是否超级管理员.
-     */
-    private boolean isSupervisor(Long id)
-    {
-        return id == 1;
     }
 
     /**
@@ -112,11 +87,6 @@ public class AccountService extends BaseService<User, Long>
     public void setUserDao(UserDao userDao)
     {
         this.userDao = userDao;
-    }
-
-    public void setDateProvider(DateProvider dateProvider)
-    {
-        this.dateProvider = dateProvider;
     }
 
     @Override

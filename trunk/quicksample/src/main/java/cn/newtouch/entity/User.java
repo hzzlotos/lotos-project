@@ -24,9 +24,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User extends IdEntity
 {
-    /**
-     * serialVersionUID long
-     */
     private static final long serialVersionUID = 1L;
 
     private Attach            attach;

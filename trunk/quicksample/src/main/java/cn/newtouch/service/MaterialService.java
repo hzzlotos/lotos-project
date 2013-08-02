@@ -1,4 +1,4 @@
-package cn.newtouch.service.attach;
+package cn.newtouch.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.newtouch.entity.Material;
 import cn.newtouch.repository.MaterialDao;
-import cn.newtouch.service.BaseService;
 
 @Component
 @Transactional(readOnly = true)
