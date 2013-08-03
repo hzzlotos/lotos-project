@@ -18,27 +18,20 @@ public class ProjectService extends BaseService<Project, Long>
     @Autowired
     private MaterialDao materialDao;
 
+    public Project findByName(String name)
+    {
+        return projectDao.findByName(name);
+    }
+
     @Override
     protected ProjectDao getEntityDao()
     {
         return projectDao;
     }
 
-    // @Override
-    // public void delete(Long id)
-    // {
-    // materialDao.deleteByProjectId(id);
-    // projectDao.delete(id);
-    // }
-
     @Override
     protected Class getEntityClass()
     {
         return Project.class;
-    }
-
-    public Project findByName(String name)
-    {
-        return projectDao.findByName(name);
     }
 }

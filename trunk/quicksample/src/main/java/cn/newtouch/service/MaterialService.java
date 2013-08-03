@@ -14,6 +14,11 @@ public class MaterialService extends BaseService<Material, Long>
     @Autowired
     private MaterialDao materialDao;
 
+    public Material findByName(String name)
+    {
+        return materialDao.findByName(name);
+    }
+
     @Override
     protected MaterialDao getEntityDao()
     {

@@ -105,20 +105,21 @@ public class ProjectController extends BaseController<Project, Long>
         return "project/projectForm";
     }
 
-    @RequestMapping(value = "update/{attachId}", method = RequestMethod.POST)
+    @RequestMapping(value = "update", method = RequestMethod.POST)
     public String update(@PathVariable("attachId") Long attachId,
             @Valid @ModelAttribute("preload") Project project,
             RedirectAttributes redirectAttributes)
     {
         projectService.save(project);
         redirectAttributes.addFlashAttribute("message", "更新项目成功");
-        return "redirect:/project/" + project.getAttach().getId();
+        return "redirect:/project/" + attachId;
     }
 
-    @RequestMapping(value = "delete/{attachId}/{id}")
-    public String delete(@PathVariable("attachId") Long attachId,
-            @PathVariable("id") Long id, RedirectAttributes redirectAttributes)
+    @RequestMapping(value = "delete/{id}")
+    public String delete(@PathVariable("id") Long id,
+            RedirectAttributes redirectAttributes)
     {
+        Long attachId = projectService.get(id).getAttach().getId();
         projectService.delete(id);
         redirectAttributes.addFlashAttribute("message", "删除项目成功");
         return "redirect:/project/" + attachId;

@@ -12,4 +12,6 @@ public interface MaterialDao extends BaseDao<Material, Long>
     @Query("delete from Material m where m.project.id = :projectId")
     public void deleteByProjectId(@Param("projectId") Long projectId);
 
+    public Material findByName(String name);
+
 }
