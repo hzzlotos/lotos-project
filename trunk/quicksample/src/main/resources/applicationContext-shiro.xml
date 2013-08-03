@@ -29,6 +29,8 @@
 				/api/** = anon
 				/fileupload/** = anon
 				/manager/** = roles[admin]<!-- anon --> 
+				/attach/show = authc
+				/attach/attahTree = authc
 				/attach/** = roles[admin]
 				<!--/material/** = authc-->
 				/** = authc
