@@ -16,7 +16,7 @@
 					<shiro:hasRole name="admin">
 						<li><a href="${ctx}/attach">区域管理</a></li>
 						<li><a href="${ctx}/manager">用户管理</a></li>
-						<li><a href="${ctx}/material">资源管理</a></li>
+						<li><a href="${ctx}/attach/show">资源管理</a></li>
 					</shiro:hasRole>
 					<li><a href="${ctx}/profile">修改资料</a></li>
 					<li><a href="${ctx}/logout">退出登录</a></li>

@@ -3,7 +3,8 @@
 	<excludes>
 		<pattern>/static/*</pattern>
 		<pattern>/api/*</pattern>
-		<pattern>/material/show/*</pattern>
+		<pattern>/material/*</pattern>
+		<pattern>/project/*</pattern>
 	</excludes>
 	
 	<decorator name="default" page="default.jsp">

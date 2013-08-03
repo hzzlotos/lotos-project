@@ -42,7 +42,7 @@
 						zTree.expandNode(treeNode);
 						return false;
 					} else {
-						demoIframe.attr("src","${ctx}/material/show/"+treeNode.id);
+						demoIframe.attr("src","${ctx}/project/"+treeNode.id);
 						return true;
 					}
 				}

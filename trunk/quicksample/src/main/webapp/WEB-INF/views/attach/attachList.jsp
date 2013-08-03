@@ -13,6 +13,9 @@
 		<div id="message" class="alert alert-success"><button data-dismiss="alert" class="close">×</button>${message}</div>
 	</c:if>
 	<div class="row">
+		<c:if test="${not empty parentId}">
+		<a class="btn" href="${ctx}/attach?parentId=${theParentId}">返回上级管理</a>
+		</c:if>
 		<div class="span4 offset7">
 			<form class="form-search" action="${ctx}/attach" method="post">
 				<label>名称：</label> <input type="text" name="search_LIKES_name" class="input-medium" value="${param.search_LIKES_name}">
@@ -20,7 +23,7 @@
 				<button type="submit" class="btn" id="search_btn">查找</button>
 		    </form>
 	    </div>
-	    <tags:sort/>
+	    <!--<tags:sort/>-->
 	</div>
 	<c:if test="${not empty parentId}">
 		<h4>【${parentName}】</h4>
@@ -40,9 +43,6 @@
 	
 	<tags:pagination page="${attachs}" paginationSize="5"/>
 	<div>
-	<c:if test="${not empty parentId}">
-		<a class="btn" href="${ctx}/attach?parentId=${theParentId}">返回上级管理</a>
-	</c:if>
 	<a class="btn" href="${ctx}/attach/create?parentId=${parentId}"">创建地区</a>
 	</div>
 </body>

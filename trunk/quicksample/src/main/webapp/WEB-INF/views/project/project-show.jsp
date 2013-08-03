@@ -8,13 +8,14 @@
 <link href="${ctx}/static/bootstrap/2.2.2/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
 <link href="${ctx}/static/styles/default.css" type="text/css" rel="stylesheet" />
 <script src="${ctx}/static/jquery/jquery-1.8.3.min.js" type="text/javascript"></script>
+<head>
+	<title>项目管理</title>
 </head>
 
 <body>
 	<div >
-	<a class="btn" href="${ctx}/project/${attachId}">返回</a>
 		<div class="span4 offset4">
-			<form class="form-search" action="${ctx}/material/show/${projectId}" method="post">
+			<form class="form-search" action="${ctx}/project/${attachId}" method="post">
 				<label>名称：</label> <input type="text" style="height: 30px" name="search_LIKES_name" class="input-medium" value="${param.search_LIKES_name}">
 				<button type="submit" class="btn" id="search_btn">查找</button>
 		    </form>
@@ -22,19 +23,17 @@
 	    <!--<tags:sort/>-->
 	</div>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
-		<thead><tr><th>资料</th><th>管理</th></tr></thead>
+		<thead><tr><th>项目</th><th>管理</th></tr></thead>
 		<tbody>
-		<c:forEach items="${materials.content}" var="material">
+		<c:forEach items="${projects.content}" var="project">
 			<tr>
-				<td>${material.name}</td>
-				<td><a onclick="">${material.fileName}</a></td>
+				<td>${project.name}</td>
+				<td><a href="${ctx}/material/show/${project.id}">查看资料</a></td>
 			</tr>
 		</c:forEach>
 		</tbody>
 	</table>
-	<div id="imgDialog" title="查看资源" style="display:none;">
-		<img width="500px" id="imgShow" src="">
-	</div>
-	<tags:pagination page="${materials}" paginationSize="5"/>
+	
+	<tags:pagination page="${projects}" paginationSize="5"/>
 </body>
 </html>
