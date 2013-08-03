@@ -11,13 +11,8 @@ import cn.newtouch.repository.MaterialDao;
 @Transactional(readOnly = true)
 public class MaterialService extends BaseService<Material, Long>
 {
-    private MaterialDao materialDao;
-
     @Autowired
-    public void setMaterialDao(MaterialDao materialDao)
-    {
-        this.materialDao = materialDao;
-    }
+    private MaterialDao materialDao;
 
     @Override
     protected MaterialDao getEntityDao()
@@ -30,5 +25,4 @@ public class MaterialService extends BaseService<Material, Long>
     {
         return Material.class;
     }
-
 }

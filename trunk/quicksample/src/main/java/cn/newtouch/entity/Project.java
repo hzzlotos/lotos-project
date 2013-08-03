@@ -1,15 +1,20 @@
 package cn.newtouch.entity;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import com.google.common.collect.Lists;
 
 @Entity
 @Table(name = "qs_project")
@@ -21,6 +26,19 @@ public class Project extends IdEntity
     private String            name;
 
     private Attach            attach;
+
+    private List<Material>    materials        = Lists.newArrayList();
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    public List<Material> getMaterials()
+    {
+        return materials;
+    }
+
+    public void setMaterials(List<Material> materials)
+    {
+        this.materials = materials;
+    }
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinColumn(name = "attach_id")

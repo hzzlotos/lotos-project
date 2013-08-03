@@ -21,8 +21,8 @@ import cn.newtouch.contants.Contants;
 import cn.newtouch.contants.RoleType;
 import cn.newtouch.entity.Material;
 import cn.newtouch.entity.User;
-import cn.newtouch.service.AttachService;
 import cn.newtouch.service.MaterialService;
+import cn.newtouch.service.ProjectService;
 import cn.newtouch.service.account.AccountService;
 import cn.newtouch.util.RequestUtils;
 import cn.newtouch.web.BaseController;
@@ -34,7 +34,7 @@ import com.google.common.collect.Maps;
 public class MaterialController extends BaseController<Material, Long>
 {
     @Autowired
-    private AttachService   attachService;
+    private ProjectService  projectService;
 
     @Autowired
     private AccountService  accountService;
@@ -46,8 +46,8 @@ public class MaterialController extends BaseController<Material, Long>
     @ResponseBody
     public Map<String, Object> save(@RequestParam("name") String name,
             @RequestParam("filePath") String filePath,
-            @RequestParam("attachId") Long attachId, HttpServletRequest request)
-            throws Exception
+            @RequestParam("projectId") Long projectId,
+            HttpServletRequest request) throws Exception
     {
         name = new String(name.getBytes("ISO-8859-1"), "UTF-8");
         File temp = new File(filePath);
@@ -59,7 +59,7 @@ public class MaterialController extends BaseController<Material, Long>
         // FileUtils.copyDirectory(file, temp);
         System.out.println("===================" + file.getAbsolutePath());
         Material material = new Material(file.getName(),
-                file.getAbsolutePath(), name, null);
+                file.getAbsolutePath(), name, projectService.get(projectId));
         materialService.save(material);
         Map<String, Object> result = Maps.newHashMap();
         result.put("id", material.getId());
@@ -68,17 +68,17 @@ public class MaterialController extends BaseController<Material, Long>
         return result;
     }
 
-    @RequestMapping(value = "delete")
+    @RequestMapping(value = "delete/{id}")
     @ResponseBody
-    public String delete(@RequestParam("id") Long id) throws Exception
+    public String delete(@PathVariable("id") Long id)
     {
         materialService.delete(id);
         return "true";
     }
 
-    @RequestMapping(value = "show/{attachId}", method = RequestMethod.GET)
+    @RequestMapping(value = "show/{attachId}/{projectId}", method = RequestMethod.GET)
     public String registerForm(@PathVariable("attachId") Long attachId,
-            Model model)
+            @PathVariable("projectId") Long projectId, Model model)
     {
         String result = "";
         User manager = accountService.get(getCurrentUserId());
@@ -98,8 +98,9 @@ public class MaterialController extends BaseController<Material, Long>
             }
         }
         model.addAttribute("attachId", attachId);
+        model.addAttribute("projectId", projectId);
         Map<String, Object> searchParams = Maps.newHashMap();
-        searchParams.put("EQL_attach.id", attachId);
+        searchParams.put("EQL_project.id", projectId);
         List<Material> materials = materialService.search(searchParams);
         model.addAttribute("materials", materials);
         return result;

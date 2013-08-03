@@ -1,11 +1,12 @@
 package cn.newtouch.web.documents;
 
-import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,9 +25,8 @@ import cn.newtouch.entity.User;
 import cn.newtouch.service.AttachService;
 import cn.newtouch.service.ProjectService;
 import cn.newtouch.service.account.AccountService;
+import cn.newtouch.util.web.Servlets;
 import cn.newtouch.web.BaseController;
-
-import com.google.common.collect.Maps;
 
 @Controller
 @RequestMapping(value = "/project")
@@ -42,7 +42,9 @@ public class ProjectController extends BaseController<Project, Long>
     private ProjectService projectService;
 
     @RequestMapping(value = "{attachId}")
-    public String list(@PathVariable("attachId") Long attachId, Model model)
+    public String list(@PathVariable("attachId") Long attachId,
+            @RequestParam(value = "page", defaultValue = "1") int pageNumber,
+            Model model, ServletRequest request)
     {
         String result = "";
         User manager = accountService.get(getCurrentUserId());
@@ -61,10 +63,12 @@ public class ProjectController extends BaseController<Project, Long>
                 result = "project/project-show";
             }
         }
+        Map<String, Object> searchParams = Servlets.getParametersStartingWith(
+                request, "search_");
         model.addAttribute("attachId", attachId);
-        Map<String, Object> searchParams = Maps.newHashMap();
         searchParams.put("EQL_attach.id", attachId);
-        List<Project> projects = projectService.search(searchParams);
+        Page<Project> projects = projectService.search(pageNumber, PAGE_SIZE,
+                searchParams);
         model.addAttribute("projects", projects);
         return result;
     }
@@ -87,7 +91,7 @@ public class ProjectController extends BaseController<Project, Long>
         Attach attach = attachService.get(attachId);
         newProject.setAttach(attach);
         projectService.save(newProject);
-        redirectAttributes.addFlashAttribute("message", "创建地区成功");
+        redirectAttributes.addFlashAttribute("message", "创建项目成功");
         return "redirect:/project/" + attachId;
     }
 
@@ -96,25 +100,49 @@ public class ProjectController extends BaseController<Project, Long>
     {
         Project project = projectService.get(id);
         model.addAttribute("project", project);
+        model.addAttribute("attachId", project.getAttach().getId());
         model.addAttribute("action", "update");
         return "project/projectForm";
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.POST)
-    public String update(@Valid @ModelAttribute("preload") Project project,
+    @RequestMapping(value = "update/{attachId}", method = RequestMethod.POST)
+    public String update(@PathVariable("attachId") Long attachId,
+            @Valid @ModelAttribute("preload") Project project,
             RedirectAttributes redirectAttributes)
     {
         projectService.save(project);
-        redirectAttributes.addFlashAttribute("message", "更新地区成功");
+        redirectAttributes.addFlashAttribute("message", "更新项目成功");
         return "redirect:/project/" + project.getAttach().getId();
     }
 
-    @RequestMapping(value = "delete")
-    @ResponseBody
-    public String delete(@RequestParam("id") Long id) throws Exception
+    @RequestMapping(value = "delete/{attachId}/{id}")
+    public String delete(@PathVariable("attachId") Long attachId,
+            @PathVariable("id") Long id, RedirectAttributes redirectAttributes)
     {
         projectService.delete(id);
-        return "true";
+        redirectAttributes.addFlashAttribute("message", "删除项目成功");
+        return "redirect:/project/" + attachId;
+    }
+
+    @RequestMapping(value = "checkName")
+    @ResponseBody
+    public String checkName(@RequestParam("name") String name,
+            @RequestParam("oldName") String oldName) throws Exception
+    {
+        name = new String(name.getBytes("ISO-8859-1"), "UTF-8");
+        oldName = new String(oldName.getBytes("ISO-8859-1"), "UTF-8");
+        if (name.equals(oldName))
+        {
+            return "true";
+        }
+        if (projectService.findByName(name) == null)
+        {
+            return "true";
+        }
+        else
+        {
+            return "false";
+        }
     }
 
     @Override

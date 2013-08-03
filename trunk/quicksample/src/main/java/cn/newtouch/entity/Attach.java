@@ -31,7 +31,33 @@ public class Attach extends IdEntity
 
     private int               type;
 
-    @OneToMany(mappedBy = "parent")
+    private List<Project>     projects         = Lists.newArrayList();
+
+    private List<User>        users            = Lists.newArrayList();
+
+    @OneToMany(mappedBy = "attach", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    public List<User> getUsers()
+    {
+        return users;
+    }
+
+    public void setUsers(List<User> users)
+    {
+        this.users = users;
+    }
+
+    @OneToMany(mappedBy = "attach", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    public List<Project> getProjects()
+    {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects)
+    {
+        this.projects = projects;
+    }
+
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     public List<Attach> getChildren()
     {
         return children;

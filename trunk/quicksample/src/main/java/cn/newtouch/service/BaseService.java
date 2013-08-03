@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
+
 import cn.newtouch.repository.BaseDao;
 import cn.newtouch.util.DynamicSpecifications;
 import cn.newtouch.util.SearchFilter;
@@ -183,8 +184,8 @@ public abstract class BaseService<T, PK extends Serializable>
     public Specification<T> buildSpecification(Map<String, Object> searchParams)
     {
         Map<String, SearchFilter> filters = SearchFilter.parse(searchParams);
-        Specification<T> spec = DynamicSpecifications.bySearchFilter(filters
-                .values(), getEntityClass());
+        Specification<T> spec = DynamicSpecifications.bySearchFilter(
+                filters.values(), getEntityClass());
         return spec;
     }
 
@@ -198,8 +199,8 @@ public abstract class BaseService<T, PK extends Serializable>
         Map<String, SearchFilter> filters = Maps.newHashMap();
         filters.put(propertyName, new SearchFilter(propertyName,
                 SearchFilter.Operator.EQ, newValue));
-        Specification<T> spec = DynamicSpecifications.bySearchFilter(filters
-                .values(), getEntityClass());
+        Specification<T> spec = DynamicSpecifications.bySearchFilter(
+                filters.values(), getEntityClass());
         Object object = getEntityDao().findOne(spec);
         return (object == null);
     }
@@ -214,8 +215,8 @@ public abstract class BaseService<T, PK extends Serializable>
         Map<String, SearchFilter> filters = SearchFilter.parse(searchParams);
         filters.put(propertyName, new SearchFilter(propertyName,
                 SearchFilter.Operator.EQ, newValue));
-        Specification<T> spec = DynamicSpecifications.bySearchFilter(filters
-                .values(), getEntityClass());
+        Specification<T> spec = DynamicSpecifications.bySearchFilter(
+                filters.values(), getEntityClass());
         Object object = getEntityDao().findOne(spec);
         return (object == null);
     }

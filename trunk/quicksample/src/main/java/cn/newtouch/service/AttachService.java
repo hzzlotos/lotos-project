@@ -17,6 +17,7 @@ import com.google.common.collect.Maps;
 @Transactional(readOnly = true)
 public class AttachService extends BaseService<Attach, Long>
 {
+    @Autowired
     private AttachDao attachDao;
 
     public List<Attach> getAreaList()
@@ -36,12 +37,6 @@ public class AttachService extends BaseService<Attach, Long>
     public Attach findByName(String name)
     {
         return attachDao.findByName(name);
-    }
-
-    @Autowired
-    public void setAttachDao(AttachDao attachDao)
-    {
-        this.attachDao = attachDao;
     }
 
     @Override
