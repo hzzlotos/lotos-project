@@ -23,7 +23,6 @@ public class DynamicSpecifications
             final Collection<SearchFilter> filters, final Class<T> clazz)
     {
         return new Specification<T>() {
-            @Override
             public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query,
                     CriteriaBuilder builder)
             {
