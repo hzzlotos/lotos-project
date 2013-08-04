@@ -47,7 +47,7 @@ public class ProjectController extends BaseController<Project, Long>
             Model model, ServletRequest request)
     {
         String result = "";
-        User manager = accountService.get(getCurrentUserId());
+        User manager = this.accountService.get(this.getCurrentUserId());
         if (manager.getRole() == RoleType.ROLE_ADMIN)
         {
             result = "project/project-manage";
@@ -67,8 +67,8 @@ public class ProjectController extends BaseController<Project, Long>
                 request, "search_");
         model.addAttribute("attachId", attachId);
         searchParams.put("EQL_attach.id", attachId);
-        Page<Project> projects = projectService.search(pageNumber, PAGE_SIZE,
-                searchParams);
+        Page<Project> projects = this.projectService.search(pageNumber,
+                PAGE_SIZE, searchParams);
         model.addAttribute("projects", projects);
         return result;
     }
@@ -88,9 +88,9 @@ public class ProjectController extends BaseController<Project, Long>
             @Valid @ModelAttribute("preload") Project newProject,
             RedirectAttributes redirectAttributes)
     {
-        Attach attach = attachService.get(attachId);
+        Attach attach = this.attachService.get(attachId);
         newProject.setAttach(attach);
-        projectService.save(newProject);
+        this.projectService.save(newProject);
         redirectAttributes.addFlashAttribute("message", "创建项目成功");
         return "redirect:/project/" + attachId;
     }
@@ -98,19 +98,19 @@ public class ProjectController extends BaseController<Project, Long>
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String updateForm(@PathVariable("id") Long id, Model model)
     {
-        Project project = projectService.get(id);
+        Project project = this.projectService.get(id);
         model.addAttribute("project", project);
         model.addAttribute("attachId", project.getAttach().getId());
         model.addAttribute("action", "update");
         return "project/projectForm";
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.POST)
+    @RequestMapping(value = "update/{attachId}", method = RequestMethod.POST)
     public String update(@PathVariable("attachId") Long attachId,
             @Valid @ModelAttribute("preload") Project project,
             RedirectAttributes redirectAttributes)
     {
-        projectService.save(project);
+        this.projectService.save(project);
         redirectAttributes.addFlashAttribute("message", "更新项目成功");
         return "redirect:/project/" + attachId;
     }
@@ -119,8 +119,8 @@ public class ProjectController extends BaseController<Project, Long>
     public String delete(@PathVariable("id") Long id,
             RedirectAttributes redirectAttributes)
     {
-        Long attachId = projectService.get(id).getAttach().getId();
-        projectService.delete(id);
+        Long attachId = this.projectService.get(id).getAttach().getId();
+        this.projectService.delete(id);
         redirectAttributes.addFlashAttribute("message", "删除项目成功");
         return "redirect:/project/" + attachId;
     }
@@ -136,7 +136,7 @@ public class ProjectController extends BaseController<Project, Long>
         {
             return "true";
         }
-        if (projectService.findByName(name) == null)
+        if (this.projectService.findByName(name) == null)
         {
             return "true";
         }
@@ -155,6 +155,6 @@ public class ProjectController extends BaseController<Project, Long>
     @Override
     protected ProjectService getEntityService()
     {
-        return projectService;
+        return this.projectService;
     }
 }
