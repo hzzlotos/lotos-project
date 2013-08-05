@@ -31,7 +31,6 @@ public class UserDetailsServiceImpl implements UserDetailsService
     /**
      * 获取用户Details信息的回调函数.
      */
-    @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException, DataAccessException
     {

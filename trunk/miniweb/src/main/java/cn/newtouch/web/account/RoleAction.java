@@ -39,7 +39,6 @@ public class RoleAction extends CrudActionSupport<Role>
     private List<Long>        checkedAuthIds;                          // 页面中钩选的权限id列表
 
     // -- ModelDriven 与 Preparable函数 --//
-    @Override
     public Role getModel()
     {
         return this.entity;

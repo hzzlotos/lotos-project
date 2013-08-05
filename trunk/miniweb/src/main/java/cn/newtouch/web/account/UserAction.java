@@ -53,7 +53,6 @@ public class UserAction extends CrudActionSupport<User>
         this.id = id;
     }
 
-    @Override
     public User getModel()
     {
         return this.entity;
