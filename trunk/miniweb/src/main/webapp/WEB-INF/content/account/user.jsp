@@ -19,6 +19,7 @@
 <div id="bd">
 	<div id="yui-main">
 	<div class="yui-b">
+	<a href="${ctx}/ws/userservice?wsdl">查看userservice服务的WADL</a>
 	<form id="mainForm" action="user.action" method="get">
 		<input type="hidden" name="page.pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="page.orderBy" id="orderBy" value="${page.orderBy}"/>

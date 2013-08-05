@@ -2,6 +2,7 @@ package cn.newtouch.service.account;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,47 @@ public class AccountManager
     private RoleDao       roleDao;
 
     private AuthorityDao  authorityDao;
+
+    /**
+     * 获取全部用户, 并对用户的延迟加载关联进行初始化.
+     */
+    @Transactional(readOnly = true)
+    public List<User> getAllInitedUser()
+    {
+        List<User> userList = this.userDao.getAll("id", true);
+        for (User user : userList)
+        {
+            this.userDao.initUser(user);
+        }
+        return userList;
+    }
+
+    /**
+     * 获取用户, 并对用户的延迟加载关联进行初始化.
+     */
+    @Transactional(readOnly = true)
+    public User getInitedUser(Long id)
+    {
+        User user = this.userDao.get(id);
+        this.userDao.initUser(user);
+        return user;
+    }
+
+    /**
+     * 验证用户名密码.
+     * 
+     * @return 验证通过时返回true.用户名或密码错误时返回false.
+     */
+    @Transactional(readOnly = true)
+    public boolean authenticate(String loginName, String password)
+    {
+        if (StringUtils.isBlank(loginName) || StringUtils.isBlank(password))
+        {
+            return false;
+        }
+
+        return (this.userDao.countUserByLoginNamePassword(loginName, password) == 1);
+    }
 
     // -- User Manager --//
     @Transactional(readOnly = true)
@@ -148,5 +190,11 @@ public class AccountManager
     public void setAuthorityDao(AuthorityDao authorityDao)
     {
         this.authorityDao = authorityDao;
+    }
+
+    public String testStr(String str)
+    {
+        logger.debug("=======|||=======" + str + "=========\\\\\\=======");
+        return this.getClass().toString();
     }
 }
