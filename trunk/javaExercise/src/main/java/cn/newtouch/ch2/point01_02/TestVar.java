@@ -1,4 +1,4 @@
-package cn.newtouch.ch2.point01_2;
+package cn.newtouch.ch2.point01_02;
 
 public class TestVar
 {
@@ -20,11 +20,13 @@ public class TestVar
         if (b)
         {
             int c = 0;
+            System.out.println(c);
             System.out.println("b is true");
         }
 
-        // System.out.println(c);
+        // System.out.println(c); 报错
 
         long longNum1 = 8888888888888L;
+        System.out.println(longNum1);
     }
 }

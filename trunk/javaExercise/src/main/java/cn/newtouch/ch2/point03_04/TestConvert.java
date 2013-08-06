@@ -1,4 +1,4 @@
-﻿package cn.newtouch.ch2.point03_4;
+﻿package cn.newtouch.ch2.point03_04;
 
 public class TestConvert
 {
@@ -8,6 +8,7 @@ public class TestConvert
         int i2 = 456;
         double d1 = (i1 + i2) * 1.2;// 系统将转换为double型运算
         float f1 = (float) ((i1 + i2) * 1.2);// 需要加强制转换符
+        System.out.println(d1 + " " + f1);
         byte b1 = 67;
         byte b2 = 89;
         byte b3 = (byte) (b1 + b2);// 系统将转换为int型运算，需
@@ -21,7 +22,6 @@ public class TestConvert
         long l1 = 123;
         long l2 = 30000000000L;// 必须加l
         float f = l1 + l2 + f3;// 系统将转换为float型计算
-        long l = (long) f;// 强制转换会舍去小数部分（不是四舍五入）
-
+        System.out.println(f);
     }
 }

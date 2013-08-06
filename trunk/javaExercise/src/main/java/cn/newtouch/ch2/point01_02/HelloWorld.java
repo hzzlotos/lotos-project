@@ -1,4 +1,4 @@
-package cn.newtouch.ch2.point01_2;
+package cn.newtouch.ch2.point01_02;
 
 public class HelloWorld
 {
@@ -13,6 +13,7 @@ public class HelloWorld
         System.out.println(123);
         System.out.println(j);
         int i = 8;
+        System.out.println(i);
     }
 
     public static void m()

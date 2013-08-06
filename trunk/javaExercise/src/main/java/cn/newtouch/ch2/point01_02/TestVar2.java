@@ -1,4 +1,4 @@
-package cn.newtouch.ch2.point01_2;
+package cn.newtouch.ch2.point01_02;
 
 public class TestVar2
 {
