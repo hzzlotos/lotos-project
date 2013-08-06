@@ -2,6 +2,7 @@ package cn.newtouch.web;
 
 import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import cn.newtouch.util.utils.web.struts2.Struts2Utils;
 import cn.newtouch.ws.UserWebService;
@@ -14,6 +15,8 @@ public class WebServiceClientAction extends ActionSupport
 
     private static final long serialVersionUID = 1L;
 
+    @Autowired
+    @Qualifier("theUserWebService")
     UserWebService            userWebServiceClient;
 
     @Override
@@ -22,11 +25,5 @@ public class WebServiceClientAction extends ActionSupport
         System.out.println(this.userWebServiceClient.testStr("hehe"));
         Struts2Utils.renderText("true");
         return null;
-    }
-
-    @Autowired
-    public void setUserWebServiceClient(UserWebService userWebServiceClient)
-    {
-        this.userWebServiceClient = userWebServiceClient;
     }
 }

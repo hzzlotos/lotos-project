@@ -14,7 +14,7 @@ import cn.newtouch.ws.dto.UserDTO;
  * 
  * @author calvin
  */
-@XmlType(name = "GetAllUserResult", namespace = WsConstants.NS)
+@XmlType(name = "GetAllUserResult")
 public class GetAllUserResult extends WSResult {
 
 	private List<UserDTO> userList;

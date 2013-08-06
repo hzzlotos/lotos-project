@@ -9,7 +9,7 @@ import cn.newtouch.ws.WsConstants;
  * 
  * @author calvin
  */
-@XmlType(name = "AuthUserResult", namespace = WsConstants.NS)
+@XmlType(name = "AuthUserResult")
 public class AuthUserResult extends WSResult {
 
 	private boolean valid;

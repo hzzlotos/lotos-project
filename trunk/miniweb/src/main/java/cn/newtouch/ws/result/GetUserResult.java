@@ -10,7 +10,7 @@ import cn.newtouch.ws.dto.UserDTO;
  * 
  * @author calvin
  */
-@XmlType(name = "GetUserResult", namespace = WsConstants.NS)
+@XmlType(name = "GetUserResult")
 public class GetUserResult extends WSResult {
 
 	private UserDTO user;

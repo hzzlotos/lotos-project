@@ -20,6 +20,7 @@
 	<div id="yui-main">
 	<div class="yui-b">
 	<a href="${ctx}/ws/userservice?wsdl">查看userservice服务的WADL</a>
+	<a href="${ctx}/web-service-client.action">测试userservice服务</a>
 	<form id="mainForm" action="user.action" method="get">
 		<input type="hidden" name="page.pageNo" id="pageNo" value="${page.pageNo}"/>
 		<input type="hidden" name="page.orderBy" id="orderBy" value="${page.orderBy}"/>
@@ -50,17 +51,16 @@
 						<td>${email}&nbsp;</td>
 						<td>${roleNames}&nbsp;</td>
 						<td>&nbsp;
-						
-							<%-- <security:authorize ifAnyGranted="ROLE_浏览用户">
+							<security:authorize ifAnyGranted="ROLE_浏览用户">
 								<security:authorize ifNotGranted="ROLE_修改用户">
-								--%>	<a href="user!input.action?id=${id}">查看</a>&nbsp;
-								<%-- </security:authorize>
+									<a href="user!input.action?id=${id}">查看</a>&nbsp;
+								</security:authorize>
 							</security:authorize>
 
 							<security:authorize ifAnyGranted="ROLE_修改用户">
-							--%>	<a href="user!input.action?id=${id}">修改</a>&nbsp;
+								<a href="user!input.action?id=${id}">修改</a>&nbsp;
 								<a href="user!delete.action?id=${id}">删除</a>
-							<%-- </security:authorize>--%>	
+							</security:authorize>
 						</td>
 					</tr>
 				</s:iterator>

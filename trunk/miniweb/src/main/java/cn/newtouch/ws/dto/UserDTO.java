@@ -18,7 +18,7 @@ import com.google.common.collect.Lists;
  * 
  * @author calvin
  */
-@XmlType(name = "User", namespace = WsConstants.NS)
+@XmlType(name = "User")
 public class UserDTO {
 
 	private Long id;

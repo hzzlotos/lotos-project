@@ -46,11 +46,9 @@
 			</tr>
 			<tr>
 				<td colspan="2">
-					<%--
-					<security:authorize ifAnyGranted="ROLE_修改角色">--%>
+					<security:authorize ifAnyGranted="ROLE_修改角色">
 						<input class="button" type="submit" value="提交"/>&nbsp;
-					<%--</security:authorize>
-					--%>
+					</security:authorize>
 					<input class="button" type="button" value="返回" onclick="history.back()"/>
 				</td>
 			</tr>

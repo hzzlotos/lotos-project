@@ -9,7 +9,7 @@ import cn.newtouch.ws.WsConstants;
  * 
  * @author calvin
  */
-@XmlType(name = "WSResult", namespace = WsConstants.NS)
+@XmlType(name = "WSResult")
 public class WSResult {
 
 	//-- 返回代码定义 --//

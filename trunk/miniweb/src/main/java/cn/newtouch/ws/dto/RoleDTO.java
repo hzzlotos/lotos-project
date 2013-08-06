@@ -12,7 +12,7 @@ import cn.newtouch.ws.WsConstants;
  *
  * @author calvin
  */
-@XmlType(name = "Role", namespace = WsConstants.NS)
+@XmlType(name = "Role")
 public class RoleDTO {
 
 	private Long id;

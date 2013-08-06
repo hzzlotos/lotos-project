@@ -34,20 +34,16 @@
 					<td>${name}</td>
 					<td>${authNames}</td>
 					<td>&nbsp;
-						<%--
 						<security:authorize ifAnyGranted="ROLE_浏览角色">
-							<security:authorize ifNotGranted="ROLE_修改角色">
-							 --%>
-								<a href="role!input.action?id=${id}">查看</a>&nbsp;
-								<%--
-							</security:authorize>
+						<security:authorize ifNotGranted="ROLE_修改角色">
+							<a href="role!input.action?id=${id}">查看</a>&nbsp;
+						</security:authorize>
 						</security:authorize>
 
 						<security:authorize ifAnyGranted="ROLE_修改角色">
-						--%>
 							<a href="role!input.action?id=${id}" id="editLink-${name}">修改</a>&nbsp;
 							<a href="role!delete.action?id=${id}" id="deleteLink-${name}">删除</a>
-						<%-- </security:authorize> --%>
+						</security:authorize>
 					</td>
 				</tr>
 			</s:iterator>

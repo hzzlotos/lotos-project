@@ -9,7 +9,7 @@ import cn.newtouch.ws.WsConstants;
  * 
  * @author calvin
  */
-@XmlType(name = "CreateUserResult", namespace = WsConstants.NS)
+@XmlType(name = "CreateUserResult")
 public class CreateUserResult extends WSResult {
 
 	private Long userId;
