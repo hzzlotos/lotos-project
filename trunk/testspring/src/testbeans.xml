@@ -1,7 +1,0 @@
-<beans>
-	<bean id="u" class="cn.newtouch.spring.UserDAOImpl" />
-	<bean id="userService" class="cn.newtouch.spring.UserService" >
-		<property name="userDAO" bean="u"/>
-	</bean>
-	
-</beans>
