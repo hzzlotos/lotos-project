@@ -6,7 +6,6 @@
 	<artifactId>quicksample</artifactId>
 	<version>1.0</version>
 	<packaging>war</packaging>
-	<name>Newtouch :: QuickSample</name>
 
 	<properties>
 		<!-- 主要依赖库的版本定义 -->

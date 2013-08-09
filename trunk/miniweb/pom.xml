@@ -6,7 +6,6 @@
 	<artifactId>miniweb</artifactId>
 	<version>1.0</version>
 	<packaging>war</packaging>
-	<name>Newtouch :: MiniWeb</name>
 
 	<properties>
 		<!-- 主要依赖库的版本定义 -->
