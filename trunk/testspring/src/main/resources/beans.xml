@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="u" class="cn.newtouch.dao.impl.UserDAOImpl">
+	</bean>
+	
+	<bean id="us" class="cn.newtouch.service.UserService">
+		<property name="userDAO" ref="u" />
+	</bean>
+
+		<!-- aaa
+	<bean id="userService" class="cn.newtouch.service.UserService">
+		//使用构造方法注入 
+		<constructor-arg>
+			<ref bean="u"/>
+			//初始化的时候去new新的bean而不是调用容器里的bean
+			<bean class="aaa.bbb.xyz"/>
+			 
+		</constructor-arg>
+		// 使用索引
+		<constructor-arg index="0" value="1234"/>
+		 
+		 // 使用类型
+		<constructor-arg type="int" value="1234"/>
+		 
+	</bean>
+	
+	// 参数为基础类型时 
+	<bean name="userDAO1" class="cn.newtouch.dao.impl.UserDAOImpl">
+	  	<property name="daoId" value="8"></property>
+	  	<property name="daoStatus" value="good"></property>
+	</bean>
+
+	 // 表示每次使用都是new一个新的对象 
+	<bean id="userService2" class="cn.newtouch.service.UserService" scope="prototype">
+	</bean>
+	// 注入list 
+	<bean name="userDAO3" class="cn.newtouch.dao.impl.UserDAOImpl">
+	  	<property name="sets">
+	  		<set>
+	  			<value>1</value>
+	  			<value>2</value>
+	  		</set>
+	  	</property>
+	  	<property name="lists">
+	  		<list>
+	  			<value>1</value>
+	  			<value>2</value>
+	  			<value>3</value>
+	  		</list>
+	  	</property>
+	  	<property name="maps">
+	  		<map>
+	  			<entry key="1" value="1"></entry>
+	  			<entry key="2" value="2"></entry>
+	  			<entry key="3" value="3"></entry>
+	  			<entry key="4" value="4"></entry>
+	  		</map>
+	  	</property>
+	</bean>
+	//初始化时调用init方法 关闭时调用destroy方法, 两者不适合与scope="prototype"方法共同使用
+	<bean id="userService" class="com.bjsxt.service.UserService" init-method="init" destroy-method="destroy" scope="prototype">
+  	<property name="userDAO" ref="u" />  	 
+  	</bean>
+    -->
+</beans>
