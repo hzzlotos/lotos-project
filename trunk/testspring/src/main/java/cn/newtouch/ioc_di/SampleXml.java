@@ -1,9 +1,10 @@
 package cn.newtouch.ioc_di;
+
 import java.util.List;
 
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.input.SAXBuilder;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.input.SAXBuilder;
 
 public class SampleXml
 {
@@ -11,8 +12,7 @@ public class SampleXml
     {
         SAXBuilder sb = new SAXBuilder();
         // 读取文件
-        Document doc = sb.build(SampleXml.class.getClassLoader()
-                .getResourceAsStream("beans.xml")); // �����ĵ�����
+        Document doc = sb.build(SampleXml.class.getClassLoader().getResourceAsStream("beans.xml")); // �����ĵ�����
         Element root = doc.getRootElement(); // ��ȡ��Ԫ��HD
         List list = root.getChildren("bean");// ȡ����Ϊdisk������Ԫ��
         for (int i = 0; i < list.size(); i++)

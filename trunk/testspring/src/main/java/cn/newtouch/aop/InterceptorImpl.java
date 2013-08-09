@@ -19,12 +19,10 @@ public class InterceptorImpl implements InvocationHandler
         System.out.println(m.getName() + " start");
     }
 
-    @Override
-    public Object invoke(Object proxy, Method m, Object[] args)
-            throws Throwable
+    public Object invoke(Object proxy, Method m, Object[] args) throws Throwable
     {
-        beforeMethod(m);
-        m.invoke(target, args);
+        this.beforeMethod(m);
+        m.invoke(this.target, args);
         return null;
     }
 }
