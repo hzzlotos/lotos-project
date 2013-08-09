@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<!-- 
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="false" />
+ 	-->
+ 	<!-- 开发模式 修改配置文件可以不用重启 
+ 	<constant name="struts.devMode" value="true" />
+ 	-->
+ 	<constant name="struts.i18n.encoding" value="GBK" /> <!-- internationalization -->
+ 	<!-- 可以访问静态常量/方法 -->
+ 	<constant name="struts.ognl.allowStaticMethodAccess" value="true"></constant>
+ 	
+ 	
+ 	<!--
+ 	<include file="/cn/newtouch/struts2/ognl/ognl.xml"/>
+ 	-->
+ 	<package name="default" namespace="/" extends="struts-default">
+    	<!--<default-action-ref name="index" />  是在这个nameSpace下的才有作用-->
+    	
+    	<!-- 默认返回值 -->
+    	<global-results>
+			<result name="mainpage">/main.jsp</result>
+		</global-results>
+   	
+    	<action name="index">
+    		<result>/default.jsp</result>
+    	</action>
+    	<action name="hello">
+            <result>/Hello.jsp</result>
+        </action>
+    </package>
+    
+    <package name="tags" extends="default">
+
+        <action name="tags" class="cn.newtouch.struts2.tags.TagsAction">
+            <result>/tags/tags.jsp</result>
+        </action>
+    </package>
+    
+    <package name="ognl" extends="default">
+
+        <action name="ognl" class="cn.newtouch.struts2.ognl.OgnlAction">
+            <result>/ognl/ognl.jsp</result>
+        </action>
+        <action name="test" class="cn.newtouch.struts2.ognl.TestAction">
+            <result type="chain">/ognl/ognl</result>
+        </action>
+
+    </package>
+ 	
+ 	<package name="user" extends="default" namespace="/user">
+        <action name="useradd" class="cn.newtouch.struts2.user.action.UserAction" method="add">
+            <result>/user/user_add_success.jsp</result>
+        </action>
+        
+        <action name="user" class="cn.newtouch.struts2.user.action.UserAction">
+            <result type="redirect">/user/user_add_success.jsp?t=${type}</result>
+            <result name="error">/user/user_error.jsp</result>
+        </action>
+    </package>
+ 	
+ 	<package name="path" extends="default" namespace="/path">
+        <action name="path" class="cn.newtouch.struts2.path.action.PathAction">
+            <result name="path">/path/path.jsp</result>
+        </action>
+    </package>
+ 	
+    <package name="front" extends="struts-default" namespace="/front">
+        <action name="index" class="cn.newtouch.struts2.front.action.IndexAction1">
+            <result name="success">/front/actionIntroduction.jsp</result>
+        </action>
+        <action name="hello">
+            <result name="success">/front/frontHello.jsp</result>
+        </action>
+    </package>
+    
+    <package name="back" namespace="/back" extends="struts-default">
+        <action name="hello">
+            <result>/back/backHello.jsp</result>
+        </action>
+    </package>
+    <include file="login.xml" />
+</struts>
