@@ -3,12 +3,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cn.newtouch</groupId>
-	<artifactId>testspring</artifactId>
+	<artifactId>testhibernate</artifactId>
 	<version>1.0</version>
 
 	<properties>
-		<!-- 主要依赖库的版本定义 -->
-		<hibernate.version>3.5.5-Final</hibernate.version>
+		<!-- 主要依赖库的版本定义
+		<hibernate.version>3.0.5-Final</hibernate.version>
+		-->
+		<jdbc.driver.groupId>mysql</jdbc.driver.groupId>
+		<jdbc.driver.artifactId>mysql-connector-java</jdbc.driver.artifactId>
+		<jdbc.driver.version>5.1.21</jdbc.driver.version>
 	</properties>
 	
 	<repositories>
@@ -47,23 +51,36 @@
 		<!-- hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>${hibernate.version}</version>
+			<artifactId>hibernate</artifactId>
+			<version>3.2.5.ga</version>
+			<exclusions>  
+				<exclusion>  
+					<groupId>javax.transaction</groupId>
+					<artifactId>jta</artifactId>
+				</exclusion>  
+    		</exclusions>  
+		</dependency>
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<version>1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-annotations</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-ehcache</artifactId>
-			<version>${hibernate.version}</version>
+			<version>3.2.0.ga</version>
 		</dependency>
 		<dependency>
 			<groupId>javassist</groupId>
 			<artifactId>javassist</artifactId>
-			<version>3.12.1.GA</version>
+			<version>3.9.0.GA</version>
+		</dependency>
+		<!-- jdbc driver -->
+		<dependency>
+			<groupId>${jdbc.driver.groupId}</groupId>
+			<artifactId>${jdbc.driver.artifactId}</artifactId>
+			<version>${jdbc.driver.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 		<!-- test begin -->
 		<dependency>
