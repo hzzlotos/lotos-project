@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+		<session-factory>
+		<!-- 各属性的配置-->
+		<!--为true表示将Hibernate发送给数据库的sql显示出来 -->
+		<property name="show_sql">true</property>
+		<property name="format_sql">true</property>
+		<!-- SQL方言，这边设定的是MySQL -->
+		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+		<!-- 一次读的数据库记录数 -->
+		<property name="jdbc.fetch_size">50</property>
+		<!-- 设定对数据库进行批量删除 -->
+		<property name="jdbc.batch_size">30</property>
+		<!--驱动程序-->
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<!-- sessionFactory.getCurrentSession()配置必须项 -->
+		<property name="current_session_context_class">thread</property>
+		<!-- JDBC URL -->
+		<property name="connection.url">jdbc:mysql://localhost:3306/testhibernate?useUnicode=true&amp;characterEncoding=utf-8</property>
+		<!-- 数据库用户名-->
+		<property name="connection.username">root</property>
+		<!-- 数据库密码-->
+		<property name="connection.password"></property>
+		<!-- create 
+		<property name="hbm2ddl.auto">update</property>
+		-->
+		<!-- 启用Hibernate的自动会话上下文管理 -->
+        <property name="current_session_context_class">thread</property>
+        
+        <property name="cache.use_second_level_cache">true</property>
+		<property name="cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
+		<property name="cache.use_query_cache">true</property>
+		<!-- 映射文件 
+		<mapping resource="cn/newtouch/model/Studentt.hbm.xml"/>
+		<mapping class="cn.newtouch.model.Teacherr"/>
+		<mapping resource="cn/newtouch/model/Student.hbm.xml"/>
+		<mapping class="cn.newtouch.model.Teacher"/>
+		<mapping class="cn.newtouch.model.Husband"/>
+		<mapping class="cn.newtouch.model.Wife"/>
+		<mapping resource="cn/newtouch/model/StuIdCard.hbm.xml"/>
+		<mapping class="cn.newtouch.model.User"/>
+		<mapping class="cn.newtouch.model.Group"/>
+		-->
+		<mapping class="cn.newtouch.model.hint.singleTable.Student"/>
+        <mapping class="cn.newtouch.model.hint.singleTable.Teacher"/>
+        
+        <mapping class="cn.newtouch.model.HQL.Category"/>
+		<mapping class="cn.newtouch.model.HQL.Msg"/>
+		<mapping class="cn.newtouch.model.HQL.Topic"/>
+		<mapping class="cn.newtouch.model.lock.Account"/>
+    </session-factory>
+</hibernate-configuration>
