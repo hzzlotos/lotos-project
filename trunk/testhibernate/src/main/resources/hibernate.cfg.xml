@@ -19,11 +19,11 @@
 		<!-- sessionFactory.getCurrentSession()配置必须项 -->
 		<property name="current_session_context_class">thread</property>
 		<!-- JDBC URL -->
-		<property name="connection.url">jdbc:mysql://localhost:3306/exercise?useUnicode=true&amp;characterEncoding=utf-8</property>
+		<property name="connection.url">jdbc:mysql://localhost:3306/testhibernate?useUnicode=true&amp;characterEncoding=utf-8</property>
 		<!-- 数据库用户名-->
 		<property name="connection.username">root</property>
 		<!-- 数据库密码-->
-		<property name="connection.password">lotos</property>
+		<property name="connection.password"></property>
 		<!-- create 
 		<property name="hbm2ddl.auto">update</property>
 		-->

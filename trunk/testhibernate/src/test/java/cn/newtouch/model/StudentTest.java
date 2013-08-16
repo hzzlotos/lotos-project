@@ -39,8 +39,14 @@ public class StudentTest
 
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
-        Student s = (Student) session.get(Student.class, 1L);
-        s.setName("zhangsan21231");
-        session.getTransaction().commit();
+        try
+        {
+            Student s = (Student) session.get(Student.class, 1L);
+            s.setName("zhangsan21231");
+            session.getTransaction().commit();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

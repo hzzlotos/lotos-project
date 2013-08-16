@@ -17,10 +17,8 @@ public class HibernateORMappingTest
     @BeforeClass
     public static void beforeClass()
     {
-        new SchemaExport(new AnnotationConfiguration().configure()).create(
-                false, true);
-        sessionFactory = new AnnotationConfiguration().configure()
-                .buildSessionFactory();
+        new SchemaExport(new AnnotationConfiguration().configure()).create(false, true);
+        sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
     }
 
     @Test
@@ -45,7 +43,7 @@ public class HibernateORMappingTest
     public void testLoad()
     {
 
-        testSave();
+        this.testSave();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         Student s = (Student) session.load(Student.class, 1, LockMode.UPGRADE);
@@ -60,8 +58,7 @@ public class HibernateORMappingTest
     @Test
     public void testSchemaExport()
     {
-        new SchemaExport(new AnnotationConfiguration().configure()).create(
-                false, true);
+        new SchemaExport(new AnnotationConfiguration().configure()).create(false, true);
     }
 
     public static void main(String[] args)
