@@ -12,14 +12,21 @@ public class UserServiceTest
 {
 
     @Test
-    public void testAdd() throws Exception
+    public void testAdd()
     {
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
+        try
+        {
+            ApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
 
-        UserService service = (UserService) ctx.getBean("userService");
+            UserService service = (UserService) ctx.getBean("userService");
 
-        User u = new User();
-        u.setName("zhangsan");
-        u = service.doAdd(u);
+            User u = new User();
+            u.setName("zhangsan");
+            u = service.doAdd(u);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

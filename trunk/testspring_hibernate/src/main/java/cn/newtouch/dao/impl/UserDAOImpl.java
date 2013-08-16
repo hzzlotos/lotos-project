@@ -46,9 +46,8 @@ public class UserDAOImpl implements UserDAO
     {
         try
         {
-            Connection conn = dataSource.getConnection();
-            String sql = "insert into user values(null,'" + user.getName()
-                    + "')";
+            Connection conn = this.dataSource.getConnection();
+            String sql = "insert into user values(null,'" + user.getName() + "')";
             System.out.println(sql);
             conn.createStatement().execute(sql);
             conn.close();
@@ -63,9 +62,8 @@ public class UserDAOImpl implements UserDAO
 
     public User hiberSave(User user)
     {
-        System.out
-                .println("session factory class:" + sessionFactory.getClass());
-        Session s = sessionFactory.getCurrentSession();
+        System.out.println("session factory class:" + this.sessionFactory.getClass());
+        Session s = this.sessionFactory.getCurrentSession();
         // s.beginTransaction();
         s.save(user);
         // s.getTransaction().commit();
@@ -74,10 +72,9 @@ public class UserDAOImpl implements UserDAO
         // throw new RuntimeException("exeption!");
     }
 
-    @Override
     public User save(User user)
     {
-        hibernateTemplate.save(user);
+        this.hibernateTemplate.save(user);
         // throw new RuntimeException("exeption!");
         return user;
     }
