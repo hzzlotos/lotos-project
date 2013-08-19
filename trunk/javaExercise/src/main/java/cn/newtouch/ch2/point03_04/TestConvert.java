@@ -2,6 +2,11 @@
 
 public class TestConvert
 {
+    // 将long放入int中只会影响其精度
+    // 将double放入float中则报错
+    // boolean不能转化为其他类型
+    // 混合计算是参照容量大的计算
+    // float f= 0.1; //报错--->double被强转成float 不行
     public static void main(String arg[])
     {
         int i1 = 123;
