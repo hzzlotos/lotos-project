@@ -21,13 +21,12 @@ public class SearchFilter
     public static final String OR_TAG      = "%OR%";
 
     public enum Operator {
-        EQ, LIKE, GT, LT, GTE, LTE, IN, EQOR
+        EQ, LIKE, GT, LT, GTE, LTE, IN, EQOR, NI
     }
 
     /** 属性数据类型. */
     public enum PropertyType {
-        S(String.class), I(Integer.class), L(Long.class), N(Double.class), D(
-                Date.class), B(Boolean.class);
+        S(String.class), I(Integer.class), L(Long.class), N(Double.class), D(Date.class), B(Boolean.class);
 
         private Class<?> clazz;
 
@@ -38,7 +37,7 @@ public class SearchFilter
 
         public Class<?> getValue()
         {
-            return clazz;
+            return this.clazz;
         }
     }
 
@@ -57,8 +56,7 @@ public class SearchFilter
         this.operator = operator;
     }
 
-    public SearchFilter(List<Object> listValue, String fieldName,
-            Operator operator)
+    public SearchFilter(List<Object> listValue, String fieldName, Operator operator)
     {
         this.fieldName = fieldName;
         this.listValue = listValue;
@@ -68,8 +66,7 @@ public class SearchFilter
     /**
      * searchParams中key的格式为OPERATOR_FIELDNAME
      */
-    public static Map<String, SearchFilter> parse(
-            Map<String, Object> searchParams)
+    public static Map<String, SearchFilter> parse(Map<String, Object> searchParams)
     {
         Map<String, SearchFilter> filters = Maps.newHashMap();
 
@@ -85,15 +82,11 @@ public class SearchFilter
             String[] names = StringUtils.split(key, Contants.UNDERLINE);
             if (names.length != 2)
             {
-                throw new IllegalArgumentException(key
-                        + " is not a valid search filter name");
+                throw new IllegalArgumentException(key + " is not a valid search filter name");
             }
-            String firstPart = StringUtils.substringBefore(key,
-                    Contants.UNDERLINE);
-            String matchTypeCode = StringUtils.substring(firstPart, 0,
-                    firstPart.length() - 1);
-            String propertyTypeCode = StringUtils.substring(firstPart,
-                    firstPart.length() - 1, firstPart.length());
+            String firstPart = StringUtils.substringBefore(key, Contants.UNDERLINE);
+            String matchTypeCode = StringUtils.substring(firstPart, 0, firstPart.length() - 1);
+            String propertyTypeCode = StringUtils.substring(firstPart, firstPart.length() - 1, firstPart.length());
             Operator operator = null;
             Class<?> propertyClass = null;
             // 拆分operator与filedAttribute
@@ -103,31 +96,27 @@ public class SearchFilter
             }
             catch (RuntimeException e)
             {
-                throw new IllegalArgumentException("filter名称" + names[1]
-                        + "没有按规则编写,无法得到属性比较类型.", e);
+                throw new IllegalArgumentException("filter名称" + names[1] + "没有按规则编写,无法得到属性比较类型.", e);
             }
             try
             {
-                propertyClass = PropertyType.valueOf(propertyTypeCode)
-                        .getValue();
+                propertyClass = PropertyType.valueOf(propertyTypeCode).getValue();
             }
             catch (RuntimeException e)
             {
-                throw new IllegalArgumentException("filter名称" + names[1]
-                        + "没有按规则编写,无法得到属性值类型.", e);
+                throw new IllegalArgumentException("filter名称" + names[1] + "没有按规则编写,无法得到属性值类型.", e);
             }
             // 创建searchFilter
             SearchFilter filter = null;
             String name = names[1].replace("[]", "");
-            if (operator == Operator.IN)
+            if (operator == Operator.IN || operator == Operator.NI)
             {
                 List<Object> list = Lists.newArrayList();
                 if (value instanceof List)
                 {
                     for (Object obj : (List<Object>) value)
                     {
-                        list.add(ConvertUtils.convertStringToObject(obj
-                                .toString(), propertyClass));
+                        list.add(ConvertUtils.convertStringToObject(obj.toString(), propertyClass));
                     }
                 }
                 else
@@ -136,15 +125,13 @@ public class SearchFilter
                     {
                         for (String obj : Arrays.asList((String[]) value))
                         {
-                            list.add(ConvertUtils.convertStringToObject(obj,
-                                    propertyClass));
+                            list.add(ConvertUtils.convertStringToObject(obj, propertyClass));
                         }
                     }
                     catch (Exception e)
                     {
                         list = Lists.newArrayList();
-                        list.add(ConvertUtils.convertStringToObject(value
-                                .toString(), propertyClass));
+                        list.add(ConvertUtils.convertStringToObject(value.toString(), propertyClass));
                     }
                 }
                 filter = new SearchFilter(list, name, operator);
@@ -155,9 +142,8 @@ public class SearchFilter
                 {
                     if (!IS_NULL_TAG.equals(value))
                     {
-                        filter = new SearchFilter(name, operator, ConvertUtils
-                                .convertStringToObject(value.toString(),
-                                        propertyClass));
+                        filter = new SearchFilter(name, operator, ConvertUtils.convertStringToObject(value.toString(),
+                                propertyClass));
                     }
                     else
                     {
