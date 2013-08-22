@@ -3,39 +3,45 @@ package cn.newtouch.ws.dto;
 import javax.xml.bind.annotation.XmlType;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
-import cn.newtouch.ws.WsConstants;
 
 /**
  * Web Service传输Role信息的DTO.
  * 
  * 注释见{@link UserDTO}.
- *
+ * 
  * @author calvin
  */
 @XmlType(name = "Role")
-public class RoleDTO {
+public class RoleDTO
+{
 
-	private Long id;
-	private String name;
+    private Long   id;
 
-	public Long getId() {
-		return id;
-	}
+    private String name;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId()
+    {
+        return this.id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName()
+    {
+        return this.name;
+    }
 
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
-	}
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    @Override
+    public String toString()
+    {
+        return ToStringBuilder.reflectionToString(this);
+    }
 }

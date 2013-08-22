@@ -33,12 +33,14 @@ import com.google.common.collect.Lists;
  * @author calvin
  */
 // serviceName与portName属性指明WSDL中的名称, endpointInterface属性指向Interface定义类.
-@WebService(endpointInterface = "cn.newtouch.ws.UserWebService")
+// targetNamespace 指向【http://localhost:8080/miniweb/ws/userservice?wsdl】中的
+// 【<wsdl:import location="http://localhost:8080/miniweb/ws/userservice?wsdl=UserWebService.wsdl"
+// namespace="http://ws.newtouch.cn/"></wsdl:import>】中的namespace
+@WebService(endpointInterface = "cn.newtouch.ws.UserWebService", targetNamespace = "http://ws.newtouch.cn/")
 public class UserWebServiceImpl implements UserWebService
 {
 
-    private static Logger   logger = LoggerFactory
-                                           .getLogger(UserWebServiceImpl.class);
+    private static Logger   logger = LoggerFactory.getLogger(UserWebServiceImpl.class);
 
     @Autowired
     private AccountManager  accountManager;
@@ -201,6 +203,7 @@ public class UserWebServiceImpl implements UserWebService
 
     public String testStr(String testString)
     {
-        return this.accountManager.testStr(testString);
+        String result = this.accountManager.testStr(testString);
+        return result;
     }
 }

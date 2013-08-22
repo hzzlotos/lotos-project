@@ -6,7 +6,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 
-import cn.newtouch.ws.WsConstants;
 import cn.newtouch.ws.dto.UserDTO;
 
 /**
@@ -15,17 +14,20 @@ import cn.newtouch.ws.dto.UserDTO;
  * @author calvin
  */
 @XmlType(name = "GetAllUserResult")
-public class GetAllUserResult extends WSResult {
+public class GetAllUserResult extends WSResult
+{
 
-	private List<UserDTO> userList;
+    private List<UserDTO> userList;
 
-	@XmlElementWrapper(name = "userList")
-	@XmlElement(name = "user")
-	public List<UserDTO> getUserList() {
-		return userList;
-	}
+    @XmlElementWrapper(name = "userList")
+    @XmlElement(name = "user")
+    public List<UserDTO> getUserList()
+    {
+        return this.userList;
+    }
 
-	public void setUserList(List<UserDTO> userList) {
-		this.userList = userList;
-	}
+    public void setUserList(List<UserDTO> userList)
+    {
+        this.userList = userList;
+    }
 }

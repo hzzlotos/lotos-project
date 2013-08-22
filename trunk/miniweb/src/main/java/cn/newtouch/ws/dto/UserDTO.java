@@ -7,7 +7,6 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
-import cn.newtouch.ws.WsConstants;
 
 import com.google.common.collect.Lists;
 
@@ -19,63 +18,78 @@ import com.google.common.collect.Lists;
  * @author calvin
  */
 @XmlType(name = "User")
-public class UserDTO {
+public class UserDTO
+{
 
-	private Long id;
-	private String loginName;
-	private String name;
-	private String email;
+    private Long          id;
 
-	private List<RoleDTO> roleList = Lists.newArrayList();
+    private String        loginName;
 
-	public Long getId() {
-		return id;
-	}
+    private String        name;
 
-	public void setId(Long value) {
-		id = value;
-	}
+    private String        email;
 
-	public String getLoginName() {
-		return loginName;
-	}
+    private List<RoleDTO> roleList = Lists.newArrayList();
 
-	public void setLoginName(String value) {
-		loginName = value;
-	}
+    public Long getId()
+    {
+        return this.id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setId(Long value)
+    {
+        this.id = value;
+    }
 
-	public void setName(String value) {
-		name = value;
-	}
+    public String getLoginName()
+    {
+        return this.loginName;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setLoginName(String value)
+    {
+        this.loginName = value;
+    }
 
-	public void setEmail(String value) {
-		email = value;
-	}
+    public String getName()
+    {
+        return this.name;
+    }
 
-	//配置输出xml为<roleList><role><id>1</id></role></roleList>
-	@XmlElementWrapper(name = "roleList")
-	@XmlElement(name = "role")
-	public List<RoleDTO> getRoleList() {
-		return roleList;
-	}
+    public void setName(String value)
+    {
+        this.name = value;
+    }
 
-	public void setRoleList(List<RoleDTO> roleList) {
-		this.roleList = roleList;
-	}
+    public String getEmail()
+    {
+        return this.email;
+    }
 
-	/**
-	 * 重新实现toString()函数方便在日志中打印DTO信息.
-	 */
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
-	}
+    public void setEmail(String value)
+    {
+        this.email = value;
+    }
+
+    // 配置输出xml为<roleList><role><id>1</id></role></roleList>
+    @XmlElementWrapper(name = "roleList")
+    @XmlElement(name = "role")
+    public List<RoleDTO> getRoleList()
+    {
+        return this.roleList;
+    }
+
+    public void setRoleList(List<RoleDTO> roleList)
+    {
+        this.roleList = roleList;
+    }
+
+    /**
+     * 重新实现toString()函数方便在日志中打印DTO信息.
+     */
+    @Override
+    public String toString()
+    {
+        return ToStringBuilder.reflectionToString(this);
+    }
 }

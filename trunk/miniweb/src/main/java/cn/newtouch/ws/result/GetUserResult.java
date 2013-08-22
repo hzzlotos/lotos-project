@@ -2,7 +2,6 @@ package cn.newtouch.ws.result;
 
 import javax.xml.bind.annotation.XmlType;
 
-import cn.newtouch.ws.WsConstants;
 import cn.newtouch.ws.dto.UserDTO;
 
 /**
@@ -11,15 +10,18 @@ import cn.newtouch.ws.dto.UserDTO;
  * @author calvin
  */
 @XmlType(name = "GetUserResult")
-public class GetUserResult extends WSResult {
+public class GetUserResult extends WSResult
+{
 
-	private UserDTO user;
+    private UserDTO user;
 
-	public UserDTO getUser() {
-		return user;
-	}
+    public UserDTO getUser()
+    {
+        return this.user;
+    }
 
-	public void setUser(UserDTO user) {
-		this.user = user;
-	}
+    public void setUser(UserDTO user)
+    {
+        this.user = user;
+    }
 }
