@@ -29,7 +29,7 @@ package cn.newtouch.constant;
 public class Constants
 {
     /**
-     * role
+     * role111
      */
     // 项目级别
     public static final int     LEVEL_SYSTEM         = 1;                  // 系统管理员
