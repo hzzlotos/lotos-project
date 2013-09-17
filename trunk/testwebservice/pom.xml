@@ -15,7 +15,7 @@
 		<selenium.version>2.0a5</selenium.version>
 	</properties>
 
-		<!-- 设定除中央仓库(repo1.maven.org/maven2/)外的其他仓库,按设定顺序进行查找. -->
+	<!-- 设定除中央仓库(repo1.maven.org/maven2/)外的其他仓库,按设定顺序进行查找. -->
 	<repositories>
 	<!--
 		<repository>
@@ -32,11 +32,10 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-
 		<repository>
-			<id>java.net</id>
-			<name>Java.net Repository</name>
-			<url>http://download.java.net/maven/2/</url>
+			<id>offical</id>
+			<name>Maven Official Repository</name>
+			<url>http://repo1.maven.org/maven2</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
