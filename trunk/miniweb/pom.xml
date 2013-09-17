@@ -17,11 +17,7 @@
 		<jetty.version>6.1.25</jetty.version>
 		<jackson.version>1.6.0</jackson.version>
 		<slf4j.version>1.6.1</slf4j.version>
-		<selenium.version>2.0a5</selenium.version>
-
-		<!-- Plugin的属性定义  -->
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		
+		<selenium.version>2.0a5</selenium.version>		
 		<!--
 		<jdbc.driver.groupId>com.oracle</jdbc.driver.groupId>
 		<jdbc.driver.artifactId>ojdbc14</jdbc.driver.artifactId>
