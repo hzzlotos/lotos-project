@@ -8,7 +8,7 @@
 	<include file="struts-part1.xml"></include>
 	<constant name="struts.i18n.encoding" value="UTF-8"/>
 	<constant name="struts.custom.i18n.resources" value="message"/>
-	<package name="struts2" extends="struts-default">
+	<package name="struts2" namespace="/" extends="struts-default">
 		<interceptors>
         <!-- 定义拦截器 -->
         <interceptor name="authInterceptor" class="cn.newtouch.interceptor.AuthInterceptor"/>
