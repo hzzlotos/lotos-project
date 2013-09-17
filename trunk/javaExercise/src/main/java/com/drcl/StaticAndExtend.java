@@ -28,7 +28,6 @@ package com.drcl;
 
 public class StaticAndExtend
 {
-
     /**
      * Description of this Method
      * 
@@ -40,7 +39,6 @@ public class StaticAndExtend
     {
         System.out.println(B.test);
     }
-
 }
 
 class A
