@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<display-name>session</display-name>
+	<servlet>
+		<servlet-name>LoginServlet</servlet-name>
+		<servlet-class>cn.newtouch.web.login.LoginServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/LoginServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>CoursesServlet</servlet-name>
+		<servlet-class>cn.newtouch.web.login.CoursesServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CoursesServlet</servlet-name>
+		<url-pattern>/CoursesServlet</url-pattern>
+	</servlet-mapping>
+	
+	
+	
+	<servlet>
+		<servlet-name>FormDealServlet</servlet-name>
+		<servlet-class>cn.newtouch.web.DoNotAgain.FormDealServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FormDealServlet</servlet-name>
+		<url-pattern>/FormDealServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>FormGenerateServlet</servlet-name>
+		<servlet-class>cn.newtouch.web.DoNotAgain.FormGenerateServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FormGenerateServlet</servlet-name>
+		<url-pattern>/FormGenerateServlet</url-pattern>
+	</servlet-mapping>
+	
+	
+	
+	<servlet>
+		<servlet-name>CheckCodeServlet</servlet-name>
+		<servlet-class>cn.newtouch.web.Check.CheckCodeServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CheckCodeServlet</servlet-name>
+		<url-pattern>/CheckCodeServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>LoginFormServlet</servlet-name>
+		<servlet-class>cn.newtouch.web.Check.LoginFormServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginFormServlet</servlet-name>
+		<url-pattern>/LoginFormServlet</url-pattern>
+	</servlet-mapping>
+	<!--  
+	<filter>
+        <filter-name>Request Response Time</filter-name>
+    	<filter-class>cn.newtouch.Web.filter.ServletFilter</filter-class>
+    </filter>
+	-->
+	
+</web-app>
