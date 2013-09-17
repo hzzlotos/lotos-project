@@ -12,14 +12,15 @@
 		<jetty.version>7.6.8.v20121106</jetty.version>
 	</properties>
 	
+	<!-- 设定除中央仓库(repo1.maven.org/maven2/)外的其他仓库,按设定顺序进行查找. -->
 	<repositories>
-		<!-- 如有Nexus私服, 取消注释并指向正确的服务器地址.
+	<!--
 		<repository>
 			<id>nexus</id>
 			<name>Team Nexus Repository</name>
-			<url>http://localhost:8081/nexus/content/groups/public</url> 
+			<url>http://localhost:8081/nexus/content/groups/public</url>
 		</repository>
-		-->
+	-->
 		<repository>
 			<id>central</id>
 			<name>Central Repository</name>
@@ -28,20 +29,16 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-	</repositories>
 
-	<!-- 设定插件仓库 如有Nexus私服, 取消注释并指向正确的服务器地址. 
-	<pluginRepositories> 
-		<pluginRepository> 
-			<id>nexus</id>
-			<name>Team Nexus Repository</name>
-			<url>http://localhost:8081/nexus/content/groups/public</url> 
+		<repository>
+			<id>offical</id>
+			<name>Maven Official Repository</name>
+			<url>http://repo1.maven.org/maven2</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
-	-->
+		</repository>
+	</repositories>
 
 	<!-- 依赖项定义 -->
 	<dependencies>
