@@ -3,6 +3,7 @@
 	<groupId>cn.newtouch</groupId>
 	<artifactId>exercise</artifactId>
 	<version>1.0</version>
+
 	<dependencies>
 		<dependency>
 			<groupId>cglib</groupId>
