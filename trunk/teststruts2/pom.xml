@@ -11,9 +11,6 @@
 		<!-- 主要依赖库的版本定义 -->
 		<struts2.version>2.3.1</struts2.version>
 		<jackson.version>1.6.0</jackson.version>
-
-		<!-- Plugin的属性定义  -->
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 		<!-- 设定除中央仓库(repo1.maven.org/maven2/)外的其他仓库,按设定顺序进行查找. -->
