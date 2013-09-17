@@ -1,4 +1,5 @@
 package com.drcl;
+
 //-------------------------------------------------------------------------
 // Copyright (c) 2000-2010 Digital. All Rights Reserved.
 //
@@ -26,14 +27,12 @@ package com.drcl;
 // HIGH RISK ACTIVITIES.
 //-------------------------------------------------------------------------
 
-
 import javax.jws.WebService;
 
 @WebService
 public class HelloWorldImpl implements HelloWorld
 {
 
-    @Override
     public String sayHello(String name)
     {
         System.out.println("Say hello is called!");

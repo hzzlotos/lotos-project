@@ -1,4 +1,5 @@
 package com.drcl;
+
 //-------------------------------------------------------------------------
 // Copyright (c) 2000-2010 Digital. All Rights Reserved.
 //
@@ -26,7 +27,6 @@ package com.drcl;
 // HIGH RISK ACTIVITIES.
 //-------------------------------------------------------------------------
 
-
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
 
@@ -40,5 +40,6 @@ public class MainServer
 
         Server server = factory.create();
         server.start();
+        System.out.println("server start");
     }
 }
