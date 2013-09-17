@@ -12,11 +12,11 @@ public class SQL_Connection
 
         String foeName = "com.mysql.jdbc.Driver";
 
-        String url = "jdbc:mysql://localhost:3306/exercise";
+        String url = "jdbc:mysql://localhost:3306/testservlet";
 
         String user = "root";
 
-        String password = "lotos";
+        String password = "";
 
         try
         {

@@ -44,9 +44,9 @@ public class FirstServlet extends HttpServlet
         {
             request.setAttribute("userName", userName);
             request.setAttribute("passWord", passWord);
-            RequestDispatcher aaa = request.getRequestDispatcher("/Jsp/ok.jsp");
+            RequestDispatcher aaa = request.getRequestDispatcher("/jsp/ok.jsp");
             aaa.forward(request, response);
-            // response.sendRedirect("../Jsp/ok.jsp");
+            // response.sendRedirect("../jsp/ok.jsp");
         }
         else
         {
