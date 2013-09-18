@@ -16,9 +16,9 @@
 		<interceptors>			
 			<interceptor name="annotationInterceptor" class="cn.newtouch.interceptor.AuthInterceptor"/>  
 			<interceptor-stack name="myDefaultStack">
-				<!-- 自己定义的要放在最前面 
+				<!-- 自己定义的要放在最前面 -->
 				<interceptor-ref name="annotationInterceptor"/>
-				-->
+				
 				<interceptor-ref name="defaultStack"/>
 				<interceptor-ref name="paramsPrepareParamsStack" />
 			</interceptor-stack>
