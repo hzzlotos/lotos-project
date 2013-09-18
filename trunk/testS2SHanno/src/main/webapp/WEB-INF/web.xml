@@ -43,7 +43,7 @@
 		<dispatcher>FORWARD</dispatcher>
 	</filter-mapping>
 	
-	<!-- 
+	
 	<filter>
 		<filter-name>myFilter</filter-name>
 		<filter-class>cn.newtouch.filter.MyFilter</filter-class>
@@ -54,7 +54,7 @@
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 	</filter-mapping>
-	 -->
+	
 	<!-- springSecurity -->
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
