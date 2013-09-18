@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:s="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security-3.0.xsd"
+	default-lazy-init="true">
+
+	<!-- 配置权限页面 -->
+	<s:http auto-config="true" use-expressions="true">
+		<s:intercept-url pattern="/css/**" filters="none" />
+		<s:intercept-url pattern="/img/**" filters="none" />
+		<s:intercept-url pattern="/js/**" filters="none" />
+		<s:intercept-url pattern="/js/**" filters="none" />
+		<s:intercept-url pattern="/pool/**" access="hasAnyRole('ROLE_科目库管理')" />
+		<s:intercept-url pattern="/user/**" access="hasAnyRole('ROLE_用户管理')" />		
+		<s:form-login login-page="/login.action" default-target-url="/" authentication-failure-url="/login.action?error=true" 
+		authentication-failure-handler-ref="failureHandler" authentication-success-handler-ref="successHandler"  />
+		<s:logout logout-success-url="/" logout-url="/logout" />
+	</s:http>
+
+	<!-- 认证配置, 使用userDetailsService提供的用户信息 -->
+	<s:authentication-manager alias="authenticationManager">
+		<s:authentication-provider user-service-ref="userDetailsService">
+			<s:password-encoder hash="plaintext" />
+		</s:authentication-provider>
+	</s:authentication-manager>
+
+	<!-- 项目实现的用户查询服务 -->
+	<bean id="userDetailsService" class="cn.newtouch.userSSimpl.UserDetailsServiceImpl" />
+	
+	<bean id="failureHandler" class="cn.newtouch.userSSimpl.UserFailureHandler" >
+	</bean>
+	
+	<bean id="successHandler" class="cn.newtouch.userSSimpl.UserSuccessHandler" >
+	   <property name="defaultTargetUrl" value="/loginSuccess.jsp" />
+	   <property name="customTargetUrl" >
+	   		<props>
+	   			<prop key="系统管理员">/pool/subject-pool.action</prop>
+	   			<prop key="科目管理员">/user/user.action</prop>
+	   			<prop key="专家管理员">/user/user.action</prop>
+	   		</props>
+	   </property>
+	   <property name="alwaysUseDefaultTargetUrl" value="false" />
+	</bean>
+</beans>

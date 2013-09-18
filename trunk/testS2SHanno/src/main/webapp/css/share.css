@@ -1,0 +1,22 @@
+@charset "utf-8";
+
+em {font-family:Arial,Helvetica,sans-serif;color:#999;font-size:11px;}
+
+a {
+	text-decoration:underline;
+	cursor:pointer;	
+}
+
+.tablebox tr td{
+	border:2px solid #dbdada;
+	text-align:center;
+}
+
+.collapse{
+	border-collapse: collapse;
+}
+
+.red {
+	color : red;	
+}
+
