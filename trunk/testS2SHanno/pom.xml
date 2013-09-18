@@ -58,6 +58,12 @@
 
 	<!-- 依赖项定义 -->
 	<dependencies>
+		<dependency>
+			<groupId>cn.newtouch</groupId>
+			<artifactId>testwebservice</artifactId>
+			<version>1.0</version>
+		</dependency>
+	
 		<!-- spring begin -->
 		<dependency>
 			<groupId>org.springframework</groupId>
