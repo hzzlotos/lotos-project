@@ -13,15 +13,12 @@
 			http://www.springframework.org/schema/aop    
 			http://www.springframework.org/schema/aop/spring-aop.xsd"
 		default-lazy-init="true">
+	<context:property-placeholder ignore-unresolvable="true"
+			location="classpath*:/jdbc.properties" />
+	<context:property-placeholder ignore-unresolvable="true"
+			location="classpath*:/log4j.properties" />
 	<context:annotation-config />
 	<context:component-scan base-package="cn.newtouch"/>
-	
-	<bean
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-			<value>classpath:jdbc.properties</value>
-		</property>
-	</bean>
 
 	<bean id="dataSource" destroy-method="close"
 		class="org.apache.commons.dbcp.BasicDataSource">
