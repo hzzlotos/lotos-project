@@ -9,7 +9,7 @@ import cn.newtouch.model.Log;
 import cn.newtouch.model.User;
 
 @Component
-public class UserService
+public class UserService extends BaseService
 {
     private LogDAO  logDAO;
 
@@ -18,10 +18,11 @@ public class UserService
     // @Transactional
     public User doAdd(User user)
     {
-        user = userDAO.save(user);
+        this.logger.debug("========================I'm going");
+        user = this.userDAO.save(user);
         Log log = new Log();
         log.setMsg(user.getName() + " saved!");
-        logDAO.save(log);
+        this.logDAO.save(log);
         return user;
     }
 
