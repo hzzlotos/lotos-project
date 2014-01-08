@@ -13,7 +13,7 @@
 <script src="${ctx}/static/jquery-validation/1.10.0/jquery.validate.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/jquery-validation/1.10.0/messages_bs_zh.js" type="text/javascript"></script>
 
-<link href="${ctx}/static/jquery-ajaxfileupload/2.1/ajaxfileupload.css" type="text/css" rel="stylesheet">
+<link href="${ctx}/static/jquery-ajaxfileupload/2.1/ajaxfileupload.css" type="text/css" rel="stylesheet" />
 <script src="${ctx}/static/jquery-ajaxfileupload/2.1/ajaxfileupload.js" type="text/javascript"></script>
 
 	<title>资料管理</title>
@@ -93,7 +93,7 @@
 					<input type="text" style="height: 30px" class="input-large required" id="fileName" name="theFileName" value="${material.fileName}" readonly="readonly"/>
 				</div>
 				<div class="controls">
-					<input id="fileToUpload"  class="btn" type="file" name="fileToUpload">
+					<input id="fileToUpload"  class="btn" type="file" name="fileToUpload" />
 					<input id="submit_file" class="btn" type="button" value="上传"/>
 					<div id="showMessage" class="alert alert-success" style="display:none;"><a class="close" onclick="doClose()">×</a><span id="message"></span></div>
 					<c:if test="${not empty material.fileName}">
