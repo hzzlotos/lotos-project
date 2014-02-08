@@ -27,12 +27,12 @@ class MyThread extends Thread
     @Override
     public void run()
     {
-        while (flag)
+        while (this.flag)
         {
             System.out.println("===" + new Date() + "===");
             try
             {
-                sleep(1000);
+                super.sleep(1000);
             }
             catch (InterruptedException e)
             {
