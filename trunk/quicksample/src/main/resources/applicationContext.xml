@@ -79,4 +79,9 @@
 	
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
 		 />
+		 
+	<bean id="messageSource" class="cn.newtouch.util.ResourceBundleMessageSource">
+		<property name="basenames" value="messages"/>
+		<property name="useCodeAsDefaultMessage" value="true"/>
+	</bean>
 </beans>

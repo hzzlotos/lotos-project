@@ -26,6 +26,7 @@
 				/login = authc
 				/logout = logout
 				/static/** = anon
+				/setlocal = anon
 				/api/** = anon
 				/fileupload/** = anon
 				/manager/** = roles[admin]<!-- anon --> 
