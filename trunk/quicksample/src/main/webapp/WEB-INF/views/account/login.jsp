@@ -2,6 +2,7 @@
 <%@ page import="org.apache.shiro.web.filter.authc.FormAuthenticationFilter"%>
 <%@ page import="org.apache.shiro.authc.ExcessiveAttemptsException"%>
 <%@ page import="org.apache.shiro.authc.IncorrectCredentialsException"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 
@@ -12,10 +13,21 @@
 		$(document).ready(function() {
 			$("#loginForm").validate();
 		});
+		function setLanguage(lan)
+	    {
+			$.post("${ctx}/setlocal",{"local":lan},function(data) {
+				window.location.reload();
+			});
+	    }
 	</script>
 </head>
 
 <body>
+	<a href="#" onclick="setLanguage('zh_CN')" title="中文版">中文版</a>
+	<a href="#" onclick="setLanguage('en')" title="English">英文版</a>
+	<div></div><br />
+	<a  title="" target="_self"><spring:message code="title.home"/></a>
+	
 	<form id="loginForm" action="${ctx}/login" method="post" class="form-horizontal">
 	<%
 	String error = (String) request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
