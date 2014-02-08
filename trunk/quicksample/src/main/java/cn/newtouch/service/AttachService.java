@@ -23,7 +23,7 @@ public class AttachService extends BaseService<Attach, Long>
     public List<Attach> getAreaList()
     {
         Map<String, Object> searchParams = Maps.newHashMap();
-        searchParams.put("EQL_parent.id", SearchFilter.IS_NULL_TAG);
+        searchParams.put("EQL_parent.id", SearchFilter.IS_NULL);
         return this.search(searchParams);
     }
 
@@ -36,7 +36,7 @@ public class AttachService extends BaseService<Attach, Long>
 
     public Attach findByName(String name)
     {
-        return attachDao.findByName(name);
+        return this.attachDao.findByName(name);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class AttachService extends BaseService<Attach, Long>
     @Override
     protected AttachDao getEntityDao()
     {
-        return attachDao;
+        return this.attachDao;
     }
 
 }

@@ -52,8 +52,8 @@ public class AttachController extends BaseController<Attach, Long>
         Attach parent;
         if (null != parentId)
         {
-            parent = attachService.get(parentId);
-            String parentName = attachService.get(parentId).getName();
+            parent = this.attachService.get(parentId);
+            String parentName = this.attachService.get(parentId).getName();
             model.addAttribute("theParentId", null == parent.getParent() ? null
                     : parent.getParent().getId());
             model.addAttribute("parentName", parentName);
@@ -62,14 +62,14 @@ public class AttachController extends BaseController<Attach, Long>
                 request, "search_");
         if (null == parentId)
         {
-            searchParams.put("EQL_parent.id", SearchFilter.IS_NULL_TAG);
+            searchParams.put("EQL_parent.id", SearchFilter.IS_NULL);
         }
         else
         {
             searchParams.put("EQL_parent.id", parentId);
         }
 
-        Page<Attach> attachs = attachService.search(pageNumber, PAGE_SIZE,
+        Page<Attach> attachs = this.attachService.search(pageNumber, PAGE_SIZE,
                 searchParams);
         model.addAttribute("parentId", parentId);
         model.addAttribute("attachs", attachs);
@@ -89,7 +89,7 @@ public class AttachController extends BaseController<Attach, Long>
         model.addAttribute("parentId", parentId);
         if (null != parentId)
         {
-            String parentName = attachService.get(parentId).getName();
+            String parentName = this.attachService.get(parentId).getName();
             model.addAttribute("parentName", parentName);
         }
         return "attach/attachForm";
@@ -103,7 +103,7 @@ public class AttachController extends BaseController<Attach, Long>
         Attach parent = null;
         if (null != parentId)
         {
-            parent = attachService.get(parentId);
+            parent = this.attachService.get(parentId);
             newAttach.setType(AttachType.TYPE_BRANCH);
         }
         else
@@ -111,7 +111,7 @@ public class AttachController extends BaseController<Attach, Long>
             newAttach.setType(AttachType.TYPE_AREA);
         }
         newAttach.setParent(parent);
-        attachService.save(newAttach);
+        this.attachService.save(newAttach);
         redirectAttributes.addFlashAttribute("message", "创建地区成功");
         return "redirect:/attach?parentId="
                 + (null == parentId ? "" : parentId);
@@ -120,7 +120,7 @@ public class AttachController extends BaseController<Attach, Long>
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String updateForm(@PathVariable("id") Long id, Model model)
     {
-        Attach attach = attachService.get(id);
+        Attach attach = this.attachService.get(id);
         if (null != attach.getParent())
         {
             model.addAttribute("parentName", attach.getParent().getName());
@@ -137,7 +137,7 @@ public class AttachController extends BaseController<Attach, Long>
             @RequestParam(required = false) Long parentId,
             RedirectAttributes redirectAttributes)
     {
-        attachService.save(attach);
+        this.attachService.save(attach);
         redirectAttributes.addFlashAttribute("message", "更新地区成功");
         return "redirect:/attach?parentId="
                 + (null == parentId ? "" : parentId);
@@ -147,8 +147,8 @@ public class AttachController extends BaseController<Attach, Long>
     public String delete(@PathVariable("id") Long id,
             RedirectAttributes redirectAttributes)
     {
-        Attach attach = attachService.get(id);
-        attachService.delete(id);
+        Attach attach = this.attachService.get(id);
+        this.attachService.delete(id);
         redirectAttributes.addFlashAttribute("message", "删除地区成功");
         return "redirect:/attach/?parentId="
                 + (null == attach.getParent() ? "" : attach.getParent().getId());
@@ -165,7 +165,7 @@ public class AttachController extends BaseController<Attach, Long>
         {
             return "true";
         }
-        if (attachService.findByName(name) == null)
+        if (this.attachService.findByName(name) == null)
         {
             return "true";
         }
@@ -186,7 +186,7 @@ public class AttachController extends BaseController<Attach, Long>
     public ResponseEntity<?> getAttahList()
     {
         List<TreeNode> tree = Lists.newArrayList();
-        User user = accountService.get(getCurrentUserId());
+        User user = this.accountService.get(this.getCurrentUserId());
         TreeNode tn = null;
         Attach attach = null;
         if (RoleType.ROLE_ADMIN == user.getRole())
@@ -195,7 +195,7 @@ public class AttachController extends BaseController<Attach, Long>
             tn.setId("0");
             tn.setName("总公司");
             tree.add(tn);
-            List<Attach> attachs = attachService.getAll();
+            List<Attach> attachs = this.attachService.getAll();
             for (Attach temp : attachs)
             {
                 tn = new TreeNode();
@@ -243,6 +243,6 @@ public class AttachController extends BaseController<Attach, Long>
     @Override
     protected AttachService getEntityService()
     {
-        return attachService;
+        return this.attachService;
     }
 }
