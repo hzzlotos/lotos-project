@@ -1,5 +1,0 @@
-Windows Registry Editor Version 5.00
-[HKEY_CLASSES_ROOT\Folder\shell\CmdHere]
-@="从这里进入命令行"
-[HKEY_CLASSES_ROOT\Folder\shell\CmdHere\command]
-@="cmd.exe /k cd \"%1\""
