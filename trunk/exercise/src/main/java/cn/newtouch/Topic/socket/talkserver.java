@@ -31,11 +31,9 @@ public class talkserver
                 System.out.println("Error:" + e);
             }
             String line;
-            BufferedReader is = new BufferedReader(new InputStreamReader(socket
-                    .getInputStream()));
+            BufferedReader is = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter os = new PrintWriter(socket.getOutputStream());
-            BufferedReader sin = new BufferedReader(new InputStreamReader(
-                    System.in));
+            BufferedReader sin = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("Client:" + is.readLine());
             line = sin.readLine();
             while (!line.equals("bye"))
@@ -51,6 +49,7 @@ public class talkserver
             os.close();
             socket.close();
             server.close();
+            System.out.println("i'm out");
         }
         catch (Exception e)
         {
