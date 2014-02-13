@@ -11,10 +11,9 @@ public class Main
 
         ArithmeticReflec arr = new ArithmeticReflec();
 
-        int res = (Integer) arr.doMethod("com.drcl.reflect.Arithmetic",
-                "addition", new Object[] { 1, 2 });
+        int res = (Integer) arr.doMethod("cn.newtouch.Topic.reflect.Arithmetic", "addition", new Object[] { 1, 2 });
 
-        Class clazz = Class.forName("com.drcl.reflect.Arithmetic");
+        Class clazz = Class.forName("cn.newtouch.Topic.reflect.Arithmetic");
 
         Object obj = clazz.newInstance();
         Method method = clazz.getMethod("addition", int.class, int.class);
