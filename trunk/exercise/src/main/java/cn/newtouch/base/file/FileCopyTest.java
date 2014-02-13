@@ -8,7 +8,7 @@ public class FileCopyTest
 {
 
     /**
-     * 复制整个文件夹内容
+     * 复制文件夹
      * 
      * @param oldPath
      *            String 原文件路径 如：c:/fqf
@@ -40,8 +40,8 @@ public class FileCopyTest
                 if (temp.isFile())
                 {
                     FileInputStream input = new FileInputStream(temp);
-                    FileOutputStream output = new FileOutputStream(newPath
-                            + File.separator + (temp.getName()).toString());
+                    FileOutputStream output = new FileOutputStream(newPath + File.separator
+                            + (temp.getName()).toString());
                     byte[] b = new byte[1024 * 5];
                     int len;
                     while ((len = input.read(b)) != -1)
@@ -55,8 +55,7 @@ public class FileCopyTest
                 else
                     if (temp.isDirectory())
                     {// 如果是子文件夹
-                        copyFolder(oldPath + File.separator + element, newPath
-                                + File.separator + element);
+                        copyFolder(oldPath + File.separator + element, newPath + File.separator + element);
                     }
             }
         }
@@ -69,7 +68,8 @@ public class FileCopyTest
 
     public static void main(String[] args)
     {
-        copyFolder("C:\\test1", "C:\\test2");
+        copyFolder("D:" + File.separator + "test" + File.separator + "111", "D:" + File.separator + "test"
+                + File.separator + "555");
     }
 
 }
