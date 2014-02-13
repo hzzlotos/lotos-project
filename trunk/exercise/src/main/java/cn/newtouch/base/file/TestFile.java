@@ -45,6 +45,7 @@ public class TestFile
         }
         else
         {
+            // 项目根目录为基准
             f.getParentFile().mkdirs();
             try
             {
