@@ -8,15 +8,15 @@ import java.sql.Statement;
 
 public final class JdbcUtils
 {
-    private static String url      = "jdbc:mysql://localhost:3306/jdbc";
+    private static String url      = "jdbc:oracle:thin:@192.168.100.234:1521:GENERALDBDEV";
 
-    private static String user     = "root";
+    private static String user     = "wangyan";
 
-    private static String password = "";
+    private static String password = "wangyan123456";
 
     public static Connection getConnection() throws Exception
     {
-        Class.forName("com.mysql.jdbc.Driver");
+        Class.forName("oracle.jdbc.driver.OracleDriver");
         return DriverManager.getConnection(url, user, password);
     }
 
