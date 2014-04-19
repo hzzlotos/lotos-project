@@ -28,5 +28,5 @@ package cn.newtouch.proxyInvoke;
 
 public interface IHello
 {
-    public void say();
+    public void say(String aaa);
 }

@@ -45,6 +45,7 @@ public class HelloInvocationHandler implements InvocationHandler
         {
             System.out.println("proxy say hello!");
             method.invoke(this.obj, args);
+            System.out.println("parameter===" + args[0]);
         }
         catch (Exception e)
         {

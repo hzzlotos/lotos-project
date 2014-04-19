@@ -36,7 +36,7 @@ public class TestMain
         IHello hello = new Hello();
         IHello proxy = (IHello) Proxy.newProxyInstance(hello.getClass().getClassLoader(), hello.getClass()
                 .getInterfaces(), new HelloInvocationHandler(hello));
-        proxy.say();
+        proxy.say("111");
     }
 
 }

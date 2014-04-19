@@ -29,7 +29,7 @@ package cn.newtouch.proxyInvoke;
 public class Hello implements IHello
 {
     @Override
-    public void say()
+    public void say(String aaa)
     {
         System.out.println("say hello!");
     }
