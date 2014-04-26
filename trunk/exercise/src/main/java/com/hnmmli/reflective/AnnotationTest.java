@@ -4,7 +4,7 @@
 // This software is the confidential and proprietary information of
 // Digital
 //
-// Original author: zzHe
+// Original author: Administrator
 //
 //-------------------------------------------------------------------------
 // LOOSOFT MAKES NO REPRESENTATIONS OR WARRANTIES ABOUT THE SUITABILITY OF
@@ -24,51 +24,27 @@
 // SPECIFICALLY DISCLAIMS ANY EXPRESS OR IMPLIED WARRANTY OF FITNESS FOR
 // HIGH RISK ACTIVITIES.
 //-------------------------------------------------------------------------
-package com.drcl;
+package com.hnmmli.reflective;
 
-import java.lang.reflect.Field;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
-public class FieldTest
-{
+import com.hnmmli.enumtest.EnumTest;
 
-    /**
-     * Description of this Method
-     * 
-     * @since 2013-5-3
-     * @author zzHe
-     * @param args
-     */
-    public static void main(String[] args)
-    {
-        try
-        {
-            Field[] fs = AA.class.getDeclaredFields();
+//注解@Retention可以用来修饰注解,是注解的注解,称为元注解
+//RetentionPolicy.CLASS修饰注解,表示注解的信息被保留在class文件(字节码文件)中;当程序编译时,但不会被虚拟机读取在运行的时候
+//RetentionPolicy.SOURCE修饰注解,表示注解的信息会被编译器抛弃,不会留在class文件中,注解的信息只会留在源文件中
+//RetentionPolicy.RUNTIME修饰注解,表示注解的信息被保留在class文件(字节码文件)中当程序编译时,会被虚拟机保留在运行时
+//RetentionPolicy.RUNTIME可以让你从JVM中读取Annotation注解的信息,以便在分析程序的时候使用.
+@Retention(RetentionPolicy.RUNTIME)
+// 用@interface来定义注解
+public @interface AnnotationTest {
+    // default表示默认值
+    String hello() default "hehe";
 
-            for (Field f : fs)
-            {
-                System.out.println(f.getName());
-                System.out.println(f.getType());
-            }
-            Field f = AA.class.getDeclaredField("name");
-            System.out.println(f.getType());
-            if (f.getType().equals(long.class))
-            {
+    int[] array() default { 2, 4, 5, 6 };
 
-            }
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
+    EnumTest lamp() default EnumTest.Id;
 
-}
-
-class AA
-{
-    private String name;
-
-    private int    cc;
-
-    private long   dd;
+    Class clazz() default String.class;
 }

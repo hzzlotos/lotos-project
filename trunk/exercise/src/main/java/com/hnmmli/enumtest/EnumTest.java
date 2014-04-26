@@ -4,7 +4,7 @@
 // This software is the confidential and proprietary information of
 // Digital
 //
-// Original author: zzHe
+// Original author: Administrator
 //
 //-------------------------------------------------------------------------
 // LOOSOFT MAKES NO REPRESENTATIONS OR WARRANTIES ABOUT THE SUITABILITY OF
@@ -24,32 +24,8 @@
 // SPECIFICALLY DISCLAIMS ANY EXPRESS OR IMPLIED WARRANTY OF FITNESS FOR
 // HIGH RISK ACTIVITIES.
 //-------------------------------------------------------------------------
-package com.drcl;
+package com.hnmmli.enumtest;
 
-public class StaticAndExtend
-{
-    /**
-     * Description of this Method
-     * 
-     * @since 2013-5-3
-     * @author zzHe
-     * @param args
-     */
-    public static void main(String[] args)
-    {
-        System.out.println(B.test);
-    }
-}
-
-class A
-{
-    public static Integer test;
-}
-
-class B extends A
-{
-    static
-    {
-        test = 2;
-    }
+public enum EnumTest {
+    Id, Name
 }

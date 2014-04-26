@@ -24,7 +24,7 @@
 // SPECIFICALLY DISCLAIMS ANY EXPRESS OR IMPLIED WARRANTY OF FITNESS FOR
 // HIGH RISK ACTIVITIES.
 //-------------------------------------------------------------------------
-package com.drcl;
+package com.hnmmli.overwrite;
 
 public class OverWriteTest
 {
@@ -32,36 +32,43 @@ public class OverWriteTest
     {
         try
         {
-            A1 b1 = B1.class.newInstance();
-            b1.call1();
+            A b = B.class.newInstance();
+            b.call();
+            b.call1();
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
-
     }
-
 }
 
-class A1
+abstract class A
 {
+    public void call()
+    {
+        System.out.println("A call");
+    }
+
     public void call1()
     {
         this.call2();
     }
 
-    public void call2()
-    {
-        System.out.println("this is A1.aaa()");
-    };
+    public abstract void call2();
 }
 
-class B1 extends A1
+class B extends A
 {
+    @Override
+    public void call()
+    {
+        System.out.println("B call");
+    }
+
     @Override
     public void call2()
     {
-        System.out.println("this is B1.aaa()");
+        System.out.println("this is B.call()");
     };
 }
