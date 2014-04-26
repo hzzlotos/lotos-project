@@ -24,7 +24,7 @@
 // SPECIFICALLY DISCLAIMS ANY EXPRESS OR IMPLIED WARRANTY OF FITNESS FOR
 // HIGH RISK ACTIVITIES.
 //-------------------------------------------------------------------------
-package com.hnmmli.static_code;
+package com.hnmmli.statictest;
 
 public class StaticCodeTest
 {
