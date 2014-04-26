@@ -4,7 +4,7 @@
 // This software is the confidential and proprietary information of
 // Digital
 //
-// Original author: zzHe
+// Original author: Administrator
 //
 //-------------------------------------------------------------------------
 // LOOSOFT MAKES NO REPRESENTATIONS OR WARRANTIES ABOUT THE SUITABILITY OF
@@ -24,16 +24,31 @@
 // SPECIFICALLY DISCLAIMS ANY EXPRESS OR IMPLIED WARRANTY OF FITNESS FOR
 // HIGH RISK ACTIVITIES.
 //-------------------------------------------------------------------------
-package com.drcl;
+package com.hnmmli.file;
 
-public class OverWriteTest
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+public class FileTest
 {
+
     public static void main(String[] args)
     {
         try
         {
-            A1 b1 = B1.class.newInstance();
-            b1.call1();
+            InputStream in = new FileInputStream("F:" + File.separator + "4月10日会议笔记.txt");
+
+            OutputStream aaa = new FileOutputStream("F:" + File.separator + "4月10日会议笔记.txt");
+            // OutputStream aaa2 = new FileOutputStream("F:" + File.separator + "4月10日会议笔记.txt");
+            InputStream in2 = new FileInputStream("F:" + File.separator + "4月10日会议笔记.txt");
+            System.out.println(in.read());
+
+            aaa.write(97);
+            System.out.println(in2.read());
+            // System.out.println(aaa2);
         }
         catch (Exception e)
         {
@@ -41,27 +56,4 @@ public class OverWriteTest
         }
 
     }
-
-}
-
-class A1
-{
-    public void call1()
-    {
-        this.call2();
-    }
-
-    public void call2()
-    {
-        System.out.println("this is A1.aaa()");
-    };
-}
-
-class B1 extends A1
-{
-    @Override
-    public void call2()
-    {
-        System.out.println("this is B1.aaa()");
-    };
 }

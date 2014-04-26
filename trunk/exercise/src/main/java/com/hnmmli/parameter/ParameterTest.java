@@ -4,7 +4,7 @@
 // This software is the confidential and proprietary information of
 // Digital
 //
-// Original author: zzHe
+// Original author: Administrator
 //
 //-------------------------------------------------------------------------
 // LOOSOFT MAKES NO REPRESENTATIONS OR WARRANTIES ABOUT THE SUITABILITY OF
@@ -24,44 +24,23 @@
 // SPECIFICALLY DISCLAIMS ANY EXPRESS OR IMPLIED WARRANTY OF FITNESS FOR
 // HIGH RISK ACTIVITIES.
 //-------------------------------------------------------------------------
-package com.drcl;
+package com.hnmmli.parameter;
 
-public class OverWriteTest
+public class ParameterTest
 {
+
     public static void main(String[] args)
     {
-        try
-        {
-            A1 b1 = B1.class.newInstance();
-            b1.call1();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
+        mutativeParameter("aaa", "bbb");
     }
 
-}
-
-class A1
-{
-    public void call1()
+    // 可变参数
+    private static void mutativeParameter(String... strs)
     {
-        this.call2();
+
+        for (String str : strs)
+        {
+            System.out.println("===" + str);
+        }
     }
-
-    public void call2()
-    {
-        System.out.println("this is A1.aaa()");
-    };
-}
-
-class B1 extends A1
-{
-    @Override
-    public void call2()
-    {
-        System.out.println("this is B1.aaa()");
-    };
 }

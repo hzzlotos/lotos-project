@@ -4,7 +4,7 @@
 // This software is the confidential and proprietary information of
 // Digital
 //
-// Original author: zzHe
+// Original author: Administrator
 //
 //-------------------------------------------------------------------------
 // LOOSOFT MAKES NO REPRESENTATIONS OR WARRANTIES ABOUT THE SUITABILITY OF
@@ -24,44 +24,30 @@
 // SPECIFICALLY DISCLAIMS ANY EXPRESS OR IMPLIED WARRANTY OF FITNESS FOR
 // HIGH RISK ACTIVITIES.
 //-------------------------------------------------------------------------
-package com.drcl;
+package com.hnmmli.bigDecimal;
 
-public class OverWriteTest
+import java.math.BigDecimal;
+
+public class BigDecimalTest
 {
     public static void main(String[] args)
     {
-        try
-        {
-            A1 b1 = B1.class.newInstance();
-            b1.call1();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        BigDecimal bigDecimal1 = new BigDecimal(10.0F), bigDecimal3;
+        BigDecimal bigDecimal2 = new BigDecimal(5.0D);
+        bigDecimal3 = bigDecimal1.add(bigDecimal2);// +
+        System.out.println(bigDecimal3.doubleValue());
 
+        bigDecimal3 = bigDecimal1.subtract(bigDecimal2);// -
+        System.out.println(bigDecimal3.doubleValue());
+
+        bigDecimal3 = bigDecimal1.multiply(bigDecimal2);// *
+        System.out.println(bigDecimal3.doubleValue());
+
+        bigDecimal3 = bigDecimal1.divide(bigDecimal2);// /
+        System.out.println(bigDecimal3.doubleValue());
+
+        System.out.println(bigDecimal1.compareTo(bigDecimal2));
+
+        System.out.println(bigDecimal2.compareTo(bigDecimal1));
     }
-
-}
-
-class A1
-{
-    public void call1()
-    {
-        this.call2();
-    }
-
-    public void call2()
-    {
-        System.out.println("this is A1.aaa()");
-    };
-}
-
-class B1 extends A1
-{
-    @Override
-    public void call2()
-    {
-        System.out.println("this is B1.aaa()");
-    };
 }
