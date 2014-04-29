@@ -24,25 +24,36 @@
 // SPECIFICALLY DISCLAIMS ANY EXPRESS OR IMPLIED WARRANTY OF FITNESS FOR
 // HIGH RISK ACTIVITIES.
 //-------------------------------------------------------------------------
-package com.hnmmli.calendar;
+package com.hnmmli.logger;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class CalendarTest
+public class LoggerTest
 {
+    private static Logger logger = Logger.getLogger("com.hnmmli.logger.LoggerTest");
 
     public static void main(String[] args)
     {
-        Calendar c = Calendar.getInstance();
-        c.setTime(new Date());
 
-        System.out.println(c.getTimeInMillis());
-
-        c = new GregorianCalendar();
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS").format(c.getTime()));
+        logger.setLevel(Level.INFO);
+        logger.info("俺不管,俺要吃三套鸭!");
+        logger.log(Level.WARNING, "俺不管,俺要吃三套鸭!");
+        getName("三套鸭", 123);
     }
 
+    private static String getName(String name, int type)
+    {
+        logger.log(Level.INFO, "方法开始 %s");
+        String result = name + type;
+        try
+        {
+            throw new NullPointerException();
+        }
+        catch (Exception e)
+        {
+            logger.log(Level.SEVERE, "出错了", e);
+        }
+        return result;
+    }
 }

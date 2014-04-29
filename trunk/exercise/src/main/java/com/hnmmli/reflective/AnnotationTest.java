@@ -1,33 +1,10 @@
-//-------------------------------------------------------------------------
-// Copyright (c) 2000-2010 Digital. All Rights Reserved.
-//
-// This software is the confidential and proprietary information of
-// Digital
-//
-// Original author: Administrator
-//
-//-------------------------------------------------------------------------
-// LOOSOFT MAKES NO REPRESENTATIONS OR WARRANTIES ABOUT THE SUITABILITY OF
-// THE SOFTWARE, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-// TO THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
-// PARTICULAR PURPOSE, OR NON-INFRINGEMENT. UFINITY SHALL NOT BE
-// LIABLE FOR ANY DAMAGES SUFFERED BY LICENSEE AS A RESULT OF USING,
-// MODIFYING OR DISTRIBUTING THIS SOFTWARE OR ITS DERIVATIVES.
-//
-// THIS SOFTWARE IS NOT DESIGNED OR INTENDED FOR USE OR RESALE AS ON-LINE
-// CONTROL EQUIPMENT IN HAZARDOUS ENVIRONMENTS REQUIRING FAIL-SAFE
-// PERFORMANCE, SUCH AS IN THE OPERATION OF NUCLEAR FACILITIES, AIRCRAFT
-// NAVIGATION OR COMMUNICATION SYSTEMS, AIR TRAFFIC CONTROL, DIRECT LIFE
-// SUPPORT MACHINES, OR WEAPONS SYSTEMS, IN WHICH THE FAILURE OF THE
-// SOFTWARE COULD LEAD DIRECTLY TO DEATH, PERSONAL INJURY, OR SEVERE
-// PHYSICAL OR ENVIRONMENTAL DAMAGE ("HIGH RISK ACTIVITIES"). UFINITY
-// SPECIFICALLY DISCLAIMS ANY EXPRESS OR IMPLIED WARRANTY OF FITNESS FOR
-// HIGH RISK ACTIVITIES.
-//-------------------------------------------------------------------------
 package com.hnmmli.reflective;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 import com.hnmmli.enumtest.EnumTest;
 
@@ -37,6 +14,18 @@ import com.hnmmli.enumtest.EnumTest;
 //RetentionPolicy.RUNTIME修饰注解,表示注解的信息被保留在class文件(字节码文件)中当程序编译时,会被虚拟机保留在运行时
 //RetentionPolicy.RUNTIME可以让你从JVM中读取Annotation注解的信息,以便在分析程序的时候使用.
 @Retention(RetentionPolicy.RUNTIME)
+// 限定注解的使用,使用@Target。
+// ElementType.TYPE //接口、类、枚举、注解
+// ElementType.FIELD //字段、枚举的常量
+// ElementType.METHOD //方法
+// ElementType.PARAMETER //方法参数
+// ElementType.CONSTRUCTOR //构造函数
+// ElementType.LOCAL_VARIABLE //局部变量
+// ElementType.ANNOTATION_TYPE //注解
+// ElementType.PACKAGE //包
+@Target(ElementType.TYPE)
+// 在javadoc中添加该注解
+@Documented
 // 用@interface来定义注解
 public @interface AnnotationTest {
     // default表示默认值

@@ -24,25 +24,18 @@
 // SPECIFICALLY DISCLAIMS ANY EXPRESS OR IMPLIED WARRANTY OF FITNESS FOR
 // HIGH RISK ACTIVITIES.
 //-------------------------------------------------------------------------
-package com.hnmmli.calendar;
+package com.hnmmli.timer;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.TimerTask;
 
-public class CalendarTest
+public class TimerTaskTest extends TimerTask
 {
-
-    public static void main(String[] args)
+    @Override
+    public void run()
     {
-        Calendar c = Calendar.getInstance();
-        c.setTime(new Date());
-
-        System.out.println(c.getTimeInMillis());
-
-        c = new GregorianCalendar();
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS").format(c.getTime()));
+        System.out.println("-------执行任务--------");
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS").format(new Date()));
     }
-
 }

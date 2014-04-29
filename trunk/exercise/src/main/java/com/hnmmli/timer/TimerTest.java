@@ -24,25 +24,56 @@
 // SPECIFICALLY DISCLAIMS ANY EXPRESS OR IMPLIED WARRANTY OF FITNESS FOR
 // HIGH RISK ACTIVITIES.
 //-------------------------------------------------------------------------
-package com.hnmmli.calendar;
+package com.hnmmli.timer;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Timer;
 
-public class CalendarTest
+public class TimerTest
 {
 
     public static void main(String[] args)
     {
-        Calendar c = Calendar.getInstance();
-        c.setTime(new Date());
-
-        System.out.println(c.getTimeInMillis());
-
-        c = new GregorianCalendar();
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS").format(c.getTime()));
+        // timer1();
+        // timer2();
+        timer3();
+        // timer4();
     }
 
+    public static void timer1()
+    {
+        Timer timer = new Timer();
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS").format(new Date()));
+        timer.schedule(new TimerTaskTest(), 3000);// 3000毫秒之后运行
+    }
+
+    public static void timer2()
+    {
+        Calendar calendar = new GregorianCalendar();
+        calendar.add(Calendar.MINUTE, 1);
+        calendar.set(Calendar.SECOND, 0); // 一分钟后执行
+        Timer timer = new Timer();
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS").format(new Date()));
+        timer.schedule(new TimerTaskTest(), calendar.getTime());
+    }
+
+    public static void timer3()
+    {
+        Timer timer = new Timer();
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS").format(new Date()));
+        timer.schedule(new TimerTaskTest(), 10000, 3000);// 3000毫秒之后运行,此后每3000毫秒运行一次
+    }
+
+    public static void timer4()
+    {
+        Calendar calendar = new GregorianCalendar();
+        calendar.set(Calendar.MINUTE, 1); // 控制分
+        calendar.set(Calendar.SECOND, 30); // 控制秒 一分半之后执行
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS").format(new Date()));
+        Timer timer = new Timer();
+        timer.schedule(new TimerTaskTest(), calendar.getTime(), 3000);
+    }
 }

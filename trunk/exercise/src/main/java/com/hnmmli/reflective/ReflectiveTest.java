@@ -1,34 +1,11 @@
-//-------------------------------------------------------------------------
-// Copyright (c) 2000-2010 Digital. All Rights Reserved.
-//
-// This software is the confidential and proprietary information of
-// Digital
-//
-// Original author: Administrator
-//
-//-------------------------------------------------------------------------
-// LOOSOFT MAKES NO REPRESENTATIONS OR WARRANTIES ABOUT THE SUITABILITY OF
-// THE SOFTWARE, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-// TO THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
-// PARTICULAR PURPOSE, OR NON-INFRINGEMENT. UFINITY SHALL NOT BE
-// LIABLE FOR ANY DAMAGES SUFFERED BY LICENSEE AS A RESULT OF USING,
-// MODIFYING OR DISTRIBUTING THIS SOFTWARE OR ITS DERIVATIVES.
-//
-// THIS SOFTWARE IS NOT DESIGNED OR INTENDED FOR USE OR RESALE AS ON-LINE
-// CONTROL EQUIPMENT IN HAZARDOUS ENVIRONMENTS REQUIRING FAIL-SAFE
-// PERFORMANCE, SUCH AS IN THE OPERATION OF NUCLEAR FACILITIES, AIRCRAFT
-// NAVIGATION OR COMMUNICATION SYSTEMS, AIR TRAFFIC CONTROL, DIRECT LIFE
-// SUPPORT MACHINES, OR WEAPONS SYSTEMS, IN WHICH THE FAILURE OF THE
-// SOFTWARE COULD LEAD DIRECTLY TO DEATH, PERSONAL INJURY, OR SEVERE
-// PHYSICAL OR ENVIRONMENTAL DAMAGE ("HIGH RISK ACTIVITIES"). UFINITY
-// SPECIFICALLY DISCLAIMS ANY EXPRESS OR IMPLIED WARRANTY OF FITNESS FOR
-// HIGH RISK ACTIVITIES.
-//-------------------------------------------------------------------------
 package com.hnmmli.reflective;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+
+import com.hnmmli.enumtest.EnumTest;
 
 public class ReflectiveTest
 {
@@ -39,6 +16,8 @@ public class ReflectiveTest
         // newInstance();
         // field();
         // method();
+        // annoTest();
+        invoke();
     }
 
     private static void theClass()
@@ -100,11 +79,12 @@ public class ReflectiveTest
     {
         // 取得所有对外的公开属性,包括父类继承来的的,接口继承来的
         Field[] fields = Test.class.getFields();
-        for (Field field : fields)
+        Field field = null;
+        for (Field temp : fields)
         {
-            System.out.println(field.getName());
-            System.out.println(field.getType());
-            System.out.println(Modifier.toString(field.getModifiers()));
+            System.out.println(temp.getName());
+            System.out.println(temp.getType());
+            System.out.println(Modifier.toString(temp.getModifiers()));
             System.out.println("=====================");
             // 其中输出有
             // iT_d
@@ -114,12 +94,29 @@ public class ReflectiveTest
         System.out.println("--------------------------");
         // 取得当前类中的所有属性,包括私有的
         fields = Test.class.getDeclaredFields();
-        for (Field field : fields)
+        for (Field temp : fields)
         {
-            System.out.println(field.getName());
-            System.out.println(field.getType());
-            System.out.println(Modifier.toString(field.getModifiers()));
+            System.out.println(temp.getName());
+            System.out.println(temp.getType());
+            System.out.println(Modifier.toString(temp.getModifiers()));
             System.out.println("=====================");
+        }
+        System.out.println("--------------------------");
+        try
+        {
+            Test test = Test.class.newInstance();
+            field = Test.class.getDeclaredField("a");
+            // field.set(test, "haha"); // 私有属性不可赋值
+            // System.out.println(field.get(test));// 私有属性不可取值
+            field = Test.class.getField("c");
+            Object c = field.get(test);
+            System.out.println(c);
+            field.set(test, 5);
+            System.out.println(field.get(test));
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
 
@@ -162,8 +159,69 @@ public class ReflectiveTest
             System.out.println("==========method end===========");
         }
     }
+
+    private static void annoTest()
+    {
+        Annotation[] annos = AnnoTest.class.getAnnotations();
+        for (Annotation anno : annos)
+        {
+            System.out.println(anno.annotationType());
+        }
+        if (AnnoTest.class.isAnnotationPresent(AnnotationTest.class))
+        {
+            System.out.println("class have AnnotationTest");
+            AnnotationTest annotationTest = AnnoTest.class.getAnnotation(AnnotationTest.class);
+            EnumTest enumTest = annotationTest.lamp();
+            System.out.println(annotationTest.hello());
+            System.out.println(enumTest);
+            int[] i = annotationTest.array();
+            System.out.println(i[0] + " " + i[1]);
+        }
+        System.out.println("=======================================");
+        try
+        {
+            Field field = AnnoTest.class.getDeclaredField("name");
+            Method method = AnnoTest.class.getDeclaredMethod("showName");
+            if (field.isAnnotationPresent(Annotation2Test.class))
+            {
+                System.out.println("field have Annotation2Test");
+                Annotation2Test annotation2Test = field.getAnnotation(Annotation2Test.class);
+                System.out.println("annotation2Test.show()========" + annotation2Test.show());
+            }
+            if (method.isAnnotationPresent(Annotation2Test.class))
+            {
+                System.out.println("method have Annotation2Test");
+            }
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private static void invoke()
+    {
+        try
+        {
+            Test t = Test.class.newInstance();
+            // 需将参数类型带上,顺序必须匹配好
+            Method method = Test.class.getMethod("setI_a", String.class, int.class);
+            // 参数不匹配
+            // Method method = Test.class.getMethod("setI_a");
+            // 参数顺序不匹配
+            // Method method = Test.class.getMethod("setI_a", int.class, String.class);
+            method.invoke(t, "aaa", 0);
+            System.out.println(t.getI_a());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 }
 
+// =======================================================================
 interface ITemp<A, V>
 {
     public double iT_d = 10D;
@@ -202,7 +260,7 @@ class Test extends SuperTest implements ITemp
         return this.a;
     }
 
-    public void setI_a(String a)
+    public void setI_a(String a, int k)
     {
         this.a = a;
     }
@@ -218,14 +276,17 @@ class Test extends SuperTest implements ITemp
     }
 }
 
-@AnnotationTest()
-class Anno1Test
+@AnnotationTest(clazz = Integer.class, hello = "hello,id")
+class AnnoTest
 {
+    @Annotation2Test(show = "hello show")
+    private String name  = "hehe";
 
-}
+    public String  name2 = "hehe";
 
-@AnnotationTest(clazz = Integer.class, hello = "name")
-class Anno2Test
-{
-
+    @Annotation2Test()
+    public void showName()
+    {
+        System.out.println("name is " + this.name);
+    }
 }
