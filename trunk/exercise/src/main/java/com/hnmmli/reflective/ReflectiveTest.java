@@ -4,8 +4,11 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 
 import com.hnmmli.enumtest.EnumTest;
+import com.hnmmli.generics.Pair;
 
 public class ReflectiveTest
 {
@@ -17,7 +20,8 @@ public class ReflectiveTest
         // field();
         // method();
         // annoTest();
-        invoke();
+        // invoke();
+        generics();
     }
 
     private static void theClass()
@@ -219,9 +223,27 @@ public class ReflectiveTest
             e.printStackTrace();
         }
     }
+
+    private static void generics()
+    {
+        for (Type type : Pair.class.getTypeParameters())
+        {
+            if (type instanceof Class)
+            {
+                System.out.println("是class");
+            }
+            if (type instanceof TypeVariable)
+            {
+                System.out.println(((TypeVariable) type).getName());
+            }
+        }
+    }
 }
 
 // =======================================================================
+// =======================================================================
+// =======================================================================
+
 interface ITemp<A, V>
 {
     public double iT_d = 10D;
@@ -239,6 +261,7 @@ class SuperTest implements Itest
 
     protected String s_a;
 
+    @Override
     public String getI_a()
     {
         return "" + i_z;

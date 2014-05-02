@@ -26,6 +26,7 @@
 //-------------------------------------------------------------------------
 package com.hnmmli.logger;
 
+import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,16 +36,32 @@ public class LoggerTest
 
     public static void main(String[] args)
     {
-
+        // 第二参数指包名+文件名去掉".properties",比如需要找该类同级的logger.properties文件 则该参数为'com.hnmmli.logger.logger'
+        logger = Logger.getLogger("com.hnmmli.logger.LoggerTest", "logger");
         logger.setLevel(Level.INFO);
+        try
+        {
+            // File file = new File("g:/logs/javalogging.log");
+            // file.getParentFile().mkdirs();
+            // logger.addHandler(new FileHandler(file.getPath()));
+            logger.addHandler(new FileHandler("g:/logs/javalogging.log"));
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
         logger.info("俺不管,俺要吃三套鸭!");
+        logger.warning("俺不管,俺要吃三套鸭!");
         logger.log(Level.WARNING, "俺不管,俺要吃三套鸭!");
+        // 第三参数为配置文件中指定的参数数组
+        logger.log(Level.WARNING, "logger.org.hibernate", new Object[] { "ye!", "2" });
         getName("三套鸭", 123);
     }
 
     private static String getName(String name, int type)
     {
-        logger.log(Level.INFO, "方法开始 %s");
+        logger.log(Level.INFO, "方法开始");
         String result = name + type;
         try
         {
