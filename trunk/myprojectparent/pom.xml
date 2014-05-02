@@ -6,6 +6,9 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>../exercise</module>
+		<module>../architecture</module>
+		<module>../memcached</module>		
+		<module>../level</module>
 	</modules>
 	<name>MyProjectParent</name>
 	<!-- 设置字符集为UTF-8 -->	
