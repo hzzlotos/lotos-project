@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 
 public class ConnectionHolder
 {
+    // 多数据源
     private Map<DataSource, Connection> connectionMap = new HashMap<DataSource, Connection>();
 
     public Connection getConnection(DataSource dataSource) throws SQLException
