@@ -12,6 +12,10 @@ public class EqualsAndHashCodeTest
         System.out.println(bbb.hashCode());
         System.out.println(ccc.hashCode());
         System.out.println("===================================");
+        // ==比较的时候使用的不是hashcode()来比较的
+        System.out.println(aaa == bbb);
+        System.out.println(aaa == ccc);
+        System.out.println("===================================");
         System.out.println(aaa.equals(bbb));
         System.out.println(aaa.equals(ccc));
     }
