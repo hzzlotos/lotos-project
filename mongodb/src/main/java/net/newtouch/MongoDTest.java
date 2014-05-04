@@ -6,12 +6,13 @@ import java.util.List;
 import org.bson.types.ObjectId;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.Bytes;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoOptions;
 import com.mongodb.QueryOperators;
 
 public class MongoDTest
@@ -39,7 +40,19 @@ public class MongoDTest
 
     public static DB init(String host, int port, String dbName, String username, String password) throws Exception
     {
-        Mongo mongo = new Mongo(host, port);
+        Mongo mongo = new MongoClient(host, port);
+
+        MongoOptions opt = mongo.getMongoOptions();
+
+        opt.autoConnectRetry = false;
+        opt.connectionsPerHost = 5000;
+        opt.connectTimeout = 30000;
+        opt.maxAutoConnectRetryTime = 0;
+        opt.maxWaitTime = 120000;
+        opt.socketKeepAlive = false;
+        opt.socketTimeout = 30000;
+        opt.threadsAllowedToBlockForConnectionMultiplier = 5;
+
         DB mdb = mongo.getDB("admin");
         if (!mdb.authenticate(username, password.toCharArray()))
         {
@@ -164,26 +177,25 @@ public class MongoDTest
         // 查询age >= 24
         System.out.println("find age >= 24: "
                 + dbTable.find(new BasicDBObject("age", new BasicDBObject("$gte", 24))).toArray());
+        // 查询age <= 24
         System.out.println("find age <= 24: "
                 + dbTable.find(new BasicDBObject("age", new BasicDBObject("$lte", 24))).toArray());
 
+        // 查询age != 25
         System.out.println("查询age!=25："
                 + dbTable.find(new BasicDBObject("age", new BasicDBObject("$ne", 25))).toArray());
+
+        // 查询 age in [24,25,26]
         System.out.println("查询age in 25/26/27："
                 + dbTable
                         .find(new BasicDBObject("age", new BasicDBObject(QueryOperators.IN, new int[] { 25, 26, 27 })))
                         .toArray());
+
+        // 查询 age not in [24,25,26]
         System.out.println("查询age not in 25/26/27："
                 + dbTable.find(
                         new BasicDBObject("age", new BasicDBObject(QueryOperators.NIN, new int[] { 25, 26, 27 })))
                         .toArray());
-        System.out.println("查询age exists 排序："
-                + dbTable.find(new BasicDBObject("age", new BasicDBObject(QueryOperators.EXISTS, true))).toArray());
-
-        System.out.println("只查询age属性：" + dbTable.find(null, new BasicDBObject("age", true)).toArray());
-        System.out.println("只查属性：" + dbTable.find(null, new BasicDBObject("age", true), 0, 2).toArray());
-        System.out.println("只查属性："
-                + dbTable.find(null, new BasicDBObject("age", true), 0, 2, Bytes.QUERYOPTION_NOTIMEOUT).toArray());
 
         // 只查询一条数据，多条去第一条
         System.out.println("findOne: " + dbTable.findOne());
@@ -197,11 +209,5 @@ public class MongoDTest
         // 查询age=26的数据，并且修改name的值为Abc
         System.out.println("findAndModify: "
                 + dbTable.findAndModify(new BasicDBObject("age", 26), new BasicDBObject("name", "Abc")));
-        System.out.println("findAndModify: " + dbTable.findAndModify(new BasicDBObject("age", 28), // 查询age=28的数据
-                new BasicDBObject("name", true), // 查询name属性
-                new BasicDBObject("age", true), // 按照age排序
-                false, // 是否删除，true表示删除
-                new BasicDBObject("name", "Abc"), // 修改的值，将name修改成Abc
-                true, true));
     }
 }
