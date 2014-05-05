@@ -26,7 +26,6 @@
 //-------------------------------------------------------------------------
 package net.newtouch;
 
-import net.rubyeye.xmemcached.CASOperation;
 import net.rubyeye.xmemcached.GetsResponse;
 import net.rubyeye.xmemcached.MemcachedClient;
 import net.rubyeye.xmemcached.MemcachedClientBuilder;
@@ -73,15 +72,19 @@ public class XmemcachedUtils
         return memcachedClient;
     }
 
-    public static void setValue(String key, String value) throws Exception
+    public static void saveValue(String key, String value) throws Exception
     {
         getMemcachedClient().set(key, 0, value);
     }
 
     public static boolean casValue(String key, String value) throws Exception
     {
+        long cas = 0;
         GetsResponse<Integer> result = memcachedClient.gets(key);
-        long cas = result.getCas();
+        if (null != result)
+        {
+            cas = result.getCas();
+        }
         return getMemcachedClient().cas(key, 0, value, cas);
     }
 
@@ -101,8 +104,8 @@ public class XmemcachedUtils
         // MemcachedClientBuilder builder = new XMemcachedClientBuilder(AddrUtil.getAddresses("127.0.0.1:11211"));
         try
         {
-            // memcachedClient = builder.build();
-            setValue("hello", "Hello,xmemcached");
+            memcachedClient = xmemcachedTest.getMemcachedClient();
+            casValue("hello", "Hello,xmemcached");
             Object value = getValue("hello");
             System.out.println("hello=" + value.toString());
             delete("hello");
@@ -125,23 +128,6 @@ public class XmemcachedUtils
         catch (Exception e)
         {
             e.printStackTrace();
-        }
-    }
-
-    static final class IncrmentOperation<T> implements CASOperation<T>
-    {
-
-        @Override
-        public int getMaxTries()
-        {
-            return Integer.MAX_VALUE;
-        }
-
-        @Override
-        public T getNewValue(long currentCAS, T currentValue)
-        {
-            currentCAS++;
-            return currentValue;
         }
     }
 
