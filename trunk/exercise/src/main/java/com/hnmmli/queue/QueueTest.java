@@ -24,23 +24,28 @@
 // SPECIFICALLY DISCLAIMS ANY EXPRESS OR IMPLIED WARRANTY OF FITNESS FOR
 // HIGH RISK ACTIVITIES.
 //-------------------------------------------------------------------------
-package com.hnmmli.set;
+package com.hnmmli.queue;
 
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.Queue;
 
-import com.google.common.collect.Maps;
-
-public class HashSetTest
+public class QueueTest
 {
-
     public static void main(String[] args)
     {
-        Map<String, String> map = Maps.newHashMap();
-        map.put("1", "1");
-        map.put("1", "2");
-        map.put("2", "5");
-        System.out.println(map.get("1"));
-        System.out.println(map.get("2"));
-    }
+        // 先进先出
+        Queue<String> queue = new LinkedList<>(); // LinkedBlockingQueue;ArrayBlockingQueue
+        queue.add("1");
+        queue.add("4");
+        queue.add("2");
+        queue.add("5");
+        queue.add("3");
 
+        // 获取但不移除此队列的头；如果此队列为空，则返回 null。
+        while (null != queue.peek())
+        {
+            // 获取并移除此队列的头，如果此队列为空，则返回 null。
+            System.out.println("======" + queue.poll() + "=======" + queue.size());
+        }
+    }
 }
