@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class GetProperties
+public class PropertiesTest
 {
     private Properties props;
 
-    public GetProperties(String fileName, String fileType) throws IOException
+    public PropertiesTest(String fileName, String fileType) throws IOException
     {
         this.props = new Properties();
         InputStream inStream = this.getClass().getClassLoader().getResourceAsStream(fileName);
