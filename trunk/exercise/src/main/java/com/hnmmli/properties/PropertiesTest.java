@@ -16,7 +16,6 @@ public class PropertiesTest
         if ("xml".equals(fileType))
         {
             this.props.loadFromXML(inStream);
-
         }
         else
         {

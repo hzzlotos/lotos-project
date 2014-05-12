@@ -2,7 +2,7 @@ package com.hnmmli.generics;
 
 import java.io.Serializable;
 
-public class Test
+public class GenericsTest
 {
     public static void main(String[] args)
     {
