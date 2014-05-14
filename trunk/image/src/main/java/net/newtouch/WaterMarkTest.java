@@ -21,7 +21,7 @@ public class WaterMarkTest
     public static void main(String[] args)
     {
         String srcImgPath = "E:/test/imagetest/origin/DSC_0674.jpg";
-        String iconPath = "E:/test/imagetest/origin/logo.jpg";
+        String iconPath = "E:/test/imagetest/origin/steelgt_logo.png";
         String targerPath = "E:/test/imagetest/target/img_mark_icon.jpg";
         String targerPath2 = "E:/test/imagetest/target/img_mark_icon_rotate.jpg";
         // 给图片添加水印

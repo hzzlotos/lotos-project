@@ -228,7 +228,7 @@ public final class ImageUtils
 
     private static String srcImgPath  = "E:/test/imagetest/origin/DSC_0674.jpg";
 
-    private static String iconPath    = "E:/test/imagetest/origin/logo.jpg";
+    private static String iconPath    = "E:/test/imagetest/origin/steelgt_logo.png";
 
     private static String targerPath  = "E:/test/imagetest/target/img_mark_icon.jpg";
 
@@ -239,7 +239,7 @@ public final class ImageUtils
     public static void main(String[] args) throws IOException
     {
         pressImage(srcImgPath, iconPath, targerPath, 10, 10, 0.4f);
-        pressText(srcImgPath, targerPath2, 150, "旺仔之印", "宋体", Font.BOLD | Font.ITALIC, Color.RED, 100, 100, 0.7f);
+        pressText(srcImgPath, targerPath2, 150, "何铮铮之印", "宋体", Font.BOLD | Font.ITALIC, Color.RED, 100, 100, 0.7f);
         resize(srcImgPath, targerPath3, 1000, 500, true);
     }
 }
