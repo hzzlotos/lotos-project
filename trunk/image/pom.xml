@@ -7,8 +7,8 @@
 		<version>1.0</version>
 		<relativePath>../myprojectparent</relativePath>
 	</parent>
-	<artifactId>watermark</artifactId>
-	<name>WaterMark</name>
+	<artifactId>image</artifactId>
+	<name>Image</name>
 	<dependencies>
 	</dependencies>  
 </project>

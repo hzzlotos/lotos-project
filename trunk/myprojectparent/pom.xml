@@ -11,6 +11,8 @@
 		<module>../memcached</module>
 		<module>../mongodb</module>
 		<module>../quicksample</module>
+		<module>../clone</module>
+		<module>../image</module>
 	</modules>
 	<name>MyProjectParent</name>
 	<!-- 设置字符集为UTF-8 -->	
