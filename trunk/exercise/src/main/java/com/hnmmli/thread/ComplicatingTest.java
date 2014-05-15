@@ -1,5 +1,6 @@
 package com.hnmmli.thread;
 
+//并发产生的问题
 public class ComplicatingTest
 {
     private int index;
