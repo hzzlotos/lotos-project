@@ -8,8 +8,7 @@ public class ThreadTest
     {
         // runnable();
         // joinTest();
-        // joinTest2();
-        exceptionTest();
+        joinTest2();
     }
 
     private static void runnable()
@@ -64,25 +63,6 @@ public class ThreadTest
             e.printStackTrace();
         }
         System.out.println("===========test");
-    }
-
-    private static void exceptionTest()
-    {
-        Thread thread = new ExceptionThread();
-        thread.start();
-    }
-}
-
-class ExceptionThread extends Thread
-{
-    // 参考下 Thread.setDefaultUncaughtExceptionHandler
-    @Override
-    public void run()
-    {
-        System.out.println("ExceptionThread test start");
-        String aa = null;
-        aa.toString();
-        System.out.println("ExceptionThread test out");
     }
 }
 
