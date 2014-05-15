@@ -7,8 +7,7 @@ public class ThreadTest
     public static void main(String[] args)
     {
         // runnable();
-        // joinTest();
-        joinTest2();
+        joinTest();
     }
 
     private static void runnable()
@@ -30,24 +29,6 @@ public class ThreadTest
     }
 
     private static void joinTest()
-    {
-        Thread thread1 = new A();
-        thread1.start();
-        System.out.println("===========test");
-        Thread thread2 = new A();
-        thread2.start();
-        try
-        {
-            thread2.join();
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
-        System.out.println("===========test");
-    }
-
-    private static void joinTest2()
     {
         Thread thread1 = new B();
         Thread thread2 = new C();
