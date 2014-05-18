@@ -50,7 +50,15 @@ java.util.concurrent库中的Lock或Condition时,就会出现这种情况. 实�
 同步阻塞是不推荐的--->即synchronized不推荐使用
 方法中的变量是线程私有的,可以做线程判断的依据
 
+14.7 线程安全的集合
+在java.util.concurrent包中提供了映象,有序集,队列的高效实现
+ConcurrentHashMap,ConcurrentSkipListMap,ConcurrentSkipListSet与ConcurrentLInkedQueue.
+他们的size方法不必在常量时间内操作,确定集合当前的大小通常需要遍历.
+迭代器不一定能反映出他们被构造之后的所有修改,但肯定不会将一个值返回两次,也不会抛出ConcurrentModificationException.
 
+List<E> synchArrayList = Collections.synchronizedList(new ArrayList<E>());
+Map<K,V> synchHashMap = Collections.synchronizedMap(new HashMap<K,V>());
+输出的集合的方法使用了锁加以保护,提供了线程的安全访问.
 
 
 
