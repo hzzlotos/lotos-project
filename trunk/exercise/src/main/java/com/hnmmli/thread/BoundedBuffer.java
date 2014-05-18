@@ -86,9 +86,15 @@ public class BoundedBuffer
     {
         BoundedBuffer test = new BoundedBuffer();
         Thread aa = new AA(test);
+        Thread aa2 = new AA(test);
+        Thread aa3 = new AA(test);
         Thread bb = new BB(test);
+        // Thread bb2 = new BB(test);
         aa.start();
+        aa2.start();
+        aa3.start();
         bb.start();
+        // bb2.start();
     }
 }
 
