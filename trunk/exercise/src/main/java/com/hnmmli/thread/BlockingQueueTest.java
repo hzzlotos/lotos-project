@@ -16,6 +16,7 @@ public class BlockingQueueTest
         String keyword1 = "a";
         String keyword2 = "b";
         String keyword3 = "c";
+
         BlockingQueue<File> queue = new ArrayBlockingQueue<File>(FILE_QUEUE_SIZE);
 
         FileEnumerationTask enumerator = new FileEnumerationTask(queue, new File(directory));
