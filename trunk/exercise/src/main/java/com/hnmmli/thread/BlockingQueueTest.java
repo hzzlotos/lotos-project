@@ -15,7 +15,7 @@ public class BlockingQueueTest
         String directory = "E://test//queue";
         String keyword1 = "a";
         String keyword2 = "b";
-
+        String keyword3 = "c";
         BlockingQueue<File> queue = new ArrayBlockingQueue<File>(FILE_QUEUE_SIZE);
 
         FileEnumerationTask enumerator = new FileEnumerationTask(queue, new File(directory));
@@ -23,6 +23,7 @@ public class BlockingQueueTest
 
         new Thread(new SearchTask(queue, keyword1)).start();
         new Thread(new SearchTask(queue, keyword2)).start();
+        new Thread(new SearchTask(queue, keyword3)).start();
     }
 }
 
@@ -121,7 +122,7 @@ class SearchTask implements Runnable
             String line = in.nextLine();
             if (line.contains(this.keyword))
             {
-                System.out.printf("%s:%d:%s%n", file.getPath(), lineNumber, line);
+                System.out.println(file.getPath() + "   行号:" + lineNumber + "   " + line);
             }
         }
         in.close();

@@ -5,6 +5,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 
 class TaskWithResult implements Callable<String>
 {
@@ -18,7 +19,7 @@ class TaskWithResult implements Callable<String>
     @Override
     public String call() throws Exception
     {
-        return "结果是============ " + this.id;
+        return "" + this.id;
     }
 }
 
@@ -26,6 +27,22 @@ public class CallableTest
 {
     public static void main(String[] args) throws Exception
     {
+        // testNo1();
+        testNo2();
+    }
+
+    private static void testNo1() throws Exception
+    {
+        Callable<String> myCallable = new TaskWithResult(111);
+        FutureTask<String> task = new FutureTask<>(myCallable);
+        Thread t = new Thread(task);
+        t.start();
+        System.out.println("=========================    " + task.get());
+    }
+
+    private static void testNo2() throws Exception
+    {
+
         ExecutorService exec = Executors.newCachedThreadPool();
         ArrayList<Future<String>> results = new ArrayList<Future<String>>(); // Future 相当于是用来存放Executor执行的结果的一种容器
         for (int i = 0; i < 10; i++)
@@ -36,7 +53,7 @@ public class CallableTest
         {
             if (fs.isDone())
             {
-                System.out.println(fs.get());
+                System.out.println("结果是=========================" + fs.get());
             }
             else
             {
