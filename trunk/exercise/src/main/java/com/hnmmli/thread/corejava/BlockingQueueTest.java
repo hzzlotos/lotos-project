@@ -1,4 +1,4 @@
-package com.hnmmli.thread;
+package com.hnmmli.thread.corejava;
 
 import java.io.File;
 import java.io.FileInputStream;

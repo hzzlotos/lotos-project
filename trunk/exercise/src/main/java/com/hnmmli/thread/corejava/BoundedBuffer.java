@@ -1,4 +1,4 @@
-package com.hnmmli.thread;
+package com.hnmmli.thread.corejava;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;

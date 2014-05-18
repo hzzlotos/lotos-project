@@ -1,4 +1,4 @@
-package com.hnmmli.thread;
+package com.hnmmli.thread.corejava;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,9 +18,9 @@ public class FutureTest
         String keyword1 = "a";
         String keyword2 = "b";
         String keyword3 = "c";
-        MatchCounter counter1 = new MatchCounter(new File(directory), keyword1);
-        MatchCounter counter2 = new MatchCounter(new File(directory), keyword2);
-        MatchCounter counter3 = new MatchCounter(new File(directory), keyword3);
+        MatchCounter1 counter1 = new MatchCounter1(new File(directory), keyword1);
+        MatchCounter1 counter2 = new MatchCounter1(new File(directory), keyword2);
+        MatchCounter1 counter3 = new MatchCounter1(new File(directory), keyword3);
         FutureTask<Integer> task1 = new FutureTask<Integer>(counter1);
         FutureTask<Integer> task2 = new FutureTask<Integer>(counter2);
         FutureTask<Integer> task3 = new FutureTask<Integer>(counter3);
@@ -46,7 +46,7 @@ public class FutureTest
 /**
  * This task counts the files in a directory and its subdirectories that contain a given keyword.
  */
-class MatchCounter implements Callable<Integer>
+class MatchCounter1 implements Callable<Integer>
 {
     private int    count;
 
@@ -60,7 +60,7 @@ class MatchCounter implements Callable<Integer>
      * @param directory the directory in which to start the search
      * @param keyword the keyword to look for
      */
-    public MatchCounter(File directory, String keyword)
+    public MatchCounter1(File directory, String keyword)
     {
         this.directory = directory;
         this.keyword = keyword;
@@ -79,7 +79,7 @@ class MatchCounter implements Callable<Integer>
             {
                 if (file.isDirectory())
                 {
-                    MatchCounter counter = new MatchCounter(file, this.keyword);
+                    MatchCounter1 counter = new MatchCounter1(file, this.keyword);
                     FutureTask<Integer> task = new FutureTask<Integer>(counter);
                     results.add(task);
                     Thread t = new Thread(task);
