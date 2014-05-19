@@ -35,12 +35,14 @@ public class ExecutorCompletionServiceTest
         list.add(counter2);
         list.add(counter3);
 
+        // ==========================1=====================================
         List<Future<Integer>> result = pool.invokeAll(list);
         for (Future<Integer> r : result)
         {
             System.out.println("---------" + r.get());
         }
 
+        // ==========================2===================================
         CompletionService<Integer> ecs = new ExecutorCompletionService<Integer>(pool);
         for (Callable<Integer> s : list)
         {

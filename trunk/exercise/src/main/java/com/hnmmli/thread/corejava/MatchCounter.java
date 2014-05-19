@@ -10,6 +10,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
+/**
+ * 多处调用,将例子中的类放出来了
+ */
 public class MatchCounter implements Callable<Integer>
 {
     private int             count;
