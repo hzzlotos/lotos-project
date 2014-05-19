@@ -59,7 +59,7 @@ public class ScheduledExecutorServiceTest
     }
 
     /**
-     * 每天晚上8点执行一次
+     * 每天固定时间执行1次
      * 每天定时安排任务进行执行
      */
     private static void executeEightAtNightPerDay()
@@ -68,7 +68,6 @@ public class ScheduledExecutorServiceTest
         long oneDay = 24 * 60 * 60 * 1000;
         long initDelay = getTimeMillis("20:52:00") - System.currentTimeMillis();
         initDelay = initDelay > 0 ? initDelay : oneDay + initDelay;
-
         executor.scheduleAtFixedRate(new EchoServer(), initDelay, oneDay, TimeUnit.MILLISECONDS);
     }
 
