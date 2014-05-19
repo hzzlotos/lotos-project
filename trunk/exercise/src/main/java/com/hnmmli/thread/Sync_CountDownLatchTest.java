@@ -2,21 +2,18 @@ package com.hnmmli.thread;
 
 import java.util.concurrent.CountDownLatch;
 
-public class CountDownLatchTest
+public class Sync_CountDownLatchTest
 {
 
     public static void main(String[] args)
     {
-        final int num = 5;
-        final CountDownLatch begin = new CountDownLatch(1);
-        final CountDownLatch end = new CountDownLatch(num);
-
-        for (int i = 0; i < num; i++)
+        //
+        CountDownLatch begin = new CountDownLatch(1);
+        CountDownLatch end = new CountDownLatch(5);
+        for (int i = 0; i < 7; i++)
         {
             new Thread(new AWorker(i, begin, end)).start();
         }
-
-        // judge prepare...
         try
         {
             Thread.sleep((long) (Math.random() * 5000));
@@ -25,10 +22,9 @@ public class CountDownLatchTest
         {
             e1.printStackTrace();
         }
-
         System.out.println("judge say : run !");
+        // 减少锁存器的计数 因为设置为1,所以该处将begin线程全部释放.
         begin.countDown();
-        long startTime = System.currentTimeMillis();
 
         try
         {
@@ -40,24 +36,20 @@ public class CountDownLatchTest
         }
         finally
         {
-            long endTime = System.currentTimeMillis();
             System.out.println("judge say : all arrived !");
-            System.out.println("spend time: " + (endTime - startTime));
         }
-
     }
-
 }
 
 class AWorker implements Runnable
 {
-    final CountDownLatch begin;
+    CountDownLatch begin;
 
-    final CountDownLatch end;
+    CountDownLatch end;
 
-    final int            id;
+    int            id;
 
-    public AWorker(final int id, final CountDownLatch begin, final CountDownLatch end)
+    public AWorker(int id, CountDownLatch begin, CountDownLatch end)
     {
         this.id = id;
         this.begin = begin;
@@ -71,7 +63,6 @@ class AWorker implements Runnable
         {
             System.out.println(this.id + " ready !");
             this.begin.await();
-            // run...
             Thread.sleep((long) (Math.random() * 10000));
         }
         catch (Throwable e)

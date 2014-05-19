@@ -4,7 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
-public class SemaphoreTest
+public class Sync_SemaphoreTest
 {
     public static void main(String[] args)
     {
