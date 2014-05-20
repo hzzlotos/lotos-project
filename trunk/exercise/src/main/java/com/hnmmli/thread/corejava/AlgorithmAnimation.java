@@ -135,7 +135,7 @@ class ArrayPanel extends JPanel
 class Sorter implements Runnable
 {
 
-    private static final int DELAY = 2000;
+    private static final int DELAY = 500;
 
     private Semaphore        semaphore;
 
