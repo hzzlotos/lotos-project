@@ -1,5 +1,7 @@
 package com.hnmmli.thread;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.Exchanger;
 
 /**
@@ -10,124 +12,146 @@ import java.util.concurrent.Exchanger;
  */
 public class Sync_ExchangerTest
 {
-
-    // 描述一个装水的杯子
-    public static class Cup
-    {
-        // 标识杯子是否有水
-        private boolean full = false;
-
-        public Cup(boolean full)
-        {
-            this.full = full;
-        }
-
-        // 添水，假设需要5s
-        public void addWater()
-        {
-            if (!this.full)
-            {
-                try
-                {
-                    Thread.sleep(5000);
-                }
-                catch (InterruptedException e)
-                {
-                }
-                this.full = true;
-            }
-        }
-
-        // 喝水，假设需要10s
-        public void drinkWater()
-        {
-            if (this.full)
-            {
-                try
-                {
-                    Thread.sleep(10000);
-                }
-                catch (InterruptedException e)
-                {
-                }
-                this.full = false;
-            }
-        }
-    }
-
-    public static void testExchanger()
+    private static void testExchanger()
     {
         // 初始化一个Exchanger，并规定可交换的信息类型是杯子
         final Exchanger<Cup> exchanger = new Exchanger<Cup>();
         // 初始化一个空的杯子和装满水的杯子
-        final Cup initialEmptyCup = new Cup(false);
-        final Cup initialFullCup = new Cup(true);
-
-        // 服务生线程
-        class Waiter implements Runnable
-        {
-            @Override
-            public void run()
-            {
-                Cup currentCup = initialEmptyCup;
-                try
-                {
-                    int i = 0;
-                    while (i < 2)
-                    {
-                        System.out.println("服务生开始往杯子中添水：" + System.currentTimeMillis());
-                        // 往空的杯子里加水
-                        currentCup.addWater();
-                        System.out.println("服务生添水完毕：" + System.currentTimeMillis());
-                        // 杯子满后和顾客的空杯子交换
-                        System.out.println("服务生等待与顾客交换杯子：" + System.currentTimeMillis());
-                        currentCup = exchanger.exchange(currentCup);
-                        System.out.println("服务生与顾客交换杯子完毕：" + System.currentTimeMillis());
-                        i++;
-                    }
-
-                }
-                catch (InterruptedException ex)
-                {
-                }
-            }
-        }
-
-        // 顾客线程
-        class Customer implements Runnable
-        {
-            @Override
-            public void run()
-            {
-                Cup currentCup = initialFullCup;
-                try
-                {
-                    int i = 0;
-                    while (i < 2)
-                    {
-                        System.out.println("顾客开始喝水：" + System.currentTimeMillis());
-                        // 把杯子里的水喝掉
-                        currentCup.drinkWater();
-                        System.out.println("顾客喝水完毕：" + System.currentTimeMillis());
-                        // 将空杯子和服务生的满杯子交换
-                        System.out.println("顾客等待与服务生交换杯子：" + System.currentTimeMillis());
-                        currentCup = exchanger.exchange(currentCup);
-                        System.out.println("顾客与服务生交换杯子完毕：" + System.currentTimeMillis());
-                        i++;
-                    }
-                }
-                catch (InterruptedException ex)
-                {
-                }
-            }
-        }
-
-        new Thread(new Waiter()).start();
-        new Thread(new Customer()).start();
+        final Cup initialEmptyCup = new Cup(false, 1);
+        final Cup initialFullCup = new Cup(true, 2);
+        new Thread(new Waiter(initialEmptyCup, exchanger)).start();
+        new Thread(new Customer(initialFullCup, exchanger)).start();
     }
 
     public static void main(String[] args)
     {
         testExchanger();
+    }
+}
+
+// 服务生线程
+class Waiter implements Runnable
+{
+    private Cup            currentCup;
+
+    private Exchanger<Cup> exchanger;
+
+    public Waiter(Cup currentCup, Exchanger<Cup> exchanger)
+    {
+        this.currentCup = currentCup;
+        this.exchanger = exchanger;
+    }
+
+    @Override
+    public void run()
+    {
+
+        try
+        {
+            int i = 0;
+            while (i < 2)
+            {
+                System.out.println("服务生开始往杯子中添水：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+                // 往空的杯子里加水
+                this.currentCup.addWater();
+                System.out.println("服务生添水完毕：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+                System.out.println("这是" + this.currentCup.getIndex() + "号杯子");
+                this.currentCup = this.exchanger.exchange(this.currentCup);
+                System.out.println("服务生与顾客交换杯子完毕：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+                i++;
+            }
+        }
+        catch (InterruptedException ex)
+        {
+        }
+    }
+}
+
+// 顾客线程
+class Customer implements Runnable
+{
+    private Cup            currentCup;
+
+    private Exchanger<Cup> exchanger;
+
+    public Customer(Cup currentCup, Exchanger<Cup> exchanger)
+    {
+        this.currentCup = currentCup;
+        this.exchanger = exchanger;
+    }
+
+    @Override
+    public void run()
+    {
+        try
+        {
+            int i = 0;
+            while (i < 2)
+            {
+                System.out.println("顾客开始喝水：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+                // 把杯子里的水喝掉
+                this.currentCup.drinkWater();
+                System.out.println("顾客喝水完毕：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+                System.out.println("这是" + this.currentCup.getIndex() + "号杯子");
+                this.currentCup = this.exchanger.exchange(this.currentCup);
+                System.out.println("顾客与服务生交换杯子完毕：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+                i++;
+            }
+        }
+        catch (InterruptedException ex)
+        {
+        }
+    }
+}
+
+// 描述一个装水的杯子
+class Cup
+{
+    // 标识杯子是否有水
+    private boolean full = false;
+
+    private int     index;
+
+    public int getIndex()
+    {
+        return this.index;
+    }
+
+    public Cup(boolean full, int index)
+    {
+        this.full = full;
+        this.index = index;
+    }
+
+    // 添水，假设需要5s
+    public void addWater()
+    {
+        if (!this.full)
+        {
+            try
+            {
+                Thread.sleep(5000);
+            }
+            catch (InterruptedException e)
+            {
+            }
+            this.full = true;
+        }
+    }
+
+    // 喝水，假设需要10s
+    public void drinkWater()
+    {
+        if (this.full)
+        {
+            try
+            {
+                Thread.sleep(10000);
+            }
+            catch (InterruptedException e)
+            {
+            }
+            this.full = false;
+        }
     }
 }
