@@ -14,10 +14,17 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * 在进行事务性操作时需要将共享资源锁定，这样可以保证在做事务性操作时只有一个线程能对资源进行操作，
  * 从而保证数据的完整性。在5.0以前，锁定的功能是由Synchronized关键字来实现的。
  */
-public class Test
+public class ReadWriteLockTest
 {
 
-    public static void testLockedTest() throws Exception
+    public static void main(String[] args) throws Exception
+    {
+        ReadWriteLockTest.testLockedTest();
+        System.out.println("---------------------");
+        ReadWriteLockTest.testReadWriteLockedTest();
+    }
+
+    private static void testLockedTest() throws Exception
     {
         final LockedTest LockedTest = new LockedTest();
         // 新建任务1，调用LockedTest的addValue方法
@@ -53,85 +60,7 @@ public class Test
         cachedService.shutdownNow();
     }
 
-    /**
-     * ReadWriteLock内置两个Lock，一个是读的Lock，一个是写的Lock。
-     * 多个线程可同时得到读的Lock，但只有一个线程能得到写的Lock，
-     * 而且写的Lock被锁定后，任何线程都不能得到Lock。ReadWriteLock提供的方法有：
-     * readLock(): 返回一个读的lock
-     * writeLock(): 返回一个写的lock, 此lock是排他的。
-     * ReadWriteLockedTest很适合处理类似文件的读写操作。
-     * 读的时候可以同时读，但不能写；写的时候既不能同时写也不能读。
-     */
-    public static class ReadWriteLockedTest
-    {
-        // 锁
-        ReadWriteLock lock     = new ReentrantReadWriteLock();
-
-        // 值
-        double        value    = 0d;
-
-        int           addtimes = 0;
-
-        /**
-         * 增加value的值，不允许多个线程同时进入该方法
-         */
-        public void addValue(double v)
-        {
-            // 得到writeLock并锁定
-            Lock writeLock = this.lock.writeLock();
-            writeLock.lock();
-            System.out.println("ReadWriteLockedTest to addValue: " + v + "   " + System.currentTimeMillis());
-            try
-            {
-                Thread.sleep(1000);
-            }
-            catch (InterruptedException e)
-            {
-            }
-            try
-            {
-                // 做写的工作
-                this.value += v;
-                this.addtimes++;
-            }
-            finally
-            {
-                // 释放writeLock锁
-                writeLock.unlock();
-            }
-        }
-
-        /**
-         * 获得信息。当有线程在调用addValue方法时，getInfo得到的信息可能是不正确的。
-         * 所以，也必须保证该方法在被调用时，没有方法在调用addValue方法。
-         */
-        public String getInfo()
-        {
-            // 得到readLock并锁定
-            Lock readLock = this.lock.readLock();
-            readLock.lock();
-            System.out.println("ReadWriteLockedTest to getInfo   " + System.currentTimeMillis());
-            try
-            {
-                Thread.sleep(1000);
-            }
-            catch (InterruptedException e)
-            {
-            }
-            try
-            {
-                // 做读的工作
-                return this.value + " : " + this.addtimes;
-            }
-            finally
-            {
-                // 释放readLock
-                readLock.unlock();
-            }
-        }
-    }
-
-    public static void testReadWriteLockedTest() throws Exception
+    private static void testReadWriteLockedTest() throws Exception
     {
         final ReadWriteLockedTest readWriteLockedTest = new ReadWriteLockedTest();
         // 新建任务1，调用LockedTest的addValue方法
@@ -174,12 +103,83 @@ public class Test
         future_1.get();
         cachedService_1.shutdownNow();
     }
+}
 
-    public static void main(String[] args) throws Exception
+/**
+ * ReadWriteLock内置两个Lock，一个是读的Lock，一个是写的Lock。
+ * 多个线程可同时得到读的Lock，但只有一个线程能得到写的Lock，
+ * 而且写的Lock被锁定后，任何线程都不能得到Lock。ReadWriteLock提供的方法有：
+ * readLock(): 返回一个读的lock
+ * writeLock(): 返回一个写的lock, 此lock是排他的。
+ * ReadWriteLockedTest很适合处理类似文件的读写操作。
+ * 读的时候可以同时读，但不能写；写的时候既不能同时写也不能读。
+ */
+class ReadWriteLockedTest
+{
+    int           addtimes = 0;
+
+    // 锁
+    ReadWriteLock lock     = new ReentrantReadWriteLock();
+
+    // 值
+    double        value    = 0d;
+
+    /**
+     * 增加value的值，不允许多个线程同时进入该方法
+     */
+    public void addValue(double v)
     {
-        Test.testLockedTest();
-        System.out.println("---------------------");
-        Test.testReadWriteLockedTest();
+        // 得到writeLock并锁定
+        Lock writeLock = this.lock.writeLock();
+        writeLock.lock();
+        System.out.println("ReadWriteLockedTest to addValue: " + v + "   " + System.currentTimeMillis());
+        try
+        {
+            Thread.sleep(1000);
+        }
+        catch (InterruptedException e)
+        {
+        }
+        try
+        {
+            // 做写的工作
+            this.value += v;
+            this.addtimes++;
+        }
+        finally
+        {
+            // 释放writeLock锁
+            writeLock.unlock();
+        }
+    }
+
+    /**
+     * 获得信息。当有线程在调用addValue方法时，getInfo得到的信息可能是不正确的。
+     * 所以，也必须保证该方法在被调用时，没有方法在调用addValue方法。
+     */
+    public String getInfo()
+    {
+        // 得到readLock并锁定
+        Lock readLock = this.lock.readLock();
+        readLock.lock();
+        System.out.println("ReadWriteLockedTest to getInfo   " + System.currentTimeMillis());
+        try
+        {
+            Thread.sleep(1000);
+        }
+        catch (InterruptedException e)
+        {
+        }
+        try
+        {
+            // 做读的工作
+            return this.value + " : " + this.addtimes;
+        }
+        finally
+        {
+            // 释放readLock
+            readLock.unlock();
+        }
     }
 }
 
@@ -189,11 +189,11 @@ public class Test
 class LockedTest
 {
 
+    int    addtimes = 0;
+
     Lock   l        = new ReentrantLock(); // 锁
 
     double value    = 0d;                 // 值
-
-    int    addtimes = 0;
 
     /**
      * 增加value的值，该方法的操作分为2步，而且相互依赖，必须实现在一个事务中
