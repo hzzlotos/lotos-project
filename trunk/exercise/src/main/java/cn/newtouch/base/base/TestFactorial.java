@@ -1,29 +1,3 @@
-//-------------------------------------------------------------------------
-// Copyright (c) 2000-2010 Digital. All Rights Reserved.
-//
-// This software is the confidential and proprietary information of
-// Digital
-//
-// Original author: zzHe
-//
-//-------------------------------------------------------------------------
-// LOOSOFT MAKES NO REPRESENTATIONS OR WARRANTIES ABOUT THE SUITABILITY OF
-// THE SOFTWARE, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-// TO THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
-// PARTICULAR PURPOSE, OR NON-INFRINGEMENT. UFINITY SHALL NOT BE
-// LIABLE FOR ANY DAMAGES SUFFERED BY LICENSEE AS A RESULT OF USING,
-// MODIFYING OR DISTRIBUTING THIS SOFTWARE OR ITS DERIVATIVES.
-//
-// THIS SOFTWARE IS NOT DESIGNED OR INTENDED FOR USE OR RESALE AS ON-LINE
-// CONTROL EQUIPMENT IN HAZARDOUS ENVIRONMENTS REQUIRING FAIL-SAFE
-// PERFORMANCE, SUCH AS IN THE OPERATION OF NUCLEAR FACILITIES, AIRCRAFT
-// NAVIGATION OR COMMUNICATION SYSTEMS, AIR TRAFFIC CONTROL, DIRECT LIFE
-// SUPPORT MACHINES, OR WEAPONS SYSTEMS, IN WHICH THE FAILURE OF THE
-// SOFTWARE COULD LEAD DIRECTLY TO DEATH, PERSONAL INJURY, OR SEVERE
-// PHYSICAL OR ENVIRONMENTAL DAMAGE ("HIGH RISK ACTIVITIES"). UFINITY
-// SPECIFICALLY DISCLAIMS ANY EXPRESS OR IMPLIED WARRANTY OF FITNESS FOR
-// HIGH RISK ACTIVITIES.
-//-------------------------------------------------------------------------
 package cn.newtouch.base.base;
 
 import java.util.HashSet;
@@ -44,12 +18,12 @@ public class TestFactorial
 
     private void start()
     {
-        for (String shuzi : shuzijihe)
+        for (String shuzi : this.shuzijihe)
         {
-            depthFirstSearch(shuzi);
+            this.depthFirstSearch(shuzi);
         }
-        System.out.println(sets.size());
-        for (String str : sets)
+        System.out.println(this.sets.size());
+        for (String str : this.sets)
         {
             System.out.println("===" + str);
         }
@@ -57,18 +31,18 @@ public class TestFactorial
 
     private void depthFirstSearch(String str)
     {
-        if (str.length() == shuzijihe.length)
+        if (str.length() == this.shuzijihe.length)
         {
-            sets.add(str);
+            this.sets.add(str);
         }
         else
         {
-            for (String shuzi : shuzijihe)
+            for (String shuzi : this.shuzijihe)
             {
                 if (str.indexOf(shuzi) < 0)
                 {
                     String ccc = str + shuzi;
-                    depthFirstSearch(ccc);
+                    this.depthFirstSearch(ccc);
                 }
             }
         }
