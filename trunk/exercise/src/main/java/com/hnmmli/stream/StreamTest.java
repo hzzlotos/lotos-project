@@ -43,6 +43,16 @@ public class StreamTest
         fis.close();
     }
 
+    private static void outputStreamTest() throws Exception
+    {
+        File f = new File("G:\\eclipse\\workspace\\exercise\\target\\classes\\com\\hnmmli\\stream\\流学习out_test.txt");
+        FileOutputStream fos = new FileOutputStream(f);
+        String test = "the outputsteam's test";
+        byte[] bs = test.getBytes();
+        fos.write(bs);
+        fos.close();
+    }
+
     private static void readTest() throws Exception
     {
         String path = URLDecoder.decode(StreamTest.class.getClassLoader()
@@ -56,16 +66,6 @@ public class StreamTest
         br.close();
     }
 
-    private static void outputStreamTest() throws Exception
-    {
-        File f = new File("G:\\eclipse\\workspace\\exercise\\target\\classes\\com\\hnmmli\\stream\\流学习out_test.txt");
-        FileOutputStream fos = new FileOutputStream(f);
-        String test = "the outputsteam's test";
-        byte[] bs = test.getBytes();
-        fos.write(bs);
-        fos.close();
-    }
-
     private static void writeTest() throws Exception
     {
         File f = new File("G:\\eclipse\\workspace\\exercise\\target\\classes\\com\\hnmmli\\stream\\流学习write_test.txt");
@@ -74,6 +74,5 @@ public class StreamTest
         pw.println(test);
         pw.println(test);
         pw.close();
-
     }
 }
