@@ -1,5 +1,7 @@
 package net.newtouch.server;
 
+import java.util.Properties;
+
 import net.rubyeye.xmemcached.GetsResponse;
 import net.rubyeye.xmemcached.MemcachedClient;
 import net.rubyeye.xmemcached.MemcachedClientBuilder;
@@ -9,48 +11,52 @@ import net.rubyeye.xmemcached.impl.KetamaMemcachedSessionLocator;
 import net.rubyeye.xmemcached.transcoders.SerializingTranscoder;
 import net.rubyeye.xmemcached.utils.AddrUtil;
 
-public class MemcachedServer implements CacheServer<String, Object>
+public class MemcachedServer implements ICacheServer<String, Object>
 {
-    private static MemcachedServer memcachedServer;
+    private static MemcachedServer        memcachedServer;
 
-    private static MemcachedClient memcachedClient;
+    private static MemcachedClientBuilder builder;
+
+    private static Properties             properties;
 
     private MemcachedServer()
     {
     }
 
-    public static CacheServer initServer() throws Exception
+    private MemcachedClient client;
+
+    public static ICacheServer init()
     {
         if (null == memcachedServer)
         {
             memcachedServer = new MemcachedServer();
+            Properties properties = PropertiesUtil.getProperties("memcached.properties");
+            MemcachedClientBuilder builder = new XMemcachedClientBuilder(AddrUtil.getAddresses(properties
+                    .getProperty("addresses")));
+            // 进行数据压缩，大于1KB时进行压缩
+            builder.getTranscoder().setCompressionThreshold(
+                    Integer.valueOf(properties.getProperty("compression.threshold")));
+            // 开启10根池连接
+            builder.setConnectionPoolSize(Integer.valueOf(properties.getProperty("connection.pool.size")));
 
-            if (null == memcachedClient)
-            {
-                // Properties properties = null;
-                // String addresses = properties.getProperty("").trim();
-                // if (logger.isInfoEnabled())
-                // {
-                // logger.info("Configure Properties:[addresses = " + addresses + "]");
-                // }
-                // MemcachedClientBuilder builder = new XMemcachedClientBuilder(AddrUtil.getAddresses(addresses));
-
-                MemcachedClientBuilder builder = new XMemcachedClientBuilder(AddrUtil.getAddresses("127.0.0.1:11211"));
-                // 使用二进制文件
-                builder.setCommandFactory(new BinaryCommandFactory());
-                // 使用一致性哈希算法（Consistent Hash Strategy）
-                builder.setSessionLocator(new KetamaMemcachedSessionLocator());
-                // 使用序列化传输编码
-                builder.setTranscoder(new SerializingTranscoder());
-                // 进行数据压缩，大于1KB时进行压缩
-                builder.getTranscoder().setCompressionThreshold(1024);
-                // 开启10根池连接
-                builder.setConnectionPoolSize(10);
-
-                memcachedClient = builder.build();
-            }
+            // 使用二进制文件
+            builder.setCommandFactory(new BinaryCommandFactory());
+            // 使用一致性哈希算法（Consistent Hash Strategy）
+            builder.setSessionLocator(new KetamaMemcachedSessionLocator());
+            // 使用序列化传输编码
+            builder.setTranscoder(new SerializingTranscoder());
         }
         return memcachedServer;
+    }
+
+    private void getClient() throws Exception
+    {
+        this.client = builder.build();
+    }
+
+    private void closeClient() throws Exception
+    {
+        this.client.shutdown();
     }
 
     @Override
@@ -58,13 +64,16 @@ public class MemcachedServer implements CacheServer<String, Object>
     {
         try
         {
+            this.getClient();
             long cas = 0;
-            GetsResponse<Integer> result = this.memcachedClient.gets(key);
-            if (null != result)
+            GetsResponse<Integer> casObj = this.client.gets(key);
+            if (null != casObj)
             {
-                cas = result.getCas();
+                cas = casObj.getCas();
             }
-            return this.memcachedClient.cas(key, 0, value, cas);
+            boolean result = this.client.cas(key, 0, value, cas);
+            this.closeClient();
+            return result;
         }
         catch (Exception e)
         {
@@ -78,8 +87,11 @@ public class MemcachedServer implements CacheServer<String, Object>
     {
         try
         {
-            // System.out.println(this.memcachedClient.gets(key).getCas());
-            return this.memcachedClient.get(key);
+            this.getClient();
+            // System.out.println(client.gets(key).getCas());
+            Object result = this.client.get(key);
+            this.closeClient();
+            return result;
         }
         catch (Exception e)
         {
@@ -93,8 +105,16 @@ public class MemcachedServer implements CacheServer<String, Object>
     {
         try
         {
-            this.memcachedClient.delete(key);
-            return true;
+            this.getClient();
+            long cas = 0;
+            GetsResponse<Integer> casObj = this.client.gets(key);
+            if (null != casObj)
+            {
+                cas = casObj.getCas();
+            }
+            boolean result = this.client.delete(key, cas, Integer.valueOf(properties.getProperty("timeout")));
+            this.closeClient();
+            return result;
         }
         catch (Exception e)
         {
@@ -103,4 +123,20 @@ public class MemcachedServer implements CacheServer<String, Object>
         return false;
     }
 
+    @Override
+    public boolean clear()
+    {
+        try
+        {
+            this.getClient();
+            this.client.flushAll();
+            this.closeClient();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }

@@ -7,8 +7,9 @@ package net.newtouch.server;
  * @version 1.0
  * @since 2014年5月5日
  */
-public interface CacheServer<K, V>
+public interface ICacheServer<K, V>
 {
+
     /**
      * 保存cache
      * 
@@ -34,9 +35,17 @@ public interface CacheServer<K, V>
      * 删除cache
      * 
      * @since 2014年5月5日
-     * @author Administrator
-     * @param key
+     * @author hezhengzheng
+     * @param key 键
      * @return
      */
     public boolean delete(K key);
+
+    /**
+     * 清除cache
+     * 
+     * @since 2014年5月27日
+     * @author hezhengzheng
+     */
+    public boolean clear();
 }

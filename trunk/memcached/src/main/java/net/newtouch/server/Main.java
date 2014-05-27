@@ -2,15 +2,15 @@ package net.newtouch.server;
 
 public class Main
 {
-    public static Main        main = new Main();
+    public static Main         main = new Main();
 
-    public static CacheServer test;
+    public static ICacheServer test;
 
     public static void main(String[] args)
     {
         try
         {
-            test = MemcachedServer.initServer();
+            test = MemcachedServer.init();
             System.out.println("===============" + test.save("hello", "Hello,xmemcached"));
             Object value = test.get("hello");
             System.out.println("hello=" + value.toString());
