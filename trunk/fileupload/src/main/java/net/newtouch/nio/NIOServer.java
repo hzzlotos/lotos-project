@@ -42,7 +42,7 @@ public class NIOServer
         this.selector = Selector.open();
         // 注册到selector，等待连接
         serverSocketChannel.register(this.selector, SelectionKey.OP_ACCEPT);
-        System.out.println("Server Start----8888:");
+        System.out.println("Server Start----" + port);
     }
 
     // 监听
