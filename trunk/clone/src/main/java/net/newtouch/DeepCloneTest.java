@@ -195,7 +195,7 @@ class Student implements Serializable
     {
         try
         {
-            // 序列化
+            // 序列化 需要使用ByteArray系列Stream
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(bos);
             oos.writeObject(this);
