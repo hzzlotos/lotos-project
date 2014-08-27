@@ -1,0 +1,2176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hnmlip.inter.usersMapper">
+  <resultMap id="BaseResultMap" type="com.hnmlip.model.users">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="NICK_NAME" jdbcType="VARCHAR" property="nickName" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="COMPANY_ID" jdbcType="DECIMAL" property="companyId" />
+    <result column="LAST_LOGIN_TIME" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="LAST_LOGIN_IP" jdbcType="VARCHAR" property="lastLoginIp" />
+    <result column="LOGIN_PASSWORD" jdbcType="VARCHAR" property="loginPassword" />
+    <result column="MOBILE_PHONE" jdbcType="VARCHAR" property="mobilePhone" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="PORTRAIT_IMAGE_FILE_ID" jdbcType="DECIMAL" property="portraitImageFileId" />
+    <result column="IS_ADMIN" jdbcType="VARCHAR" property="isAdmin" />
+    <result column="LOGISTICS_ADDRESS_ID" jdbcType="DECIMAL" property="logisticsAddressId" />
+    <result column="SEX" jdbcType="VARCHAR" property="sex" />
+    <result column="QQ_CODE" jdbcType="VARCHAR" property="qqCode" />
+    <result column="BIRTH_DATE" jdbcType="VARCHAR" property="birthDate" />
+    <result column="MICROBLOGGING" jdbcType="VARCHAR" property="microblogging" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="ID_CARD_CODE" jdbcType="VARCHAR" property="idCardCode" />
+    <result column="ID_CARD_FILE_ID" jdbcType="DECIMAL" property="idCardFileId" />
+    <result column="RRGISTRATION_DATE" jdbcType="TIMESTAMP" property="rrgistrationDate" />
+    <result column="IS_MODIFIED_PASSWORD" jdbcType="VARCHAR" property="isModifiedPassword" />
+    <result column="WORKBENCH" jdbcType="VARCHAR" property="workbench" />
+    <result column="IS_OLD" jdbcType="VARCHAR" property="isOld" />
+    <result column="DATA_VER" jdbcType="DECIMAL" property="dataVer" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, USER_NAME, NICK_NAME, STATUS, COMPANY_ID, LAST_LOGIN_TIME, LAST_LOGIN_IP, LOGIN_PASSWORD, 
+    MOBILE_PHONE, EMAIL, NAME, PORTRAIT_IMAGE_FILE_ID, IS_ADMIN, LOGISTICS_ADDRESS_ID, 
+    SEX, QQ_CODE, BIRTH_DATE, MICROBLOGGING, PHONE, ID_CARD_CODE, ID_CARD_FILE_ID, RRGISTRATION_DATE, 
+    IS_MODIFIED_PASSWORD, WORKBENCH, IS_OLD, DATA_VER
+  </sql>
+  <select id="selectByExample" parameterType="com.hnmlip.model.usersExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from USERS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from USERS
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from USERS
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hnmlip.model.usersExample">
+    delete from USERS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hnmlip.model.users">
+    insert into USERS (ID, USER_NAME, NICK_NAME, 
+      STATUS, COMPANY_ID, LAST_LOGIN_TIME, 
+      LAST_LOGIN_IP, LOGIN_PASSWORD, MOBILE_PHONE, 
+      EMAIL, NAME, PORTRAIT_IMAGE_FILE_ID, 
+      IS_ADMIN, LOGISTICS_ADDRESS_ID, SEX, 
+      QQ_CODE, BIRTH_DATE, MICROBLOGGING, 
+      PHONE, ID_CARD_CODE, ID_CARD_FILE_ID, 
+      RRGISTRATION_DATE, IS_MODIFIED_PASSWORD, 
+      WORKBENCH, IS_OLD, DATA_VER
+      )
+    values (#{id,jdbcType=DECIMAL}, #{userName,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{companyId,jdbcType=DECIMAL}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
+      #{lastLoginIp,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}, #{mobilePhone,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{portraitImageFileId,jdbcType=DECIMAL}, 
+      #{isAdmin,jdbcType=VARCHAR}, #{logisticsAddressId,jdbcType=DECIMAL}, #{sex,jdbcType=VARCHAR}, 
+      #{qqCode,jdbcType=VARCHAR}, #{birthDate,jdbcType=VARCHAR}, #{microblogging,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{idCardCode,jdbcType=VARCHAR}, #{idCardFileId,jdbcType=DECIMAL}, 
+      #{rrgistrationDate,jdbcType=TIMESTAMP}, #{isModifiedPassword,jdbcType=VARCHAR}, 
+      #{workbench,jdbcType=VARCHAR}, #{isOld,jdbcType=VARCHAR}, #{dataVer,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hnmlip.model.users">
+    insert into USERS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="userName != null">
+        USER_NAME,
+      </if>
+      <if test="nickName != null">
+        NICK_NAME,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="lastLoginTime != null">
+        LAST_LOGIN_TIME,
+      </if>
+      <if test="lastLoginIp != null">
+        LAST_LOGIN_IP,
+      </if>
+      <if test="loginPassword != null">
+        LOGIN_PASSWORD,
+      </if>
+      <if test="mobilePhone != null">
+        MOBILE_PHONE,
+      </if>
+      <if test="email != null">
+        EMAIL,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="portraitImageFileId != null">
+        PORTRAIT_IMAGE_FILE_ID,
+      </if>
+      <if test="isAdmin != null">
+        IS_ADMIN,
+      </if>
+      <if test="logisticsAddressId != null">
+        LOGISTICS_ADDRESS_ID,
+      </if>
+      <if test="sex != null">
+        SEX,
+      </if>
+      <if test="qqCode != null">
+        QQ_CODE,
+      </if>
+      <if test="birthDate != null">
+        BIRTH_DATE,
+      </if>
+      <if test="microblogging != null">
+        MICROBLOGGING,
+      </if>
+      <if test="phone != null">
+        PHONE,
+      </if>
+      <if test="idCardCode != null">
+        ID_CARD_CODE,
+      </if>
+      <if test="idCardFileId != null">
+        ID_CARD_FILE_ID,
+      </if>
+      <if test="rrgistrationDate != null">
+        RRGISTRATION_DATE,
+      </if>
+      <if test="isModifiedPassword != null">
+        IS_MODIFIED_PASSWORD,
+      </if>
+      <if test="workbench != null">
+        WORKBENCH,
+      </if>
+      <if test="isOld != null">
+        IS_OLD,
+      </if>
+      <if test="dataVer != null">
+        DATA_VER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastLoginTime != null">
+        #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginIp != null">
+        #{lastLoginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null">
+        #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null">
+        #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="portraitImageFileId != null">
+        #{portraitImageFileId,jdbcType=DECIMAL},
+      </if>
+      <if test="isAdmin != null">
+        #{isAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsAddressId != null">
+        #{logisticsAddressId,jdbcType=DECIMAL},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="qqCode != null">
+        #{qqCode,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null">
+        #{birthDate,jdbcType=VARCHAR},
+      </if>
+      <if test="microblogging != null">
+        #{microblogging,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardCode != null">
+        #{idCardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardFileId != null">
+        #{idCardFileId,jdbcType=DECIMAL},
+      </if>
+      <if test="rrgistrationDate != null">
+        #{rrgistrationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isModifiedPassword != null">
+        #{isModifiedPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="workbench != null">
+        #{workbench,jdbcType=VARCHAR},
+      </if>
+      <if test="isOld != null">
+        #{isOld,jdbcType=VARCHAR},
+      </if>
+      <if test="dataVer != null">
+        #{dataVer,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hnmlip.model.usersExample" resultType="java.lang.Integer">
+    select count(*) from USERS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update USERS
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.userName != null">
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickName != null">
+        NICK_NAME = #{record.nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyId != null">
+        COMPANY_ID = #{record.companyId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.lastLoginTime != null">
+        LAST_LOGIN_TIME = #{record.lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastLoginIp != null">
+        LAST_LOGIN_IP = #{record.lastLoginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginPassword != null">
+        LOGIN_PASSWORD = #{record.loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobilePhone != null">
+        MOBILE_PHONE = #{record.mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.portraitImageFileId != null">
+        PORTRAIT_IMAGE_FILE_ID = #{record.portraitImageFileId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isAdmin != null">
+        IS_ADMIN = #{record.isAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logisticsAddressId != null">
+        LOGISTICS_ADDRESS_ID = #{record.logisticsAddressId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sex != null">
+        SEX = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qqCode != null">
+        QQ_CODE = #{record.qqCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthDate != null">
+        BIRTH_DATE = #{record.birthDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.microblogging != null">
+        MICROBLOGGING = #{record.microblogging,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        PHONE = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idCardCode != null">
+        ID_CARD_CODE = #{record.idCardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idCardFileId != null">
+        ID_CARD_FILE_ID = #{record.idCardFileId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.rrgistrationDate != null">
+        RRGISTRATION_DATE = #{record.rrgistrationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isModifiedPassword != null">
+        IS_MODIFIED_PASSWORD = #{record.isModifiedPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workbench != null">
+        WORKBENCH = #{record.workbench,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isOld != null">
+        IS_OLD = #{record.isOld,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataVer != null">
+        DATA_VER = #{record.dataVer,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update USERS
+    set ID = #{record.id,jdbcType=DECIMAL},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      NICK_NAME = #{record.nickName,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      COMPANY_ID = #{record.companyId,jdbcType=DECIMAL},
+      LAST_LOGIN_TIME = #{record.lastLoginTime,jdbcType=TIMESTAMP},
+      LAST_LOGIN_IP = #{record.lastLoginIp,jdbcType=VARCHAR},
+      LOGIN_PASSWORD = #{record.loginPassword,jdbcType=VARCHAR},
+      MOBILE_PHONE = #{record.mobilePhone,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      PORTRAIT_IMAGE_FILE_ID = #{record.portraitImageFileId,jdbcType=DECIMAL},
+      IS_ADMIN = #{record.isAdmin,jdbcType=VARCHAR},
+      LOGISTICS_ADDRESS_ID = #{record.logisticsAddressId,jdbcType=DECIMAL},
+      SEX = #{record.sex,jdbcType=VARCHAR},
+      QQ_CODE = #{record.qqCode,jdbcType=VARCHAR},
+      BIRTH_DATE = #{record.birthDate,jdbcType=VARCHAR},
+      MICROBLOGGING = #{record.microblogging,jdbcType=VARCHAR},
+      PHONE = #{record.phone,jdbcType=VARCHAR},
+      ID_CARD_CODE = #{record.idCardCode,jdbcType=VARCHAR},
+      ID_CARD_FILE_ID = #{record.idCardFileId,jdbcType=DECIMAL},
+      RRGISTRATION_DATE = #{record.rrgistrationDate,jdbcType=TIMESTAMP},
+      IS_MODIFIED_PASSWORD = #{record.isModifiedPassword,jdbcType=VARCHAR},
+      WORKBENCH = #{record.workbench,jdbcType=VARCHAR},
+      IS_OLD = #{record.isOld,jdbcType=VARCHAR},
+      DATA_VER = #{record.dataVer,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hnmlip.model.users">
+    update USERS
+    <set>
+      <if test="userName != null">
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastLoginTime != null">
+        LAST_LOGIN_TIME = #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginIp != null">
+        LAST_LOGIN_IP = #{lastLoginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null">
+        LOGIN_PASSWORD = #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null">
+        MOBILE_PHONE = #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="portraitImageFileId != null">
+        PORTRAIT_IMAGE_FILE_ID = #{portraitImageFileId,jdbcType=DECIMAL},
+      </if>
+      <if test="isAdmin != null">
+        IS_ADMIN = #{isAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsAddressId != null">
+        LOGISTICS_ADDRESS_ID = #{logisticsAddressId,jdbcType=DECIMAL},
+      </if>
+      <if test="sex != null">
+        SEX = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="qqCode != null">
+        QQ_CODE = #{qqCode,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null">
+        BIRTH_DATE = #{birthDate,jdbcType=VARCHAR},
+      </if>
+      <if test="microblogging != null">
+        MICROBLOGGING = #{microblogging,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardCode != null">
+        ID_CARD_CODE = #{idCardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardFileId != null">
+        ID_CARD_FILE_ID = #{idCardFileId,jdbcType=DECIMAL},
+      </if>
+      <if test="rrgistrationDate != null">
+        RRGISTRATION_DATE = #{rrgistrationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isModifiedPassword != null">
+        IS_MODIFIED_PASSWORD = #{isModifiedPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="workbench != null">
+        WORKBENCH = #{workbench,jdbcType=VARCHAR},
+      </if>
+      <if test="isOld != null">
+        IS_OLD = #{isOld,jdbcType=VARCHAR},
+      </if>
+      <if test="dataVer != null">
+        DATA_VER = #{dataVer,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hnmlip.model.users">
+    update USERS
+    set USER_NAME = #{userName,jdbcType=VARCHAR},
+      NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      COMPANY_ID = #{companyId,jdbcType=DECIMAL},
+      LAST_LOGIN_TIME = #{lastLoginTime,jdbcType=TIMESTAMP},
+      LAST_LOGIN_IP = #{lastLoginIp,jdbcType=VARCHAR},
+      LOGIN_PASSWORD = #{loginPassword,jdbcType=VARCHAR},
+      MOBILE_PHONE = #{mobilePhone,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      PORTRAIT_IMAGE_FILE_ID = #{portraitImageFileId,jdbcType=DECIMAL},
+      IS_ADMIN = #{isAdmin,jdbcType=VARCHAR},
+      LOGISTICS_ADDRESS_ID = #{logisticsAddressId,jdbcType=DECIMAL},
+      SEX = #{sex,jdbcType=VARCHAR},
+      QQ_CODE = #{qqCode,jdbcType=VARCHAR},
+      BIRTH_DATE = #{birthDate,jdbcType=VARCHAR},
+      MICROBLOGGING = #{microblogging,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      ID_CARD_CODE = #{idCardCode,jdbcType=VARCHAR},
+      ID_CARD_FILE_ID = #{idCardFileId,jdbcType=DECIMAL},
+      RRGISTRATION_DATE = #{rrgistrationDate,jdbcType=TIMESTAMP},
+      IS_MODIFIED_PASSWORD = #{isModifiedPassword,jdbcType=VARCHAR},
+      WORKBENCH = #{workbench,jdbcType=VARCHAR},
+      IS_OLD = #{isOld,jdbcType=VARCHAR},
+      DATA_VER = #{dataVer,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <resultMap id="BaseResultMap" type="com.hnmlip.model.users">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="NICK_NAME" jdbcType="VARCHAR" property="nickName" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="COMPANY_ID" jdbcType="DECIMAL" property="companyId" />
+    <result column="LAST_LOGIN_TIME" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="LAST_LOGIN_IP" jdbcType="VARCHAR" property="lastLoginIp" />
+    <result column="LOGIN_PASSWORD" jdbcType="VARCHAR" property="loginPassword" />
+    <result column="MOBILE_PHONE" jdbcType="VARCHAR" property="mobilePhone" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="PORTRAIT_IMAGE_FILE_ID" jdbcType="DECIMAL" property="portraitImageFileId" />
+    <result column="IS_ADMIN" jdbcType="VARCHAR" property="isAdmin" />
+    <result column="LOGISTICS_ADDRESS_ID" jdbcType="DECIMAL" property="logisticsAddressId" />
+    <result column="SEX" jdbcType="VARCHAR" property="sex" />
+    <result column="QQ_CODE" jdbcType="VARCHAR" property="qqCode" />
+    <result column="BIRTH_DATE" jdbcType="VARCHAR" property="birthDate" />
+    <result column="MICROBLOGGING" jdbcType="VARCHAR" property="microblogging" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="ID_CARD_CODE" jdbcType="VARCHAR" property="idCardCode" />
+    <result column="ID_CARD_FILE_ID" jdbcType="DECIMAL" property="idCardFileId" />
+    <result column="RRGISTRATION_DATE" jdbcType="TIMESTAMP" property="rrgistrationDate" />
+    <result column="IS_MODIFIED_PASSWORD" jdbcType="VARCHAR" property="isModifiedPassword" />
+    <result column="WORKBENCH" jdbcType="VARCHAR" property="workbench" />
+    <result column="IS_OLD" jdbcType="VARCHAR" property="isOld" />
+    <result column="DATA_VER" jdbcType="DECIMAL" property="dataVer" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, USER_NAME, NICK_NAME, STATUS, COMPANY_ID, LAST_LOGIN_TIME, LAST_LOGIN_IP, LOGIN_PASSWORD, 
+    MOBILE_PHONE, EMAIL, NAME, PORTRAIT_IMAGE_FILE_ID, IS_ADMIN, LOGISTICS_ADDRESS_ID, 
+    SEX, QQ_CODE, BIRTH_DATE, MICROBLOGGING, PHONE, ID_CARD_CODE, ID_CARD_FILE_ID, RRGISTRATION_DATE, 
+    IS_MODIFIED_PASSWORD, WORKBENCH, IS_OLD, DATA_VER
+  </sql>
+  <select id="selectByExample" parameterType="com.hnmlip.model.usersExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from USERS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from USERS
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from USERS
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hnmlip.model.usersExample">
+    delete from USERS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hnmlip.model.users">
+    insert into USERS (ID, USER_NAME, NICK_NAME, 
+      STATUS, COMPANY_ID, LAST_LOGIN_TIME, 
+      LAST_LOGIN_IP, LOGIN_PASSWORD, MOBILE_PHONE, 
+      EMAIL, NAME, PORTRAIT_IMAGE_FILE_ID, 
+      IS_ADMIN, LOGISTICS_ADDRESS_ID, SEX, 
+      QQ_CODE, BIRTH_DATE, MICROBLOGGING, 
+      PHONE, ID_CARD_CODE, ID_CARD_FILE_ID, 
+      RRGISTRATION_DATE, IS_MODIFIED_PASSWORD, 
+      WORKBENCH, IS_OLD, DATA_VER
+      )
+    values (#{id,jdbcType=DECIMAL}, #{userName,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{companyId,jdbcType=DECIMAL}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
+      #{lastLoginIp,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}, #{mobilePhone,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{portraitImageFileId,jdbcType=DECIMAL}, 
+      #{isAdmin,jdbcType=VARCHAR}, #{logisticsAddressId,jdbcType=DECIMAL}, #{sex,jdbcType=VARCHAR}, 
+      #{qqCode,jdbcType=VARCHAR}, #{birthDate,jdbcType=VARCHAR}, #{microblogging,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{idCardCode,jdbcType=VARCHAR}, #{idCardFileId,jdbcType=DECIMAL}, 
+      #{rrgistrationDate,jdbcType=TIMESTAMP}, #{isModifiedPassword,jdbcType=VARCHAR}, 
+      #{workbench,jdbcType=VARCHAR}, #{isOld,jdbcType=VARCHAR}, #{dataVer,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hnmlip.model.users">
+    insert into USERS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="userName != null">
+        USER_NAME,
+      </if>
+      <if test="nickName != null">
+        NICK_NAME,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="lastLoginTime != null">
+        LAST_LOGIN_TIME,
+      </if>
+      <if test="lastLoginIp != null">
+        LAST_LOGIN_IP,
+      </if>
+      <if test="loginPassword != null">
+        LOGIN_PASSWORD,
+      </if>
+      <if test="mobilePhone != null">
+        MOBILE_PHONE,
+      </if>
+      <if test="email != null">
+        EMAIL,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="portraitImageFileId != null">
+        PORTRAIT_IMAGE_FILE_ID,
+      </if>
+      <if test="isAdmin != null">
+        IS_ADMIN,
+      </if>
+      <if test="logisticsAddressId != null">
+        LOGISTICS_ADDRESS_ID,
+      </if>
+      <if test="sex != null">
+        SEX,
+      </if>
+      <if test="qqCode != null">
+        QQ_CODE,
+      </if>
+      <if test="birthDate != null">
+        BIRTH_DATE,
+      </if>
+      <if test="microblogging != null">
+        MICROBLOGGING,
+      </if>
+      <if test="phone != null">
+        PHONE,
+      </if>
+      <if test="idCardCode != null">
+        ID_CARD_CODE,
+      </if>
+      <if test="idCardFileId != null">
+        ID_CARD_FILE_ID,
+      </if>
+      <if test="rrgistrationDate != null">
+        RRGISTRATION_DATE,
+      </if>
+      <if test="isModifiedPassword != null">
+        IS_MODIFIED_PASSWORD,
+      </if>
+      <if test="workbench != null">
+        WORKBENCH,
+      </if>
+      <if test="isOld != null">
+        IS_OLD,
+      </if>
+      <if test="dataVer != null">
+        DATA_VER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastLoginTime != null">
+        #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginIp != null">
+        #{lastLoginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null">
+        #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null">
+        #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="portraitImageFileId != null">
+        #{portraitImageFileId,jdbcType=DECIMAL},
+      </if>
+      <if test="isAdmin != null">
+        #{isAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsAddressId != null">
+        #{logisticsAddressId,jdbcType=DECIMAL},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="qqCode != null">
+        #{qqCode,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null">
+        #{birthDate,jdbcType=VARCHAR},
+      </if>
+      <if test="microblogging != null">
+        #{microblogging,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardCode != null">
+        #{idCardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardFileId != null">
+        #{idCardFileId,jdbcType=DECIMAL},
+      </if>
+      <if test="rrgistrationDate != null">
+        #{rrgistrationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isModifiedPassword != null">
+        #{isModifiedPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="workbench != null">
+        #{workbench,jdbcType=VARCHAR},
+      </if>
+      <if test="isOld != null">
+        #{isOld,jdbcType=VARCHAR},
+      </if>
+      <if test="dataVer != null">
+        #{dataVer,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hnmlip.model.usersExample" resultType="java.lang.Integer">
+    select count(*) from USERS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update USERS
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.userName != null">
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickName != null">
+        NICK_NAME = #{record.nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyId != null">
+        COMPANY_ID = #{record.companyId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.lastLoginTime != null">
+        LAST_LOGIN_TIME = #{record.lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastLoginIp != null">
+        LAST_LOGIN_IP = #{record.lastLoginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginPassword != null">
+        LOGIN_PASSWORD = #{record.loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobilePhone != null">
+        MOBILE_PHONE = #{record.mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.portraitImageFileId != null">
+        PORTRAIT_IMAGE_FILE_ID = #{record.portraitImageFileId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isAdmin != null">
+        IS_ADMIN = #{record.isAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logisticsAddressId != null">
+        LOGISTICS_ADDRESS_ID = #{record.logisticsAddressId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sex != null">
+        SEX = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qqCode != null">
+        QQ_CODE = #{record.qqCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthDate != null">
+        BIRTH_DATE = #{record.birthDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.microblogging != null">
+        MICROBLOGGING = #{record.microblogging,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        PHONE = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idCardCode != null">
+        ID_CARD_CODE = #{record.idCardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idCardFileId != null">
+        ID_CARD_FILE_ID = #{record.idCardFileId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.rrgistrationDate != null">
+        RRGISTRATION_DATE = #{record.rrgistrationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isModifiedPassword != null">
+        IS_MODIFIED_PASSWORD = #{record.isModifiedPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workbench != null">
+        WORKBENCH = #{record.workbench,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isOld != null">
+        IS_OLD = #{record.isOld,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataVer != null">
+        DATA_VER = #{record.dataVer,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update USERS
+    set ID = #{record.id,jdbcType=DECIMAL},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      NICK_NAME = #{record.nickName,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      COMPANY_ID = #{record.companyId,jdbcType=DECIMAL},
+      LAST_LOGIN_TIME = #{record.lastLoginTime,jdbcType=TIMESTAMP},
+      LAST_LOGIN_IP = #{record.lastLoginIp,jdbcType=VARCHAR},
+      LOGIN_PASSWORD = #{record.loginPassword,jdbcType=VARCHAR},
+      MOBILE_PHONE = #{record.mobilePhone,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      PORTRAIT_IMAGE_FILE_ID = #{record.portraitImageFileId,jdbcType=DECIMAL},
+      IS_ADMIN = #{record.isAdmin,jdbcType=VARCHAR},
+      LOGISTICS_ADDRESS_ID = #{record.logisticsAddressId,jdbcType=DECIMAL},
+      SEX = #{record.sex,jdbcType=VARCHAR},
+      QQ_CODE = #{record.qqCode,jdbcType=VARCHAR},
+      BIRTH_DATE = #{record.birthDate,jdbcType=VARCHAR},
+      MICROBLOGGING = #{record.microblogging,jdbcType=VARCHAR},
+      PHONE = #{record.phone,jdbcType=VARCHAR},
+      ID_CARD_CODE = #{record.idCardCode,jdbcType=VARCHAR},
+      ID_CARD_FILE_ID = #{record.idCardFileId,jdbcType=DECIMAL},
+      RRGISTRATION_DATE = #{record.rrgistrationDate,jdbcType=TIMESTAMP},
+      IS_MODIFIED_PASSWORD = #{record.isModifiedPassword,jdbcType=VARCHAR},
+      WORKBENCH = #{record.workbench,jdbcType=VARCHAR},
+      IS_OLD = #{record.isOld,jdbcType=VARCHAR},
+      DATA_VER = #{record.dataVer,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hnmlip.model.users">
+    update USERS
+    <set>
+      <if test="userName != null">
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastLoginTime != null">
+        LAST_LOGIN_TIME = #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginIp != null">
+        LAST_LOGIN_IP = #{lastLoginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null">
+        LOGIN_PASSWORD = #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null">
+        MOBILE_PHONE = #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="portraitImageFileId != null">
+        PORTRAIT_IMAGE_FILE_ID = #{portraitImageFileId,jdbcType=DECIMAL},
+      </if>
+      <if test="isAdmin != null">
+        IS_ADMIN = #{isAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsAddressId != null">
+        LOGISTICS_ADDRESS_ID = #{logisticsAddressId,jdbcType=DECIMAL},
+      </if>
+      <if test="sex != null">
+        SEX = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="qqCode != null">
+        QQ_CODE = #{qqCode,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null">
+        BIRTH_DATE = #{birthDate,jdbcType=VARCHAR},
+      </if>
+      <if test="microblogging != null">
+        MICROBLOGGING = #{microblogging,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardCode != null">
+        ID_CARD_CODE = #{idCardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardFileId != null">
+        ID_CARD_FILE_ID = #{idCardFileId,jdbcType=DECIMAL},
+      </if>
+      <if test="rrgistrationDate != null">
+        RRGISTRATION_DATE = #{rrgistrationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isModifiedPassword != null">
+        IS_MODIFIED_PASSWORD = #{isModifiedPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="workbench != null">
+        WORKBENCH = #{workbench,jdbcType=VARCHAR},
+      </if>
+      <if test="isOld != null">
+        IS_OLD = #{isOld,jdbcType=VARCHAR},
+      </if>
+      <if test="dataVer != null">
+        DATA_VER = #{dataVer,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hnmlip.model.users">
+    update USERS
+    set USER_NAME = #{userName,jdbcType=VARCHAR},
+      NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      COMPANY_ID = #{companyId,jdbcType=DECIMAL},
+      LAST_LOGIN_TIME = #{lastLoginTime,jdbcType=TIMESTAMP},
+      LAST_LOGIN_IP = #{lastLoginIp,jdbcType=VARCHAR},
+      LOGIN_PASSWORD = #{loginPassword,jdbcType=VARCHAR},
+      MOBILE_PHONE = #{mobilePhone,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      PORTRAIT_IMAGE_FILE_ID = #{portraitImageFileId,jdbcType=DECIMAL},
+      IS_ADMIN = #{isAdmin,jdbcType=VARCHAR},
+      LOGISTICS_ADDRESS_ID = #{logisticsAddressId,jdbcType=DECIMAL},
+      SEX = #{sex,jdbcType=VARCHAR},
+      QQ_CODE = #{qqCode,jdbcType=VARCHAR},
+      BIRTH_DATE = #{birthDate,jdbcType=VARCHAR},
+      MICROBLOGGING = #{microblogging,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      ID_CARD_CODE = #{idCardCode,jdbcType=VARCHAR},
+      ID_CARD_FILE_ID = #{idCardFileId,jdbcType=DECIMAL},
+      RRGISTRATION_DATE = #{rrgistrationDate,jdbcType=TIMESTAMP},
+      IS_MODIFIED_PASSWORD = #{isModifiedPassword,jdbcType=VARCHAR},
+      WORKBENCH = #{workbench,jdbcType=VARCHAR},
+      IS_OLD = #{isOld,jdbcType=VARCHAR},
+      DATA_VER = #{dataVer,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <resultMap id="BaseResultMap" type="com.hnmlip.model.users">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="NICK_NAME" jdbcType="VARCHAR" property="nickName" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="COMPANY_ID" jdbcType="DECIMAL" property="companyId" />
+    <result column="LAST_LOGIN_TIME" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="LAST_LOGIN_IP" jdbcType="VARCHAR" property="lastLoginIp" />
+    <result column="LOGIN_PASSWORD" jdbcType="VARCHAR" property="loginPassword" />
+    <result column="MOBILE_PHONE" jdbcType="VARCHAR" property="mobilePhone" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="PORTRAIT_IMAGE_FILE_ID" jdbcType="DECIMAL" property="portraitImageFileId" />
+    <result column="IS_ADMIN" jdbcType="VARCHAR" property="isAdmin" />
+    <result column="LOGISTICS_ADDRESS_ID" jdbcType="DECIMAL" property="logisticsAddressId" />
+    <result column="SEX" jdbcType="VARCHAR" property="sex" />
+    <result column="QQ_CODE" jdbcType="VARCHAR" property="qqCode" />
+    <result column="BIRTH_DATE" jdbcType="VARCHAR" property="birthDate" />
+    <result column="MICROBLOGGING" jdbcType="VARCHAR" property="microblogging" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="ID_CARD_CODE" jdbcType="VARCHAR" property="idCardCode" />
+    <result column="ID_CARD_FILE_ID" jdbcType="DECIMAL" property="idCardFileId" />
+    <result column="RRGISTRATION_DATE" jdbcType="TIMESTAMP" property="rrgistrationDate" />
+    <result column="IS_MODIFIED_PASSWORD" jdbcType="VARCHAR" property="isModifiedPassword" />
+    <result column="WORKBENCH" jdbcType="VARCHAR" property="workbench" />
+    <result column="IS_OLD" jdbcType="VARCHAR" property="isOld" />
+    <result column="DATA_VER" jdbcType="DECIMAL" property="dataVer" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, USER_NAME, NICK_NAME, STATUS, COMPANY_ID, LAST_LOGIN_TIME, LAST_LOGIN_IP, LOGIN_PASSWORD, 
+    MOBILE_PHONE, EMAIL, NAME, PORTRAIT_IMAGE_FILE_ID, IS_ADMIN, LOGISTICS_ADDRESS_ID, 
+    SEX, QQ_CODE, BIRTH_DATE, MICROBLOGGING, PHONE, ID_CARD_CODE, ID_CARD_FILE_ID, RRGISTRATION_DATE, 
+    IS_MODIFIED_PASSWORD, WORKBENCH, IS_OLD, DATA_VER
+  </sql>
+  <select id="selectByExample" parameterType="com.hnmlip.model.usersExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from USERS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from USERS
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from USERS
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hnmlip.model.usersExample">
+    delete from USERS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hnmlip.model.users">
+    insert into USERS (ID, USER_NAME, NICK_NAME, 
+      STATUS, COMPANY_ID, LAST_LOGIN_TIME, 
+      LAST_LOGIN_IP, LOGIN_PASSWORD, MOBILE_PHONE, 
+      EMAIL, NAME, PORTRAIT_IMAGE_FILE_ID, 
+      IS_ADMIN, LOGISTICS_ADDRESS_ID, SEX, 
+      QQ_CODE, BIRTH_DATE, MICROBLOGGING, 
+      PHONE, ID_CARD_CODE, ID_CARD_FILE_ID, 
+      RRGISTRATION_DATE, IS_MODIFIED_PASSWORD, 
+      WORKBENCH, IS_OLD, DATA_VER
+      )
+    values (#{id,jdbcType=DECIMAL}, #{userName,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{companyId,jdbcType=DECIMAL}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
+      #{lastLoginIp,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}, #{mobilePhone,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{portraitImageFileId,jdbcType=DECIMAL}, 
+      #{isAdmin,jdbcType=VARCHAR}, #{logisticsAddressId,jdbcType=DECIMAL}, #{sex,jdbcType=VARCHAR}, 
+      #{qqCode,jdbcType=VARCHAR}, #{birthDate,jdbcType=VARCHAR}, #{microblogging,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{idCardCode,jdbcType=VARCHAR}, #{idCardFileId,jdbcType=DECIMAL}, 
+      #{rrgistrationDate,jdbcType=TIMESTAMP}, #{isModifiedPassword,jdbcType=VARCHAR}, 
+      #{workbench,jdbcType=VARCHAR}, #{isOld,jdbcType=VARCHAR}, #{dataVer,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hnmlip.model.users">
+    insert into USERS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="userName != null">
+        USER_NAME,
+      </if>
+      <if test="nickName != null">
+        NICK_NAME,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="lastLoginTime != null">
+        LAST_LOGIN_TIME,
+      </if>
+      <if test="lastLoginIp != null">
+        LAST_LOGIN_IP,
+      </if>
+      <if test="loginPassword != null">
+        LOGIN_PASSWORD,
+      </if>
+      <if test="mobilePhone != null">
+        MOBILE_PHONE,
+      </if>
+      <if test="email != null">
+        EMAIL,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="portraitImageFileId != null">
+        PORTRAIT_IMAGE_FILE_ID,
+      </if>
+      <if test="isAdmin != null">
+        IS_ADMIN,
+      </if>
+      <if test="logisticsAddressId != null">
+        LOGISTICS_ADDRESS_ID,
+      </if>
+      <if test="sex != null">
+        SEX,
+      </if>
+      <if test="qqCode != null">
+        QQ_CODE,
+      </if>
+      <if test="birthDate != null">
+        BIRTH_DATE,
+      </if>
+      <if test="microblogging != null">
+        MICROBLOGGING,
+      </if>
+      <if test="phone != null">
+        PHONE,
+      </if>
+      <if test="idCardCode != null">
+        ID_CARD_CODE,
+      </if>
+      <if test="idCardFileId != null">
+        ID_CARD_FILE_ID,
+      </if>
+      <if test="rrgistrationDate != null">
+        RRGISTRATION_DATE,
+      </if>
+      <if test="isModifiedPassword != null">
+        IS_MODIFIED_PASSWORD,
+      </if>
+      <if test="workbench != null">
+        WORKBENCH,
+      </if>
+      <if test="isOld != null">
+        IS_OLD,
+      </if>
+      <if test="dataVer != null">
+        DATA_VER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastLoginTime != null">
+        #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginIp != null">
+        #{lastLoginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null">
+        #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null">
+        #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="portraitImageFileId != null">
+        #{portraitImageFileId,jdbcType=DECIMAL},
+      </if>
+      <if test="isAdmin != null">
+        #{isAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsAddressId != null">
+        #{logisticsAddressId,jdbcType=DECIMAL},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="qqCode != null">
+        #{qqCode,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null">
+        #{birthDate,jdbcType=VARCHAR},
+      </if>
+      <if test="microblogging != null">
+        #{microblogging,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardCode != null">
+        #{idCardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardFileId != null">
+        #{idCardFileId,jdbcType=DECIMAL},
+      </if>
+      <if test="rrgistrationDate != null">
+        #{rrgistrationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isModifiedPassword != null">
+        #{isModifiedPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="workbench != null">
+        #{workbench,jdbcType=VARCHAR},
+      </if>
+      <if test="isOld != null">
+        #{isOld,jdbcType=VARCHAR},
+      </if>
+      <if test="dataVer != null">
+        #{dataVer,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hnmlip.model.usersExample" resultType="java.lang.Integer">
+    select count(*) from USERS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update USERS
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.userName != null">
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickName != null">
+        NICK_NAME = #{record.nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyId != null">
+        COMPANY_ID = #{record.companyId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.lastLoginTime != null">
+        LAST_LOGIN_TIME = #{record.lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastLoginIp != null">
+        LAST_LOGIN_IP = #{record.lastLoginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginPassword != null">
+        LOGIN_PASSWORD = #{record.loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobilePhone != null">
+        MOBILE_PHONE = #{record.mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.portraitImageFileId != null">
+        PORTRAIT_IMAGE_FILE_ID = #{record.portraitImageFileId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isAdmin != null">
+        IS_ADMIN = #{record.isAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logisticsAddressId != null">
+        LOGISTICS_ADDRESS_ID = #{record.logisticsAddressId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sex != null">
+        SEX = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qqCode != null">
+        QQ_CODE = #{record.qqCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthDate != null">
+        BIRTH_DATE = #{record.birthDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.microblogging != null">
+        MICROBLOGGING = #{record.microblogging,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        PHONE = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idCardCode != null">
+        ID_CARD_CODE = #{record.idCardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idCardFileId != null">
+        ID_CARD_FILE_ID = #{record.idCardFileId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.rrgistrationDate != null">
+        RRGISTRATION_DATE = #{record.rrgistrationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isModifiedPassword != null">
+        IS_MODIFIED_PASSWORD = #{record.isModifiedPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workbench != null">
+        WORKBENCH = #{record.workbench,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isOld != null">
+        IS_OLD = #{record.isOld,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataVer != null">
+        DATA_VER = #{record.dataVer,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update USERS
+    set ID = #{record.id,jdbcType=DECIMAL},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      NICK_NAME = #{record.nickName,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      COMPANY_ID = #{record.companyId,jdbcType=DECIMAL},
+      LAST_LOGIN_TIME = #{record.lastLoginTime,jdbcType=TIMESTAMP},
+      LAST_LOGIN_IP = #{record.lastLoginIp,jdbcType=VARCHAR},
+      LOGIN_PASSWORD = #{record.loginPassword,jdbcType=VARCHAR},
+      MOBILE_PHONE = #{record.mobilePhone,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      PORTRAIT_IMAGE_FILE_ID = #{record.portraitImageFileId,jdbcType=DECIMAL},
+      IS_ADMIN = #{record.isAdmin,jdbcType=VARCHAR},
+      LOGISTICS_ADDRESS_ID = #{record.logisticsAddressId,jdbcType=DECIMAL},
+      SEX = #{record.sex,jdbcType=VARCHAR},
+      QQ_CODE = #{record.qqCode,jdbcType=VARCHAR},
+      BIRTH_DATE = #{record.birthDate,jdbcType=VARCHAR},
+      MICROBLOGGING = #{record.microblogging,jdbcType=VARCHAR},
+      PHONE = #{record.phone,jdbcType=VARCHAR},
+      ID_CARD_CODE = #{record.idCardCode,jdbcType=VARCHAR},
+      ID_CARD_FILE_ID = #{record.idCardFileId,jdbcType=DECIMAL},
+      RRGISTRATION_DATE = #{record.rrgistrationDate,jdbcType=TIMESTAMP},
+      IS_MODIFIED_PASSWORD = #{record.isModifiedPassword,jdbcType=VARCHAR},
+      WORKBENCH = #{record.workbench,jdbcType=VARCHAR},
+      IS_OLD = #{record.isOld,jdbcType=VARCHAR},
+      DATA_VER = #{record.dataVer,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hnmlip.model.users">
+    update USERS
+    <set>
+      <if test="userName != null">
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastLoginTime != null">
+        LAST_LOGIN_TIME = #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginIp != null">
+        LAST_LOGIN_IP = #{lastLoginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null">
+        LOGIN_PASSWORD = #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null">
+        MOBILE_PHONE = #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="portraitImageFileId != null">
+        PORTRAIT_IMAGE_FILE_ID = #{portraitImageFileId,jdbcType=DECIMAL},
+      </if>
+      <if test="isAdmin != null">
+        IS_ADMIN = #{isAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsAddressId != null">
+        LOGISTICS_ADDRESS_ID = #{logisticsAddressId,jdbcType=DECIMAL},
+      </if>
+      <if test="sex != null">
+        SEX = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="qqCode != null">
+        QQ_CODE = #{qqCode,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null">
+        BIRTH_DATE = #{birthDate,jdbcType=VARCHAR},
+      </if>
+      <if test="microblogging != null">
+        MICROBLOGGING = #{microblogging,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardCode != null">
+        ID_CARD_CODE = #{idCardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardFileId != null">
+        ID_CARD_FILE_ID = #{idCardFileId,jdbcType=DECIMAL},
+      </if>
+      <if test="rrgistrationDate != null">
+        RRGISTRATION_DATE = #{rrgistrationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isModifiedPassword != null">
+        IS_MODIFIED_PASSWORD = #{isModifiedPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="workbench != null">
+        WORKBENCH = #{workbench,jdbcType=VARCHAR},
+      </if>
+      <if test="isOld != null">
+        IS_OLD = #{isOld,jdbcType=VARCHAR},
+      </if>
+      <if test="dataVer != null">
+        DATA_VER = #{dataVer,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hnmlip.model.users">
+    update USERS
+    set USER_NAME = #{userName,jdbcType=VARCHAR},
+      NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      COMPANY_ID = #{companyId,jdbcType=DECIMAL},
+      LAST_LOGIN_TIME = #{lastLoginTime,jdbcType=TIMESTAMP},
+      LAST_LOGIN_IP = #{lastLoginIp,jdbcType=VARCHAR},
+      LOGIN_PASSWORD = #{loginPassword,jdbcType=VARCHAR},
+      MOBILE_PHONE = #{mobilePhone,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      PORTRAIT_IMAGE_FILE_ID = #{portraitImageFileId,jdbcType=DECIMAL},
+      IS_ADMIN = #{isAdmin,jdbcType=VARCHAR},
+      LOGISTICS_ADDRESS_ID = #{logisticsAddressId,jdbcType=DECIMAL},
+      SEX = #{sex,jdbcType=VARCHAR},
+      QQ_CODE = #{qqCode,jdbcType=VARCHAR},
+      BIRTH_DATE = #{birthDate,jdbcType=VARCHAR},
+      MICROBLOGGING = #{microblogging,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      ID_CARD_CODE = #{idCardCode,jdbcType=VARCHAR},
+      ID_CARD_FILE_ID = #{idCardFileId,jdbcType=DECIMAL},
+      RRGISTRATION_DATE = #{rrgistrationDate,jdbcType=TIMESTAMP},
+      IS_MODIFIED_PASSWORD = #{isModifiedPassword,jdbcType=VARCHAR},
+      WORKBENCH = #{workbench,jdbcType=VARCHAR},
+      IS_OLD = #{isOld,jdbcType=VARCHAR},
+      DATA_VER = #{dataVer,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <resultMap id="BaseResultMap" type="com.hnmlip.model.users">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="NICK_NAME" jdbcType="VARCHAR" property="nickName" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="COMPANY_ID" jdbcType="DECIMAL" property="companyId" />
+    <result column="LAST_LOGIN_TIME" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="LAST_LOGIN_IP" jdbcType="VARCHAR" property="lastLoginIp" />
+    <result column="LOGIN_PASSWORD" jdbcType="VARCHAR" property="loginPassword" />
+    <result column="MOBILE_PHONE" jdbcType="VARCHAR" property="mobilePhone" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="PORTRAIT_IMAGE_FILE_ID" jdbcType="DECIMAL" property="portraitImageFileId" />
+    <result column="IS_ADMIN" jdbcType="VARCHAR" property="isAdmin" />
+    <result column="LOGISTICS_ADDRESS_ID" jdbcType="DECIMAL" property="logisticsAddressId" />
+    <result column="SEX" jdbcType="VARCHAR" property="sex" />
+    <result column="QQ_CODE" jdbcType="VARCHAR" property="qqCode" />
+    <result column="BIRTH_DATE" jdbcType="VARCHAR" property="birthDate" />
+    <result column="MICROBLOGGING" jdbcType="VARCHAR" property="microblogging" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="ID_CARD_CODE" jdbcType="VARCHAR" property="idCardCode" />
+    <result column="ID_CARD_FILE_ID" jdbcType="DECIMAL" property="idCardFileId" />
+    <result column="RRGISTRATION_DATE" jdbcType="TIMESTAMP" property="rrgistrationDate" />
+    <result column="IS_MODIFIED_PASSWORD" jdbcType="VARCHAR" property="isModifiedPassword" />
+    <result column="WORKBENCH" jdbcType="VARCHAR" property="workbench" />
+    <result column="IS_OLD" jdbcType="VARCHAR" property="isOld" />
+    <result column="DATA_VER" jdbcType="DECIMAL" property="dataVer" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, USER_NAME, NICK_NAME, STATUS, COMPANY_ID, LAST_LOGIN_TIME, LAST_LOGIN_IP, LOGIN_PASSWORD, 
+    MOBILE_PHONE, EMAIL, NAME, PORTRAIT_IMAGE_FILE_ID, IS_ADMIN, LOGISTICS_ADDRESS_ID, 
+    SEX, QQ_CODE, BIRTH_DATE, MICROBLOGGING, PHONE, ID_CARD_CODE, ID_CARD_FILE_ID, RRGISTRATION_DATE, 
+    IS_MODIFIED_PASSWORD, WORKBENCH, IS_OLD, DATA_VER
+  </sql>
+  <select id="selectByExample" parameterType="com.hnmlip.model.usersExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from USERS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from USERS
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from USERS
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hnmlip.model.usersExample">
+    delete from USERS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hnmlip.model.users">
+    insert into USERS (ID, USER_NAME, NICK_NAME, 
+      STATUS, COMPANY_ID, LAST_LOGIN_TIME, 
+      LAST_LOGIN_IP, LOGIN_PASSWORD, MOBILE_PHONE, 
+      EMAIL, NAME, PORTRAIT_IMAGE_FILE_ID, 
+      IS_ADMIN, LOGISTICS_ADDRESS_ID, SEX, 
+      QQ_CODE, BIRTH_DATE, MICROBLOGGING, 
+      PHONE, ID_CARD_CODE, ID_CARD_FILE_ID, 
+      RRGISTRATION_DATE, IS_MODIFIED_PASSWORD, 
+      WORKBENCH, IS_OLD, DATA_VER
+      )
+    values (#{id,jdbcType=DECIMAL}, #{userName,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{companyId,jdbcType=DECIMAL}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
+      #{lastLoginIp,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}, #{mobilePhone,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{portraitImageFileId,jdbcType=DECIMAL}, 
+      #{isAdmin,jdbcType=VARCHAR}, #{logisticsAddressId,jdbcType=DECIMAL}, #{sex,jdbcType=VARCHAR}, 
+      #{qqCode,jdbcType=VARCHAR}, #{birthDate,jdbcType=VARCHAR}, #{microblogging,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{idCardCode,jdbcType=VARCHAR}, #{idCardFileId,jdbcType=DECIMAL}, 
+      #{rrgistrationDate,jdbcType=TIMESTAMP}, #{isModifiedPassword,jdbcType=VARCHAR}, 
+      #{workbench,jdbcType=VARCHAR}, #{isOld,jdbcType=VARCHAR}, #{dataVer,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hnmlip.model.users">
+    insert into USERS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="userName != null">
+        USER_NAME,
+      </if>
+      <if test="nickName != null">
+        NICK_NAME,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="lastLoginTime != null">
+        LAST_LOGIN_TIME,
+      </if>
+      <if test="lastLoginIp != null">
+        LAST_LOGIN_IP,
+      </if>
+      <if test="loginPassword != null">
+        LOGIN_PASSWORD,
+      </if>
+      <if test="mobilePhone != null">
+        MOBILE_PHONE,
+      </if>
+      <if test="email != null">
+        EMAIL,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="portraitImageFileId != null">
+        PORTRAIT_IMAGE_FILE_ID,
+      </if>
+      <if test="isAdmin != null">
+        IS_ADMIN,
+      </if>
+      <if test="logisticsAddressId != null">
+        LOGISTICS_ADDRESS_ID,
+      </if>
+      <if test="sex != null">
+        SEX,
+      </if>
+      <if test="qqCode != null">
+        QQ_CODE,
+      </if>
+      <if test="birthDate != null">
+        BIRTH_DATE,
+      </if>
+      <if test="microblogging != null">
+        MICROBLOGGING,
+      </if>
+      <if test="phone != null">
+        PHONE,
+      </if>
+      <if test="idCardCode != null">
+        ID_CARD_CODE,
+      </if>
+      <if test="idCardFileId != null">
+        ID_CARD_FILE_ID,
+      </if>
+      <if test="rrgistrationDate != null">
+        RRGISTRATION_DATE,
+      </if>
+      <if test="isModifiedPassword != null">
+        IS_MODIFIED_PASSWORD,
+      </if>
+      <if test="workbench != null">
+        WORKBENCH,
+      </if>
+      <if test="isOld != null">
+        IS_OLD,
+      </if>
+      <if test="dataVer != null">
+        DATA_VER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastLoginTime != null">
+        #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginIp != null">
+        #{lastLoginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null">
+        #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null">
+        #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="portraitImageFileId != null">
+        #{portraitImageFileId,jdbcType=DECIMAL},
+      </if>
+      <if test="isAdmin != null">
+        #{isAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsAddressId != null">
+        #{logisticsAddressId,jdbcType=DECIMAL},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="qqCode != null">
+        #{qqCode,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null">
+        #{birthDate,jdbcType=VARCHAR},
+      </if>
+      <if test="microblogging != null">
+        #{microblogging,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardCode != null">
+        #{idCardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardFileId != null">
+        #{idCardFileId,jdbcType=DECIMAL},
+      </if>
+      <if test="rrgistrationDate != null">
+        #{rrgistrationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isModifiedPassword != null">
+        #{isModifiedPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="workbench != null">
+        #{workbench,jdbcType=VARCHAR},
+      </if>
+      <if test="isOld != null">
+        #{isOld,jdbcType=VARCHAR},
+      </if>
+      <if test="dataVer != null">
+        #{dataVer,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hnmlip.model.usersExample" resultType="java.lang.Integer">
+    select count(*) from USERS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update USERS
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.userName != null">
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickName != null">
+        NICK_NAME = #{record.nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyId != null">
+        COMPANY_ID = #{record.companyId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.lastLoginTime != null">
+        LAST_LOGIN_TIME = #{record.lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastLoginIp != null">
+        LAST_LOGIN_IP = #{record.lastLoginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginPassword != null">
+        LOGIN_PASSWORD = #{record.loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobilePhone != null">
+        MOBILE_PHONE = #{record.mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.portraitImageFileId != null">
+        PORTRAIT_IMAGE_FILE_ID = #{record.portraitImageFileId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isAdmin != null">
+        IS_ADMIN = #{record.isAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logisticsAddressId != null">
+        LOGISTICS_ADDRESS_ID = #{record.logisticsAddressId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sex != null">
+        SEX = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qqCode != null">
+        QQ_CODE = #{record.qqCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthDate != null">
+        BIRTH_DATE = #{record.birthDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.microblogging != null">
+        MICROBLOGGING = #{record.microblogging,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        PHONE = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idCardCode != null">
+        ID_CARD_CODE = #{record.idCardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idCardFileId != null">
+        ID_CARD_FILE_ID = #{record.idCardFileId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.rrgistrationDate != null">
+        RRGISTRATION_DATE = #{record.rrgistrationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isModifiedPassword != null">
+        IS_MODIFIED_PASSWORD = #{record.isModifiedPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workbench != null">
+        WORKBENCH = #{record.workbench,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isOld != null">
+        IS_OLD = #{record.isOld,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataVer != null">
+        DATA_VER = #{record.dataVer,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update USERS
+    set ID = #{record.id,jdbcType=DECIMAL},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      NICK_NAME = #{record.nickName,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      COMPANY_ID = #{record.companyId,jdbcType=DECIMAL},
+      LAST_LOGIN_TIME = #{record.lastLoginTime,jdbcType=TIMESTAMP},
+      LAST_LOGIN_IP = #{record.lastLoginIp,jdbcType=VARCHAR},
+      LOGIN_PASSWORD = #{record.loginPassword,jdbcType=VARCHAR},
+      MOBILE_PHONE = #{record.mobilePhone,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      PORTRAIT_IMAGE_FILE_ID = #{record.portraitImageFileId,jdbcType=DECIMAL},
+      IS_ADMIN = #{record.isAdmin,jdbcType=VARCHAR},
+      LOGISTICS_ADDRESS_ID = #{record.logisticsAddressId,jdbcType=DECIMAL},
+      SEX = #{record.sex,jdbcType=VARCHAR},
+      QQ_CODE = #{record.qqCode,jdbcType=VARCHAR},
+      BIRTH_DATE = #{record.birthDate,jdbcType=VARCHAR},
+      MICROBLOGGING = #{record.microblogging,jdbcType=VARCHAR},
+      PHONE = #{record.phone,jdbcType=VARCHAR},
+      ID_CARD_CODE = #{record.idCardCode,jdbcType=VARCHAR},
+      ID_CARD_FILE_ID = #{record.idCardFileId,jdbcType=DECIMAL},
+      RRGISTRATION_DATE = #{record.rrgistrationDate,jdbcType=TIMESTAMP},
+      IS_MODIFIED_PASSWORD = #{record.isModifiedPassword,jdbcType=VARCHAR},
+      WORKBENCH = #{record.workbench,jdbcType=VARCHAR},
+      IS_OLD = #{record.isOld,jdbcType=VARCHAR},
+      DATA_VER = #{record.dataVer,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hnmlip.model.users">
+    update USERS
+    <set>
+      <if test="userName != null">
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastLoginTime != null">
+        LAST_LOGIN_TIME = #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginIp != null">
+        LAST_LOGIN_IP = #{lastLoginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null">
+        LOGIN_PASSWORD = #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null">
+        MOBILE_PHONE = #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="portraitImageFileId != null">
+        PORTRAIT_IMAGE_FILE_ID = #{portraitImageFileId,jdbcType=DECIMAL},
+      </if>
+      <if test="isAdmin != null">
+        IS_ADMIN = #{isAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsAddressId != null">
+        LOGISTICS_ADDRESS_ID = #{logisticsAddressId,jdbcType=DECIMAL},
+      </if>
+      <if test="sex != null">
+        SEX = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="qqCode != null">
+        QQ_CODE = #{qqCode,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null">
+        BIRTH_DATE = #{birthDate,jdbcType=VARCHAR},
+      </if>
+      <if test="microblogging != null">
+        MICROBLOGGING = #{microblogging,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardCode != null">
+        ID_CARD_CODE = #{idCardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardFileId != null">
+        ID_CARD_FILE_ID = #{idCardFileId,jdbcType=DECIMAL},
+      </if>
+      <if test="rrgistrationDate != null">
+        RRGISTRATION_DATE = #{rrgistrationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isModifiedPassword != null">
+        IS_MODIFIED_PASSWORD = #{isModifiedPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="workbench != null">
+        WORKBENCH = #{workbench,jdbcType=VARCHAR},
+      </if>
+      <if test="isOld != null">
+        IS_OLD = #{isOld,jdbcType=VARCHAR},
+      </if>
+      <if test="dataVer != null">
+        DATA_VER = #{dataVer,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hnmlip.model.users">
+    update USERS
+    set USER_NAME = #{userName,jdbcType=VARCHAR},
+      NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      COMPANY_ID = #{companyId,jdbcType=DECIMAL},
+      LAST_LOGIN_TIME = #{lastLoginTime,jdbcType=TIMESTAMP},
+      LAST_LOGIN_IP = #{lastLoginIp,jdbcType=VARCHAR},
+      LOGIN_PASSWORD = #{loginPassword,jdbcType=VARCHAR},
+      MOBILE_PHONE = #{mobilePhone,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      PORTRAIT_IMAGE_FILE_ID = #{portraitImageFileId,jdbcType=DECIMAL},
+      IS_ADMIN = #{isAdmin,jdbcType=VARCHAR},
+      LOGISTICS_ADDRESS_ID = #{logisticsAddressId,jdbcType=DECIMAL},
+      SEX = #{sex,jdbcType=VARCHAR},
+      QQ_CODE = #{qqCode,jdbcType=VARCHAR},
+      BIRTH_DATE = #{birthDate,jdbcType=VARCHAR},
+      MICROBLOGGING = #{microblogging,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      ID_CARD_CODE = #{idCardCode,jdbcType=VARCHAR},
+      ID_CARD_FILE_ID = #{idCardFileId,jdbcType=DECIMAL},
+      RRGISTRATION_DATE = #{rrgistrationDate,jdbcType=TIMESTAMP},
+      IS_MODIFIED_PASSWORD = #{isModifiedPassword,jdbcType=VARCHAR},
+      WORKBENCH = #{workbench,jdbcType=VARCHAR},
+      IS_OLD = #{isOld,jdbcType=VARCHAR},
+      DATA_VER = #{dataVer,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  
+  
+  
+  
+  <sql id="aaaaaaaaaaaaaaaaaaaaaaaaaa" />
+  <sql id="aaaaaaaaaaaaaaaaaaaaaaaaaa" />
+  <sql id="aaaaaaaaaaaaaaaaaaaaaaaaaa" />
+  <sql id="aaaaaaaaaaaaaaaaaaaaaaaaaa" />
+</mapper>
