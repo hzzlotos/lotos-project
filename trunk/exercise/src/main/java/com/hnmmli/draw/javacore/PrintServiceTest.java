@@ -8,6 +8,16 @@ import javax.print.DocPrintJob;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
+import javax.print.attribute.AttributeSet;
+import javax.print.attribute.DocAttributeSet;
+import javax.print.attribute.HashAttributeSet;
+import javax.print.attribute.HashDocAttributeSet;
+import javax.print.attribute.HashPrintJobAttributeSet;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.HashPrintServiceAttributeSet;
+import javax.print.attribute.PrintJobAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.PrintServiceAttributeSet;
 
 /**
  * This program demonstrates the use of print services. The program lets you print a GIF image to
@@ -74,4 +84,31 @@ public class PrintServiceTest // implements ActionListener, Printable
             e.printStackTrace();
         }
     }
+
+    // ==========================================================
+    /**
+     * Interface
+     */
+    private AttributeSet                 interSet1;
+
+    private PrintRequestAttributeSet     interSet2;
+
+    private DocAttributeSet              interSet3;
+
+    private PrintServiceAttributeSet     interSet4;
+
+    private PrintJobAttributeSet         interSet5;
+
+    /**
+     * impl
+     */
+    private HashAttributeSet             implSet1;
+
+    private HashPrintRequestAttributeSet implSet2;
+
+    private HashDocAttributeSet          implSet3;
+
+    private HashPrintServiceAttributeSet implSet4;
+
+    private HashPrintJobAttributeSet     implSet5;
 }
