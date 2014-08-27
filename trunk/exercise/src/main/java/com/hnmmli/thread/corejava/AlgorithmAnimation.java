@@ -1,6 +1,7 @@
 package com.hnmmli.thread.corejava;
 
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -11,6 +12,7 @@ import java.util.Comparator;
 import java.util.concurrent.Semaphore;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -18,39 +20,26 @@ public class AlgorithmAnimation
 {
     public static void main(String[] args)
     {
-        JFrame frame = new AnimationFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run()
+            {
+                JFrame frame = new AnimationFrame();
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setVisible(true);
+            }
+        });
     }
 }
 
 class AnimationFrame extends JFrame
 {
-
-    private static final long serialVersionUID = 1L;
-
-    private static final int  DEFAULT_HEIGHT   = 300;
-
-    private static final int  DEFAULT_WIDTH    = 300;
-
-    private static final int  VALUES_LENGTH    = 30;
-
     public AnimationFrame()
     {
-        ArrayPanel panel = new ArrayPanel();
-        this.add(panel, BorderLayout.CENTER);
+        ArrayComponent comp = new ArrayComponent();
+        this.add(comp, BorderLayout.CENTER);
 
-        Double[] values = new Double[VALUES_LENGTH];
-        final Sorter sorter = new Sorter(values, panel);
-
-        JButton restartButton = new JButton("Restart");
-        restartButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event)
-            {
-                sorter.restart();
-            }
-        });
+        final Sorter sorter = new Sorter(comp);
 
         JButton runButton = new JButton("Run");
         runButton.addActionListener(new ActionListener() {
@@ -71,41 +60,117 @@ class AnimationFrame extends JFrame
         });
 
         JPanel buttons = new JPanel();
-        buttons.add(restartButton);
         buttons.add(runButton);
         buttons.add(stepButton);
         this.add(buttons, BorderLayout.NORTH);
         this.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 
-        for (int i = 0; i < values.length; i++)
-        {
-            values[i] = new Double(Math.random());
-        }
-
         Thread t = new Thread(sorter);
         t.start();
     }
+
+    private static final int DEFAULT_WIDTH  = 300;
+
+    private static final int DEFAULT_HEIGHT = 300;
 }
 
-class ArrayPanel extends JPanel
+class Sorter implements Runnable
 {
 
-    private static final long serialVersionUID = 1L;
+    public Sorter(ArrayComponent comp)
+    {
+        this.values = new Double[VALUES_LENGTH];
+        for (int i = 0; i < this.values.length; i++)
+        {
+            this.values[i] = new Double(Math.random());
+        }
+        this.component = comp;
+        this.gate = new Semaphore(1);
+        this.run = false;
+    }
 
-    private Double            marked1;
+    public void setRun()
+    {
+        this.run = true;
+        this.gate.release();
+    }
 
-    private Double            marked2;
-
-    private Double[]          values;
+    public void setStep()
+    {
+        this.run = false;
+        this.gate.release();
+    }
 
     @Override
-    public void paintComponent(Graphics g)
+    public void run()
+    {
+        Comparator<Double> comp = new Comparator<Double>() {
+            @Override
+            public int compare(Double i1, Double i2)
+            {
+                Sorter.this.component.setValues(Sorter.this.values, i1, i2);
+                try
+                {
+                    if (Sorter.this.run)
+                    {
+                        Thread.sleep(DELAY);
+                    }
+                    else
+                    {
+                        Sorter.this.gate.acquire();
+                    }
+                }
+                catch (InterruptedException exception)
+                {
+                    Thread.currentThread().interrupt();
+                }
+                return i1.compareTo(i2);
+            }
+        };
+        Arrays.sort(this.values, comp);
+        this.component.setValues(this.values, null, null);
+    }
+
+    private Double[]         values;
+
+    private ArrayComponent   component;
+
+    private Semaphore        gate;
+
+    private static final int DELAY         = 100;
+
+    private volatile boolean run;
+
+    private static final int VALUES_LENGTH = 30;
+}
+
+/**
+ * This component draws an array and marks two elements in the array.
+ */
+class ArrayComponent extends JComponent
+{
+    /**
+     * Sets the values to be painted. Called on the sorter thread.
+     * 
+     * @param values the array of values to display
+     * @param marked1 the first marked element
+     * @param marked2 the second marked element
+     */
+    public synchronized void setValues(Double[] values, Double marked1, Double marked2)
+    {
+        this.values = values.clone();
+        this.marked1 = marked1;
+        this.marked2 = marked2;
+        this.repaint();
+    }
+
+    @Override
+    public synchronized void paintComponent(Graphics g) // Called on the event dispatch thread
     {
         if (this.values == null)
         {
             return;
         }
-        super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         int width = this.getWidth() / this.values.length;
         for (int i = 0; i < this.values.length; i++)
@@ -123,85 +188,9 @@ class ArrayPanel extends JPanel
         }
     }
 
-    public void setValues(Double[] values, Double marked1, Double marked2)
-    {
-        this.values = values;
-        this.marked1 = marked1;
-        this.marked2 = marked2;
-        this.repaint();
-    }
-}
+    private Double   marked1;
 
-class Sorter implements Runnable
-{
+    private Double   marked2;
 
-    private static final int DELAY = 500;
-
-    private Semaphore        semaphore;
-
-    private ArrayPanel       panel;
-
-    private boolean          run;
-
-    private Double[]         values;
-
-    public Sorter(Double[] values, ArrayPanel panel)
-    {
-        this.values = values;
-        this.panel = panel;
-        this.semaphore = new Semaphore(1);
-        this.run = false;
-    }
-
-    @Override
-    public void run()
-    {
-        Comparator<Double> comp = new Comparator<Double>() {
-            @Override
-            public int compare(Double i1, Double i2)
-            {
-                Sorter.this.panel.setValues(Sorter.this.values, i1, i2);
-                try
-                {
-                    if (Sorter.this.run)
-                    {
-                        Thread.sleep(DELAY);
-                    }
-                    else
-                    {
-                        Sorter.this.semaphore.acquire();
-                    }
-                }
-                catch (InterruptedException exception)
-                {
-                    Thread.currentThread().interrupt();
-                }
-                return i1.compareTo(i2);
-            }
-        };
-        Arrays.sort(this.values, comp);
-        this.panel.setValues(this.values, null, null);
-    }
-
-    public void restart()
-    {
-        this.run = false;
-        for (int i = 0; i < this.values.length; i++)
-        {
-            this.values[i] = new Double(Math.random());
-        }
-        this.semaphore.release();
-    }
-
-    public void setRun()
-    {
-        this.run = true;
-        this.semaphore.release();
-    }
-
-    public void setStep()
-    {
-        this.run = false;
-        this.semaphore.release();
-    }
+    private Double[] values;
 }

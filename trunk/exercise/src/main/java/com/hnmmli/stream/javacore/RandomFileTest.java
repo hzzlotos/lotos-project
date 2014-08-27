@@ -24,6 +24,8 @@ public class RandomFileTest
         {
             // save all employee records to the file employee.dat
             DataOutputStream out = new DataOutputStream(new FileOutputStream("employee.dat"));// 写在了项目的根目录
+            // DataOutputStream out = new DataOutputStream(new FileOutputStream("/employee.dat"));// 写在了盘符的根目录
+            // DataOutputStream out = new DataOutputStream(new FileOutputStream("./employee.dat"));// 写在了项目的根目录
             for (Employee e : staff)
             {
                 e.writeData(out);

@@ -32,20 +32,15 @@ import java.util.logging.Logger;
 
 public class LoggerTest
 {
-    private static Logger logger = Logger.getLogger("com.hnmmli.logger.LoggerTest");
+    // 第二参数指包名+文件名去掉".properties",比如需要找该类同一个包下的logger.properties文件 则该参数为'com.hnmmli.logger.logger'
+    private static Logger logger = Logger.getLogger("com.hnmmli.logger.LoggerTest", "logger");
 
     public static void main(String[] args)
     {
-        // 第二参数指包名+文件名去掉".properties",比如需要找该类同级的logger.properties文件 则该参数为'com.hnmmli.logger.logger'
-        logger = Logger.getLogger("com.hnmmli.logger.LoggerTest", "logger");
         logger.setLevel(Level.INFO);
         try
         {
-            // File file = new File("g:/logs/javalogging.log");
-            // file.getParentFile().mkdirs();
-            // logger.addHandler(new FileHandler(file.getPath()));
             logger.addHandler(new FileHandler("g:/logs/javalogging.log"));
-
         }
         catch (Exception e)
         {

@@ -2,3 +2,5 @@ InputStream  从流中读取数据 ->Reader
 OutputStream 向流中写入数据 ->Writer
 
 流可以通过嵌套过滤器来添加多重功能
+
+尽可能使用带缓存的流

@@ -34,13 +34,15 @@ import java.io.OutputStream;
 
 public class FileTest
 {
-
     public static void main(String[] args)
     {
+
+        System.out.println("=================" + System.getProperty("user.home"));
+        System.out.println("================="
+                + FileTest.class.getClassLoader().getResource("logger.properties").getPath());
         try
         {
             InputStream in = new FileInputStream("F:" + File.separator + "4月10日会议笔记.txt");
-
             OutputStream aaa = new FileOutputStream("F:" + File.separator + "4月10日会议笔记.txt");
             // OutputStream aaa2 = new FileOutputStream("F:" + File.separator + "4月10日会议笔记.txt");
             InputStream in2 = new FileInputStream("F:" + File.separator + "4月10日会议笔记.txt");
