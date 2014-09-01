@@ -1,0 +1,14 @@
+引导类加载器（bootstrap class loader ）首先会把java中的一些关键类，像java.lang.Objent，和运行时的代码载入内存。
+这些运行时类打包在 JRE\lib\rt.jar文件中。因为是一个本地的接口，我们并不能从java文档中得到引导类加载器
+（bootstrap class loader ）信息。也正是这个原因，引导类加载器（bootstrap class loader ）的表现也根据JVM的不同而异。
+比如，如果我们试图得到一个核心java运行时类的一个类加载器，我们将得到null值，如下：log(java.lang.String.class.getClassLoader()); 
+系统类加载器通常不会使用。此类加载器处理启动应用程序时classpath指定的类，可以通过ClassLoader.getSystemClassLoader()来获得。
+-----------------------------------------------------------------------------------------------------------------------
+扩展类加载器将会加载java.ext.dirs目录下的所有.jar文件。开发者可以为自己的应用添加新的.jar文件与类库，只要将其添加至java.ext.dirs
+目录下面以至于能被扩展类加载器找到即可。
+java.net.URLClassLoader
+java.security.SecureClassLoader
+java.rmi.server.RMIClassLoader
+sun.applet.AppletClassLoader
+
+

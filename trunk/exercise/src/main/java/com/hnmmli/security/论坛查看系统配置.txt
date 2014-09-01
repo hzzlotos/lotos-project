@@ -1,0 +1,36 @@
+JDK下又有一个JRE目录，JDK下的JRE目录比较对应的JRE文件下的目录里的文件要多；
+
+其中都有一个bin目录，但是JDK和JRE还是各有其职能的。就名称来说，JRE意是运行环境，而JDK是开发环境（因为是Development Kit嘛），
+但是实际上却不是那么简单的。一般来说，JRE是最终用户需要用到的，如浏览器插件或者Swing界面的客户端就可直接用JRE；
+搞技术的人或者应用服务器上都是用JDK。JDK实际上自含一个JRE，而且JDK是依赖于它自含的JRE的。
+
+JDK目录下就包含一个子目录jre，你用JDK\bin\java启动程序时，实际上是依赖于jre目录的。
+以下简要过一下JDK目录下的子目录吧（非特殊说明，下列为JDK目录的一层子目录）：
+
+	bin: 这是存放java启动命令以及其他开发工具命令（如javac）的，该目录应当保存到PATH变量中。
+	
+	lib: 是JDK工具用到的类库及其他文件。tools.jar就包含了对开发工具的支持功能库；dt.jar就是所谓DesignTime的东西，
+	估计是给JavaBean和IDE用的；jconsole.jar自然是给jconsole工具用的了；htmlconverter.jar是用来把用applet的HTML转成所谓
+	Java Plug-In的，即<APPLET>标签改为<OBJECT><EMBED>。
+	-------------------------------------------------------------------------------------------------------------------
+	jre: 这就是JDK自含JRE的根目录了，这是系统属性java.home所指向的目录。
+	
+	jre/bin: 包含执行文件和dll等库文件，是JVM需要的，可执行文件和jdk/bin是一样，本目录不需要被PATH所包含。
+	
+	jre/lib: 包含核心代码库(Java平台的core API)，如rt.jar是所谓的bootstrap的类库，还有很多其他需要的子目录和资源文件等等。
+	注意这个lib目录和jdk/lib是不一样的。【重要】
+	
+	jre/lib/ext: 是Extension Class Loader装入jar类库的地方，如localdata.jar包含的是java.text和java.util需要的东西。【重要】
+	-------------------------------------------------------------------------------------------------------------------
+	jre/bin/client: 包含用Client模式的VM时需要的dll库。
+	
+	jre/bin/server: 包含用Server模式的VM时需要的dll库。	
+	
+	jre/lib/security: 包含JVM安全需要的设置文件，JVM信任的证书也在这里。
+	
+	jre/lib/applet: 用于applet需要用到的jar库文件，Applet类通过Applet Class Loader从本地文件系统中预加载，这样为减小大型
+	Applet 的启动时间提供了一些方式，好像从网上已经下载完成了一样。
+	
+	jre/lib/fonts: 字体文件。
+	
+	include: 包含C语言头文件，用于编写JNI程序和JVMDI(Debugger Interface)的程序时用到，好像还有JVMTI。
