@@ -23,6 +23,21 @@ import org.apache.bcel.generic.PUSH;
  */
 public class EntryLogger
 {
+    private ClassGen        cg;
+
+    private ConstantPoolGen cpg;
+
+    /**
+     * Constructs an EntryLogger that inserts logging into annotated methods of a given class
+     * 
+     * @param cg the class
+     */
+    public EntryLogger(ClassGen cg)
+    {
+        this.cg = cg;
+        this.cpg = cg.getConstantPool();
+    }
+
     // 首先javac Item.java
     // 接着javac -classpath ./bcel-5.3-SNAPSHOT.jar EbtryLogger.java
     // java -Xbootcalsspath/a:./bcel-5.3-SNAPSHOT.jar EntryLogger Item
@@ -53,17 +68,6 @@ public class EntryLogger
         {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Constructs an EntryLogger that inserts logging into annotated methods of a given class
-     * 
-     * @param cg the class
-     */
-    public EntryLogger(ClassGen cg)
-    {
-        this.cg = cg;
-        this.cpg = cg.getConstantPool();
     }
 
     /**
@@ -122,8 +126,4 @@ public class EntryLogger
         mg.setMaxStack();
         return mg.getMethod();
     }
-
-    private ClassGen        cg;
-
-    private ConstantPoolGen cpg;
 }
