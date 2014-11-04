@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd"
 	default-lazy-init="true">
 
@@ -12,10 +13,11 @@
 	</bean>
 
 	<!-- 項目自定义的Realm, 所有accountService依赖的dao都需要用depends-on声明 -->
-	<bean id="shiroDbRealm" class="cn.newtouch.service.account.ShiroDbRealm" depends-on="userDao">
-		<property name="accountService" ref="accountService"/>
+	<bean id="shiroDbRealm" class="cn.newtouch.service.account.ShiroDbRealm"
+		depends-on="userDao">
+		<property name="accountService" ref="accountService" />
 	</bean>
-	
+
 	<!-- Shiro Filter -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
@@ -29,21 +31,22 @@
 				/setlocal = anon
 				/api/** = anon
 				/fileupload/** = anon
-				/manager/** = roles[admin]<!-- anon --> 
+				/manager/** = roles[admin]<!-- anon -->
 				/attach/show = authc
 				/attach/attahTree = authc
-				/attach/** = roles[admin]
-				<!--/material/** = authc-->
+				/attach/** =
+				roles[admin]
+				<!--/material/** = authc -->
 				/** = authc
 			</value>
 		</property>
 	</bean>
-	
+
 	<!-- 用户授权信息Cache, 采用EhCache -->
 	<bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
-		<property name="cacheManagerConfigFile" value="classpath:ehcache/ehcache-shiro.xml"/>
+		<property name="cacheManagerConfigFile" value="classpath:ehcache/ehcache-shiro.xml" />
 	</bean>
-	
+
 	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
-	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
 </beans>
