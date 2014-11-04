@@ -1,15 +1,15 @@
 package com.hnmmli.net;
 
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
 public class ServerSocketTest
 {
-
+    /**
+     * 使用telnet localhost 8189命令来访问
+     */
     public static void main(String[] args)
     {
         ServerSocket ss = null;
@@ -21,11 +21,11 @@ public class ServerSocketTest
 
             InputStream in = incoming.getInputStream();
 
-            OutputStream out = incoming.getOutputStream();
+            // OutputStream out = incoming.getOutputStream();
 
             Scanner ins = new Scanner(in);
 
-            new PrintWriter(out, true);
+            // new PrintWriter(out, true);
 
             while (ins.hasNext())
             {

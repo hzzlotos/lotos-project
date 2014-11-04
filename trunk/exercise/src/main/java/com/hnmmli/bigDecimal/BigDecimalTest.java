@@ -24,7 +24,7 @@
 // SPECIFICALLY DISCLAIMS ANY EXPRESS OR IMPLIED WARRANTY OF FITNESS FOR
 // HIGH RISK ACTIVITIES.
 //-------------------------------------------------------------------------
-package com.hnmmli.bigDecimal;
+package com.hnmmli.bigdecimal;
 
 import java.math.BigDecimal;
 

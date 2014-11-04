@@ -9,7 +9,6 @@ public class ClassLoaderTest
         systemJarTest();
         System.out.println("========================");
         testClassLoader();
-
     }
 
     private static void systemJarTest()
@@ -33,5 +32,13 @@ public class ClassLoaderTest
         System.out.println("当前ext系统ExtClassLoader==========" + ClassLoader.getSystemClassLoader().getParent());
         System.out.println("当前系统系统SysClassLoader=========="
                 + ClassLoader.getSystemClassLoader().getParent().getParent());
+        TestSysClassLoader tscl = new TestSysClassLoader();
+        tscl.getSysClassLoader();
+        /*
+         * Thread.currentThread().getContextClassLoader()
+         * ClassLoaderTest.class.getClassLoader()-->该应用下启动main下所有class得到的getClassLoader都是当前的应用AppClassLoader
+         * ClassLoader.getSystemClassLoader()
+         * 三者是一致的
+         */
     }
 }
