@@ -18,6 +18,8 @@ import com.horstmann.annotations.*;
 @SupportedSourceVersion(SourceVersion.RELEASE_6)
 public class BeanInfoAnnotationProcessor extends AbstractProcessor
 {
+   // 先执行javac BeanInfoAnnotationProcessor.java
+   // 再执行java -processor BeanInfoAnnotationProcessor com/horstmannn/corejava/ChartBean.java
    @Override
    public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv)
    {
