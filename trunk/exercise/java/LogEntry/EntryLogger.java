@@ -10,6 +10,9 @@ import org.apache.bcel.generic.*;
  */
 public class EntryLogger
 {
+   // 首先javac Item.java
+   // 接着javac -classpath ./bcel-5.3-SNAPSHOT.jar EbtryLogger.java
+   // java -Xbootcalsspath/a:./bcel-5.3-SNAPSHOT.jar EntryLogger Item
    /**
     * Adds entry logging code to the given class
     * @param args the name of the class file to patch

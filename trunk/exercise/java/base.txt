@@ -23,7 +23,7 @@ jre运行环境包
 4 命令
 在环境变量path里面查找其所拥有的目录下是否有与该命令相同名称的.exe文件(可执行文件),有则执行,没有则报错不认识
 javac:编译程序命令	javac -encoding UTF-8 -sourcepath G:\test\ -d g:\classpath XX.java
-java:运行程序命令	java cn.newtouch.XX
+java:运行程序命令	java -Xbootclasspath/a:/usrhome/thirdlib.jar: cn.newtouch.XX
 是在java的jdk路径下的bin目录下的一个javac.exe文件
 classpath去找class文件
 这里可以自定义一个classpath 如G:classpath之后在环境配置的CLASSPATH中添加";G:\classpath"
@@ -38,4 +38,4 @@ javac D:\eclipse-juno\workSpace\javaExercise\java\HolleWorld.java
 一个java类文件中只能有一个public的class
 程序的入口是main方法
 
-执行jar命令：java -jar test.jar
+执行jar命令：java -Xbootclasspath/a:/usrhome/thirdlib.jar: -jar yourJarExe.jar
