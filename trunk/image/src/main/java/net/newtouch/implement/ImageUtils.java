@@ -3,10 +3,28 @@ package net.newtouch.implement;
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.awt.image.CropImageFilter;
+import java.awt.image.FilteredImageSource;
+import java.awt.image.ImageFilter;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
+
+import org.apache.commons.lang.StringUtils;
+import org.im4java.core.GMOperation;
+import org.im4java.core.GraphicsMagickCmd;
+import org.im4java.process.Pipe;
+
+import com.google.common.collect.Maps;
 
 //import com.sun.image.codec.jpeg.JPEGCodec;
 //import com.sun.image.codec.jpeg.JPEGImageEncoder;
@@ -21,22 +39,228 @@ import javax.imageio.ImageIO;
 public class ImageUtils
 {
 
-    private static String       waterImg            = "E:" + File.separator + "test" + File.separator + "imagetest"
-                                                            + File.separator + "origin" + File.separator
-                                                            + "steelgt_logo.png";
-
-    private static int          x                   = 30;
-
-    private static int          y                   = 30;
-
-    private static float        alpha               = 0.8F;
-
-    /** 图片格式：JPG */
-    private static final String PICTRUE_FORMATE_JPG = "jpg";
-
-    private static Image getImage(String imgPath) throws Exception
+    /**
+     * 
+     * 压缩图片
+     * 
+     * @since 2014年6月23日
+     * @author hezhengzheng
+     * @param originImg 需压缩的图片字节数组
+     * @param formatName 图片压缩格式
+     * @param width 图片压缩所要达到宽度
+     * @param height 图片压缩所要达到高度
+     * @return 返回压缩图片字节数组
+     * @throws Exception
+     */
+    public static byte[] compress(byte[] originImg, String formatName, int width, int height) throws Exception
     {
-        return ImageIO.read(new File(imgPath));
+        return compress(originImg, formatName, width, height, BufferedImage.TYPE_INT_RGB, Image.SCALE_FAST);
+    }
+
+    public static byte[] compressByGM(byte[] originImg, String formatName, int width, int height) throws Exception
+    {
+        GMOperation op = new GMOperation();
+        op.resize(width, height, '!');
+        op.addImage("-");
+        op.addImage(formatName + ":-");
+        Pipe pipeIn = new Pipe(new ByteArrayInputStream(originImg), null);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        Pipe pipeOut = new Pipe(null, out);
+        GraphicsMagickCmd cmd = new GraphicsMagickCmd("convert");
+        cmd.setInputProvider(pipeIn);
+        cmd.setOutputConsumer(pipeOut);
+        cmd.run(op);
+        return out.toByteArray();
+    }
+
+    /**
+     * 
+     * 压缩图片
+     * 
+     * @since 2014年6月23日
+     * @author hezhengzheng
+     * @param originImg 需压缩的图片字节数组
+     * @param formatName 图片压缩格式
+     * @param width 图片压缩所要达到宽度
+     * @param height 图片压缩所要达到高度
+     * @param imageType BufferedImage所需的imageType类型
+     * @param scaleType BufferedImage的drawImage方法所需的ImageObserver类型
+     * @return 返回压缩图片字节数组
+     * @throws Exception
+     */
+    public static byte[] compress(byte[] originImg, String formatName, int width, int height, int imageType,
+            int scaleType) throws Exception
+    {
+        Image img = getImage(originImg);
+        BufferedImage bufferedImage = new BufferedImage(width, height, imageType);
+        Graphics2D g = bufferedImage.createGraphics();
+        g.drawImage(img.getScaledInstance(width, height, scaleType), 0, 0, null);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try
+        {
+            ImageIO.write(bufferedImage, StringUtils.isNotEmpty(formatName) ? formatName
+                    : FileConstants.PICTRUE_FORMATE_JPG, out);
+            byte[] result = out.toByteArray();
+            return result;
+        }
+        finally
+        {
+            if (null != out)
+            {
+                out.close();
+            }
+        }
+    }
+
+    /**
+     * 
+     * 压缩图片,根据图片类型进行相对应的图片压缩
+     * 
+     * @since 2014年6月23日
+     * @author hezhengzheng
+     * @param originImg 需压缩的图片字节数组
+     * @param name 图片名称
+     * @param type 图片类型
+     * @return 返回压缩图片Map；Key为图片路径，Value为图片字节数组
+     * @throws Exception
+     */
+    public static Map<String, byte[]> compress(byte[] originImg, String name, ImageType type) throws Exception
+    {
+        Map<String, byte[]> map = Maps.newHashMap();
+        String formatName = getExtension(name);
+        switch (type)
+        {
+        case MATERIAL:
+            map.put(getName(name, formatName, 265, 265), compressByGM(originImg, formatName, 265, 265));
+            map.put(getName(name, formatName, 220, 220), compressByGM(originImg, formatName, 220, 220));
+            map.put(getName(name, formatName, 118, 118), compressByGM(originImg, formatName, 118, 118));
+            map.put(getName(name, formatName, 45, 45), compressByGM(originImg, formatName, 45, 45));
+            map.put(getName(name, formatName, 30, 30), compressByGM(originImg, formatName, 30, 30));
+            break;
+        case WAREHOUSE:
+            map.put(getName(name, formatName, 620, 390), compressByGM(originImg, formatName, 620, 390));
+            map.put(getName(name, formatName, 150, 120), compressByGM(originImg, formatName, 150, 120));
+            break;
+        case PORTRAIT:
+            map.put(getName(name, formatName, 70, 70), compressByGM(originImg, formatName, 70, 70));
+            map.put(getName(name, formatName, 50, 50), compressByGM(originImg, formatName, 50, 50));
+            map.put(getName(name, formatName, 20, 20), compressByGM(originImg, formatName, 20, 20));
+            break;
+        case SESSION:
+            map.put(getName(name, formatName, 158, 158), compressByGM(originImg, formatName, 158, 158));
+            map.put(getName(name, formatName, 54, 54), compressByGM(originImg, formatName, 54, 54));
+            break;
+        case CERTIFICATE:
+            map.put(getName(name, formatName, 134, 90), compressByGM(originImg, formatName, 134, 90));
+            map.put(getName(name, formatName, 980, 700), compressByGM(originImg, formatName, 980, 700));
+            map.put(getName(name, formatName, 140, 104), compressByGM(originImg, formatName, 140, 104));
+            break;
+        case ID_CARD:
+            map.put(getName(name, formatName, 186, 118), compressByGM(originImg, formatName, 186, 118));
+            map.put(getName(name, formatName, 300, 190), compressByGM(originImg, formatName, 300, 190));
+            break;
+        case LOGISTICS:
+            map.put(getName(name, formatName, 100, 100), compressByGM(originImg, formatName, 100, 100));
+            map.put(getName(name, formatName, 880, 880), compressByGM(originImg, formatName, 880, 880));
+            break;
+        case LOGO:
+            map.put(getName(name, formatName, 102, 30), compressByGM(originImg, formatName, 102, 30));
+            break;
+        default:
+            break;
+        }
+        return map;
+    }
+
+    /**
+     * 将图片进行裁剪
+     * 
+     * @since 2014年6月23日
+     * @author hezhengzheng
+     * @param originImg 需压缩的图片字节数组
+     * @param formatName 图片压缩格式
+     * @param x 图片裁剪的x坐标
+     * @param y 图片裁剪的y坐标
+     * @param width 截取的宽
+     * @param height 截取的高
+     * @param balance_width 比例宽
+     * @param balance_height 比例高
+     * @throws IOException
+     * */
+    public static byte[] cutImage(byte[] originImg, String formatName, int x, int y, int width, int height,
+            int balance_width, int balance_height) throws Exception
+    {
+        InputStream is = new ByteArrayInputStream(originImg);
+        ByteArrayOutputStream fos = new ByteArrayOutputStream();
+        try
+        {
+            // 读取源图片文件
+            BufferedImage sourceImage = ImageIO.read(is);
+            int ori_width = sourceImage.getWidth();
+            int ori_height = sourceImage.getHeight();
+            int x_ = x * ori_width / balance_width;
+            int y_ = y * ori_height / balance_height;
+            int width_ = width * ori_width / balance_width;
+            int height_ = height * ori_height / balance_height;
+            // System.out.println(x_);
+            // System.out.println(y_);
+            // System.out.println(width_);
+            // System.out.println(height_);
+
+            // 生成过滤器
+            ImageFilter cropFilter = new CropImageFilter(x_, y_, width_, height_);
+            // 生成图片
+            Image image = Toolkit.getDefaultToolkit().createImage(
+                    new FilteredImageSource(sourceImage.getSource(), cropFilter));
+            // 生成新的画板
+            BufferedImage targerImage = new BufferedImage(width_, height_, BufferedImage.TYPE_INT_RGB);
+            Graphics2D g = targerImage.createGraphics();
+            // 画出最新的图片
+            g.drawImage(image, 0, 0, null);
+            ImageIO.write(targerImage, StringUtils.isNotEmpty(formatName) ? formatName
+                    : FileConstants.PICTRUE_FORMATE_JPG, fos);
+            return fos.toByteArray();
+        }
+        finally
+        {
+            if (null != is)
+            {
+                is.close();
+            }
+            if (null != fos)
+            {
+                fos.close();
+            }
+        }
+    }
+
+    public static void main(String[] args)
+    {
+        try
+        {
+            // int imageWidth = 600;
+            // int imageHeight = 401;
+            // int x = 264;
+            // int y = 147;
+            // int imageTagWidth = 180;
+            // int imageTagHeight = 180;
+
+            FileInputStream fis = new FileInputStream("G:\\DSC_0287.JPG");
+            byte[] bs = new byte[fis.available()];
+            fis.read(bs);
+            // byte[] bs2 = cutImage(bs, "jpg", x, y, imageTagWidth, imageTagHeight, imageWidth, imageHeight);
+            byte[] bs2 = compress(bs, "jpg", 100, 100);
+            FileOutputStream fos = new FileOutputStream("G:\\DSC_0287_123.jpg");
+            fos.write(bs2);
+            fis.close();
+            fos.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        String aaa = "asd.Jpg";
+        System.out.println(getExtension(aaa));
     }
 
     /**
@@ -52,10 +276,10 @@ public class ImageUtils
     public static String waterMark(String originImg) throws Exception
     {
         String targerPath = null;
-        String[] strs = originImg.split("\\.");
-        targerPath = strs[0] + "_" + "watermark" + "." + PICTRUE_FORMATE_JPG;
-        waterMark(originImg, BufferedImage.TYPE_INT_RGB, targerPath, waterImg, x, y, AlphaComposite.SRC_ATOP, alpha,
-                PICTRUE_FORMATE_JPG);
+        String[] strs = originImg.split(FileConstants.REGULAR_DOT);
+        targerPath = strs[0] + "_" + "watermark" + FileConstants.DOT + FileConstants.PICTRUE_FORMATE_JPG;
+        waterMark(originImg, BufferedImage.TYPE_INT_RGB, targerPath, FileConstants.WATERIMG, FileConstants.X,
+                FileConstants.Y, AlphaComposite.SRC_ATOP, FileConstants.ALPHA, FileConstants.PICTRUE_FORMATE_JPG);
         return targerPath;
     }
 
@@ -112,88 +336,77 @@ public class ImageUtils
     }
 
     /**
+     * 生成Image对象
      * 
-     * 压缩图片，根据物资类型进行指定压缩
-     * 
-     * @since 2014年5月13日
+     * @since 2014年6月23日
      * @author hezhengzheng
-     * @param originImg 需压缩的图片路径
-     * @param type 图片类型
+     * @param imgBs 图片字节数组
+     * @return Image对象
      * @throws Exception
      */
-    public static void compress(String originImg, ImageType type) throws Exception
+    private static Image getImage(byte[] imgBs) throws Exception
     {
-        switch (type)
-        {
-        case MATERIAL:
-            compress(originImg, 265, 265);
-            compress(originImg, 220, 220);
-            compress(originImg, 118, 118);
-            compress(originImg, 45, 45);
-            compress(originImg, 30, 30);
-            break;
-        case STORE:
-            compress(originImg, 620, 390);
-            compress(originImg, 150, 120);
-            break;
-        case PORTRAIT:
-            compress(originImg, 70, 70);
-            compress(originImg, 50, 50);
-            compress(originImg, 20, 20);
-            break;
-        case MARKET:
-            compress(originImg, 158, 158);
-            compress(originImg, 54, 54);
-            break;
-        case CREDENTIAL:
-            compress(originImg, 134, 90);
-            compress(originImg, 140, 104);
-            break;
-        default:
-            break;
-        }
-    }
-
-    public static void compress(String originImg, int width, int height) throws Exception
-    {
-        String[] str = originImg.split("\\.");
-        String targerPath = str[0] + "_" + width + "_" + height + "." + str[1];
-        compress(originImg, targerPath, width, height);
-    }
-
-    public static void compress(String originImg, String targerImg, int width, int height) throws Exception
-    {
-        compress(originImg, BufferedImage.TYPE_INT_RGB, Image.SCALE_SMOOTH, targerImg, width, height);
-    }
-
-    public static void compress(String originImg, int imageType, int scaleType, String targerImg, int width, int height)
-            throws Exception
-    {
-        Image img = getImage(originImg);
-        // double rate1 = ((double) img.getWidth(null)) / (double) width + 0.1;
-        // double rate2 = ((double) img.getHeight(null)) / (double) height + 0.1;
-        // double rate = rate1 > rate2 ? rate1 : rate2;
-        // int newWidth = (int) ((img.getWidth(null)) / rate);
-        // int newHeight = (int) ((img.getHeight(null)) / rate);
-        BufferedImage tag = new BufferedImage(width, height, imageType);
-        tag.getGraphics().drawImage(img.getScaledInstance(width, height, scaleType), 0, 0, null);
-        // FileOutputStream out = new FileOutputStream(targerPath);
-        ImageIO.write(tag, "jpg", new File(targerImg));
-        // JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
-        // encoder.encode(tag);
-        // out.close();
-    }
-
-    public static void main(String[] args)
-    {
+        InputStream is = new ByteArrayInputStream(imgBs);
         try
         {
-            System.out.println("===========================" + waterMark("E:/test/imagetest/target/yuantu.jpg"));
-            compress("E:/test/imagetest/target/yuantu.jpg", 1024, 768);
+            return ImageIO.read(is);
         }
-        catch (Exception e)
+        finally
         {
-            e.printStackTrace();
+            if (null != is)
+            {
+                is.close();
+            }
         }
+    }
+
+    /**
+     * 生成Image对象
+     * 
+     * @since 2014年6月23日
+     * @author hezhengzheng
+     * @param imgPath 图片路径
+     * @return Image对象
+     * @throws Exception
+     */
+    private static Image getImage(String imgPath) throws Exception
+    {
+        return ImageIO.read(new File(imgPath));
+    }
+
+    /**
+     * 根据所传尺寸建立图片名称
+     * 
+     * @since 2014年6月23日
+     * @author hezhengzheng
+     * @param originName 需压缩的图片名称
+     * @param width 图片压缩所要达到宽度
+     * @param height 图片压缩所要达到高度
+     * @return
+     */
+    public static String getName(String originName, String formatName, int width, int height)
+    {
+        String[] str = originName.split(FileConstants.REGULAR_DOT);
+        return str[0] + FileConstants.UNDER_LINE + width + FileConstants.UNDER_LINE + height + FileConstants.DOT
+                + (StringUtils.isNotEmpty(formatName) ? formatName : FileConstants.PICTRUE_FORMATE_JPG);
+    }
+
+    /**
+     * 
+     * 获取后缀名
+     * 
+     * @since 2014年8月13日
+     * @author hezhengzheng
+     * @param formatName 原文件名
+     * @return
+     */
+    public static String getExtension(String formatName)
+    {
+        if (StringUtils.isEmpty(formatName))
+        {
+            return null;
+        }
+        int index = formatName.lastIndexOf(FileConstants.DOT);
+        return formatName.substring(index + 1, formatName.length()).toLowerCase();
     }
 }
