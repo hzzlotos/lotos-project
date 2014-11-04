@@ -6,16 +6,30 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>../architecture</module>
+		<module>../clone</module>
 		<module>../exercise</module>
+		<module>../fileupload</module>
+		<module>../holle</module>
+		<module>../image</module>
 		<module>../javamail</module>
 		<module>../level</module>
 		<module>../math</module>
 		<module>../memcached</module>
+		<module>../miniweb</module>
 		<module>../mongodb</module>
 		<module>../mybatis</module>
 		<module>../quicksample</module>
-		<module>../clone</module>
-		<module>../image</module>
+		<module>../tankwar</module>
+		<module>../testfreemarker</module>
+		<module>../testhibernate</module>
+		<module>../testS2SHanno</module>
+		<module>../testS2SHxml</module>
+		<module>../testservlet</module>
+		<module>../testsession</module>
+		<module>../testspring</module>
+		<module>../testspring_hibernate</module>
+		<module>../teststruts2</module>
+		<module>../testwebservice</module>
 	</modules>
 	<name>MyProjectParent</name>
 	<!-- 设置字符集为UTF-8 -->	
