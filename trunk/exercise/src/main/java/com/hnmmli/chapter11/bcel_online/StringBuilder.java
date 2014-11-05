@@ -15,6 +15,8 @@ public class StringBuilder
     public static void main(String[] argv)
     {
         StringBuilder inst = new StringBuilder();
+        String[] argv1 = { "1000", "2000" };
+        argv = argv1;
         for (String element : argv)
         {
             String result = inst.buildString(Integer.parseInt(element));
