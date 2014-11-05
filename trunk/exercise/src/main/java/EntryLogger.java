@@ -60,6 +60,7 @@ public class EntryLogger
             ClassGen cg = new ClassGen(jc);
             EntryLogger el = new EntryLogger(cg);
             el.convert();
+            System.out.println("the path========" + Repository.lookupClassFile(cg.getClassName()).getPath());
             File f = new File(Repository.lookupClassFile(cg.getClassName()).getPath());
             cg.getJavaClass().dump(f.getPath());
             // }
@@ -82,7 +83,7 @@ public class EntryLogger
             for (AnnotationEntry a : annotations)
             {
                 System.out.println("---" + a.getAnnotationType());
-                if (a.getAnnotationType().equals("LTestEntry;"))
+                if (a.getAnnotationType().equals("LLogEntry;"))
                 {
                     for (ElementValuePair p : a.getElementValuePairs())
                     {

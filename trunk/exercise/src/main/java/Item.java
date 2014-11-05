@@ -6,6 +6,10 @@
  */
 public class Item
 {
+    private String description;
+
+    private int    partNumber;
+
     /**
      * Constructs an item.
      * 
@@ -16,23 +20,6 @@ public class Item
     {
         this.description = aDescription;
         this.partNumber = aPartNumber;
-    }
-
-    /**
-     * Gets the description of this item.
-     * 
-     * @return the description
-     */
-    public String getDescription()
-    {
-        return this.description;
-    }
-
-    @Override
-    @TestEntry(logger = "the")
-    public String toString()
-    {
-        return "[descripion=" + this.description + ", partNumber=" + this.partNumber + "]";
     }
 
     @Override
@@ -55,6 +42,16 @@ public class Item
         return this.description.equals(other.description) && this.partNumber == other.partNumber;
     }
 
+    /**
+     * Gets the description of this item.
+     * 
+     * @return the description
+     */
+    public String getDescription()
+    {
+        return this.description;
+    }
+
     @Override
     @LogEntry(logger = "global")
     public int hashCode()
@@ -62,7 +59,10 @@ public class Item
         return 13 * this.description.hashCode() + 17 * this.partNumber;
     }
 
-    private String description;
-
-    private int    partNumber;
+    @Override
+    @TestEntry(logger = "the")
+    public String toString()
+    {
+        return "[descripion=" + this.description + ", partNumber=" + this.partNumber + "]";
+    }
 }

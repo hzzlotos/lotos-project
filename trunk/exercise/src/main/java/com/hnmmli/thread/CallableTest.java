@@ -34,7 +34,7 @@ public class CallableTest
     private static void testNo1() throws Exception
     {
         Callable<String> myCallable = new TaskWithResult(111);
-        FutureTask<String> task = new FutureTask<>(myCallable);
+        FutureTask<String> task = new FutureTask<String>(myCallable);
         Thread t = new Thread(task);
         t.start();
         System.out.println("=========================    " + task.get());

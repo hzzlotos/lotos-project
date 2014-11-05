@@ -34,7 +34,7 @@ public class QueueTest
     public static void main(String[] args)
     {
         // 先进先出
-        Queue<String> queue = new LinkedList<>(); // LinkedBlockingQueue;ArrayBlockingQueue
+        Queue<String> queue = new LinkedList<String>(); // LinkedBlockingQueue;ArrayBlockingQueue
         queue.add("1");
         queue.add("4");
         queue.add("2");
