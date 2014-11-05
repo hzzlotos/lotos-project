@@ -10,7 +10,7 @@ public class StoreManager implements StoreService
 
     public StoreManager(DataSource dataSource)
     {
-        this.dao = new StoreDAO<>(dataSource);
+        this.dao = new StoreDAO<Store>(dataSource);
     }
 
     @Override
