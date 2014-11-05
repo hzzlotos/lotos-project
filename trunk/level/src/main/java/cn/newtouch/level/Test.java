@@ -25,11 +25,11 @@ public class Test
 
     private static void getNodeByClass(String[] classNames) throws Exception
     {
-        List<KeyValue<String, Integer>> result = new ArrayList<>();
-        List<KeyValue<String, Set<KeyValue<String, Integer>>>> temp = new ArrayList<>();
+        List<KeyValue<String, Integer>> result = new ArrayList<KeyValue<String, Integer>>();
+        List<KeyValue<String, Set<KeyValue<String, Integer>>>> temp = new ArrayList<KeyValue<String, Set<KeyValue<String, Integer>>>>();
         String name;
         KeyValue<String, Set<KeyValue<String, Integer>>> keyValue;
-        Set<KeyValue<String, Integer>> fieldNames = new HashSet<>();
+        Set<KeyValue<String, Integer>> fieldNames = new HashSet<KeyValue<String, Integer>>();
         for (String s : classNames)
         {
             if (s.contains("Key.java") || s.equals("level"))
@@ -39,7 +39,7 @@ public class Test
             name = s.replace(".class", "");
             Class clazz = Class.forName("com.hnmmli.g2base.mybatis.entities." + name);
             Field[] fields = clazz.getDeclaredFields();
-            fieldNames = new HashSet<>();
+            fieldNames = new HashSet<KeyValue<String, Integer>>();
             for (Field f : fields)
             {
                 if (!f.getType().equals(Long.class) && !f.getType().equals(String.class)
@@ -73,7 +73,7 @@ public class Test
         {
             return;
         }
-        Set<KeyValue<String, Integer>> fieldNames = new HashSet<>();
+        Set<KeyValue<String, Integer>> fieldNames = new HashSet<KeyValue<String, Integer>>();
         KeyValue<String, Integer> keyValue;
         boolean flag = true;
         Integer max = 0;
