@@ -1,4 +1,4 @@
-package com.hnmmli.other11.javacore.compilerapi.test;
+package com.hnmmli.chapter11.javacore.compilerapi.test;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;

@@ -1,4 +1,4 @@
-package com.hnmmli.other11;
+package com.hnmmli.chapter11;
 
 import org.python.core.PyFunction;
 import org.python.core.PyInteger;

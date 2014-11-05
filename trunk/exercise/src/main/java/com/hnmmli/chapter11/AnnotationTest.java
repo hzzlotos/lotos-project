@@ -1,4 +1,4 @@
-package com.hnmmli.other11;
+package com.hnmmli.chapter11;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

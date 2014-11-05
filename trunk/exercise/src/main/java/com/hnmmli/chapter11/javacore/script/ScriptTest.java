@@ -1,4 +1,4 @@
-package com.hnmmli.other11.javacore.script;
+package com.hnmmli.chapter11.javacore.script;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -71,7 +71,7 @@ public class ScriptTest
 
                     final Properties events = new Properties();
                     events.load(new FileReader(ScriptTest.class.getClassLoader().getResource("").getPath()
-                            + "\\com\\hnmmli\\other11\\javacore\\script\\" + language + ".properties"));
+                            + "\\com\\hnmmli\\chapter11\\javacore\\script\\" + language + ".properties"));
                     for (final Object e : events.keySet())
                     {
                         String[] s = ((String) e).split("\\.");

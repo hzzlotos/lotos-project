@@ -1,4 +1,4 @@
-package com.hnmmli.other11.javacore.compilerapi;
+package com.hnmmli.chapter11.javacore.compilerapi;
 
 import java.net.URI;
 

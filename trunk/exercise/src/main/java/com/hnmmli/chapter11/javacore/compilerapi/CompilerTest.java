@@ -1,4 +1,4 @@
-package com.hnmmli.other11.javacore.compilerapi;
+package com.hnmmli.chapter11.javacore.compilerapi;
 
 import java.awt.EventQueue;
 import java.io.FileReader;
@@ -56,7 +56,7 @@ public class CompilerTest
             }
         };
 
-        JavaFileObject source = buildSource("com.hnmmli.other11.javacore.api.test.ButtonFrame");
+        JavaFileObject source = buildSource("com.hnmmli.chapter11.javacore.api.test.ButtonFrame");
         JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, diagnostics, null, null,
                 Arrays.asList(source));
         Boolean result = task.call();
@@ -111,7 +111,7 @@ public class CompilerTest
         source.append("protected void addEventHandlers() {");
         Properties props = new Properties();
         props.load(new FileReader(CompilerTest.class.getClassLoader().getResource("").getPath()
-                + "com\\hnmmli\\other11\\javacore\\api\\action.properties"));
+                + "com\\hnmmli\\chapter11\\javacore\\api\\action.properties"));
         for (Map.Entry<Object, Object> e : props.entrySet())
         {
             String beanName = (String) e.getKey();
