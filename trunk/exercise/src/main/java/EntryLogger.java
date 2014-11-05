@@ -77,12 +77,12 @@ public class EntryLogger
     {
         for (Method m : this.cg.getMethods())
         {
-            System.out.println(m.getName());
+            System.out.println("===" + m.getName());
             AnnotationEntry[] annotations = m.getAnnotationEntries();
             for (AnnotationEntry a : annotations)
             {
-                System.out.println(a.getAnnotationType());
-                if (a.getAnnotationType().equals("LLogEntry;"))
+                System.out.println("---" + a.getAnnotationType());
+                if (a.getAnnotationType().equals("LTestEntry;"))
                 {
                     for (ElementValuePair p : a.getElementValuePairs())
                     {
