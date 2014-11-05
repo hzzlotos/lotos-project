@@ -22,7 +22,7 @@ import org.apache.bcel.generic.ObjectType;
 import org.apache.bcel.generic.PUSH;
 import org.apache.bcel.generic.Type;
 
-public class TheBCELTiming
+public class BCELTiming
 {
 
     private static void modifyWrapper(ClassGen cgen, Method method)
