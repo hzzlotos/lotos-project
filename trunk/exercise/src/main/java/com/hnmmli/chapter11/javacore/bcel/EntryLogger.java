@@ -1,3 +1,5 @@
+package com.hnmmli.chapter11.javacore.bcel;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -56,7 +58,7 @@ public class EntryLogger
             // }
             // else
             // {
-            JavaClass jc = Repository.lookupClass("Item");
+            JavaClass jc = Repository.lookupClass("com/hnmmli/chapter11/javacore/bcel/Item");
             ClassGen cg = new ClassGen(jc);
             EntryLogger el = new EntryLogger(cg);
             el.convert();
