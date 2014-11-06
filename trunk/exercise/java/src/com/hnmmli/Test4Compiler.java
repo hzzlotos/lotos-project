@@ -13,7 +13,7 @@ public class Test4Compiler
 {
     public static void main(String args[])
     {
-         aa; //让编译出错
+        // aa; //让编译出错
         System.out.println("holle world!");
     }
 }

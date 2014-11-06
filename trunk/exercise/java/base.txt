@@ -39,3 +39,5 @@ javac D:\eclipse-juno\workSpace\javaExercise\java\HolleWorld.java
 程序的入口是main方法
 
 执行jar命令：java -Xbootclasspath/a:/usrhome/thirdlib.jar: -jar yourJarExe.jar
+
+jdk1.7把java.exe拷贝一份在c:\windows\system32
