@@ -7,15 +7,14 @@
 	<modules>
 		<module>../architecture</module>
 		<module>../exercise</module>
-		<module>../level</module>
-		<module>../miniweb</module>
-		<module>../mybatis</module>
+		<module>../miniweb</module>		
 		<module>../quicksample</module>
 		<module>../ssodemo</module>
 		<module>../ssoserver</module>
 		<module>../tankwar</module>
 		<module>../testfreemarker</module>
 		<module>../testhibernate</module>
+		<module>../testmybatis</module>
 		<module>../testS2SHanno</module>
 		<module>../testS2SHxml</module>
 		<module>../testservlet</module>
