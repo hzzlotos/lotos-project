@@ -7,10 +7,8 @@
 	<modules>
 		<module>../architecture</module>
 		<module>../exercise</module>
-		<module>../javamail</module>
 		<module>../level</module>
 		<module>../miniweb</module>
-		<module>../mongodb</module>
 		<module>../mybatis</module>
 		<module>../quicksample</module>
 		<module>../ssodemo</module>
