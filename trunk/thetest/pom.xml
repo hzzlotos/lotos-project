@@ -23,8 +23,7 @@
 			<artifactId>im4java</artifactId>
 			<version>1.4.0</version>
 		</dependency>
-		<!-- image -->
-		
+		<!-- image -->		
 		<!-- memcached -->
 		<dependency>
 			<groupId>com.googlecode.xmemcached</groupId>
@@ -37,5 +36,12 @@
 			<version>2.11.0</version>
 		</dependency>
 		<!-- memcached -->
+		<!-- mongodb -->
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>2.10.0</version>
+		</dependency>
+		<!-- mongodb -->
 	</dependencies>  
 </project>
