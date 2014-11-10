@@ -9,33 +9,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class LoginFormServlet extends HttpServlet
+public class LoginSubmitServlet extends HttpServlet
 {
-
     private static final long serialVersionUID = 1L;
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
     {
-
         this.doPost(request, response);
     }
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
     {
-
         response.setContentType("text/html;charset=UTF-8");
-
         PrintWriter out = response.getWriter();
-
         HttpSession session = request.getSession(false);
 
         if (null == session)
         {
-
             out.println("验证码异常!");
-
             return;
         }
 
@@ -43,9 +36,7 @@ public class LoginFormServlet extends HttpServlet
 
         if (null == savedCode)
         {
-
             out.println("验证码异常!");
-
             return;
         }
 
@@ -55,12 +46,10 @@ public class LoginFormServlet extends HttpServlet
         {
 
             out.println("验证码不正确!");
-
             return;
         }
 
         session.removeAttribute("checkCode");
-
         out.println("验证码正确!");
     }
 }

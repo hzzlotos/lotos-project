@@ -31,9 +31,7 @@
 		用户名: <input type="text" name="name" />
 		<br />
 		<input type="submit" value="登录" />
-	</form>
-	<a href="<%=request.getContextPath() %>/jsp/donotagain/login.jsp">验证码测试</a>
-	
+	</form>	
 	<a href="<%=request.getContextPath() %>/jsp/check/loginCheck.jsp">验证码图片测试</a>
 </body>
 </html>

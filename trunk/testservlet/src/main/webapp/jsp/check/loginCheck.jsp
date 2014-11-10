@@ -7,7 +7,7 @@
 <title>SESSION</title>
 </head>
 <body>
-	<form action="<%=request.getContextPath() %>/loginformservlet" name="name" method="POST">
+	<form action="<%=request.getContextPath() %>/loginsubmitservlet" name="name" method="POST">
 		验证码: <input type="text" name="checkCode" />
 		<img src="<%=request.getContextPath() %>/checkcodeservlet" />
 		<input type="submit" value="登录" />

@@ -84,12 +84,12 @@
 		<url-pattern>/checkcodeservlet</url-pattern>
 	</servlet-mapping>
 	<servlet>
-		<servlet-name>loginformservlet</servlet-name>
-		<servlet-class>cn.newtouch.session.Check.LoginFormServlet</servlet-class>
+		<servlet-name>loginsubmitservlet</servlet-name>
+		<servlet-class>cn.newtouch.session.Check.LoginSubmitServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>loginformservlet</servlet-name>
-		<url-pattern>/loginformservlet</url-pattern>
+		<servlet-name>loginsubmitservlet</servlet-name>
+		<url-pattern>/loginsubmitservlet</url-pattern>
 	</servlet-mapping>
 
 	<jsp-config>
