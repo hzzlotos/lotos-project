@@ -4,9 +4,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>cn.newtouch</groupId>
-		<artifactId>myprojectparent</artifactId>
+		<artifactId>mywebparent</artifactId>
 		<version>1.0</version>
-		<relativePath>../myprojectparent</relativePath>
+		<relativePath>../mywebparent</relativePath>
 	</parent>
 	<artifactId>miniweb</artifactId>
 	<packaging>war</packaging>
@@ -136,23 +136,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>taglibs</groupId>
-			<artifactId>standard</artifactId>
-			<version>1.1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
-			<scope>provided</scope>
 		</dependency>
 
 		<dependency>

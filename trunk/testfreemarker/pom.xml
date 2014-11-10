@@ -4,9 +4,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>cn.newtouch</groupId>
-		<artifactId>myprojectparent</artifactId>
+		<artifactId>mywebparent</artifactId>
 		<version>1.0</version>
-		<relativePath>../myprojectparent</relativePath>
+		<relativePath>../mywebparent</relativePath>
 	</parent>
 	<artifactId>testfreemarker</artifactId>
 	<name>TestFreemarker</name>
@@ -17,12 +17,6 @@
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-webmvc</artifactId>
 		    <version>3.2.4.RELEASE</version>
-		</dependency>
-		<!-- JSP -->
-		<dependency>    
-		    <groupId>javax.servlet.jsp.jstl</groupId>
-		    <artifactId>jstl-api</artifactId>
-		    <version>1.2</version>
 		</dependency>
 		<!-- Freemarker -->
 		<dependency>

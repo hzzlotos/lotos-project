@@ -4,9 +4,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>cn.newtouch</groupId>
-		<artifactId>myprojectparent</artifactId>
+		<artifactId>mywebparent</artifactId>
 		<version>1.0</version>
-		<relativePath>../myprojectparent</relativePath>
+		<relativePath>../mywebparent</relativePath>
 	</parent>
 	<artifactId>teststruts2</artifactId>
 	<packaging>war</packaging>
@@ -29,21 +29,6 @@
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-convention-plugin</artifactId>
 			<version>${struts2.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>taglibs</groupId>
-			<artifactId>standard</artifactId>
-			<version>1.1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
 		</dependency>
 
 		<dependency>

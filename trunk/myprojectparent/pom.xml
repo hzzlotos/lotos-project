@@ -27,22 +27,12 @@
 	</repositories>
 	<modules>
 		<module>../architecture</module>
-		<module>../exercise</module>
-		<module>../miniweb</module>
-		<module>../quicksample</module>
-		
-		<module>../ssodemo</module>
-		<module>../ssoserver</module>
+		<module>../mywebparent</module>
 		<module>../tankwar</module>
-		<module>../testfreemarker</module>
 		<module>../testhibernate</module>
 		<module>../testmybatis</module>
-		<module>../testS2SHanno</module>
-		<module>../testS2SHxml</module>
-		<module>../testservlet</module>
 		<module>../testspring</module>
 		<module>../testspring_hibernate</module>
-		<module>../teststruts2</module>
 		<module>../testwebservice</module>
 		<module>../thetest</module>
 	</modules>
