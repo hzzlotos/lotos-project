@@ -15,6 +15,6 @@
 	<label>-----------------------------------------</label>
 	<label><%=request.getAttribute("userName")%></label>
 	<label><%=request.getAttribute("passWord")%></label>
-	<a href="<%=request.getContextPath() %>/Jsp/platform.jsp">点击此连接进入论坛!</a>
+	<a href="<%=request.getContextPath() %>/jsp/platform.jsp">点击此连接进入论坛!</a>
 </body>
 </html>

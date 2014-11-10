@@ -30,6 +30,7 @@
 		<module>../exercise</module>
 		<module>../miniweb</module>
 		<module>../quicksample</module>
+		<module>../servlet</module>
 		<module>../ssodemo</module>
 		<module>../ssoserver</module>
 		<module>../tankwar</module>
@@ -37,9 +38,7 @@
 		<module>../testhibernate</module>
 		<module>../testmybatis</module>
 		<module>../testS2SHanno</module>
-		<module>../testS2SHxml</module>
-		<module>../testservlet</module>
-		<module>../testsession</module>
+		<module>../testS2SHxml</module>		
 		<module>../testspring</module>
 		<module>../testspring_hibernate</module>
 		<module>../teststruts2</module>

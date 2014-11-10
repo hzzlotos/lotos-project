@@ -1,20 +1,119 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-	<display-name>MyFirstWeb111</display-name>
+<web-app id="WebApp_ID" version="2.4"
+	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+	<filter>
+		<filter-name>FilterDispatcher</filter-name>
+		<filter-class>cn.newtouch.filter.FilterDispatcher</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>FilterDispatcher</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<servlet>
+		<servlet-name>InitServlet</servlet-name>
+		<servlet-class>cn.newtouch.servlet.InitServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
 	<servlet>
 		<servlet-name>FirstServlet</servlet-name>
 		<servlet-class>cn.newtouch.servlet.FirstServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>FirstServlet</servlet-name>
-		<url-pattern>/servlet/FirstServlet</url-pattern>
+		<url-pattern>/firstservlet</url-pattern>
 	</servlet-mapping>
+
+
 	<servlet>
-		<servlet-name>SecondServlet</servlet-name>
-		<servlet-class>cn.newtouch.servlet.SecondServlet</servlet-class>
+		<servlet-name>Download</servlet-name>
+		<servlet-class>cn.newtouch.servlet.DownloadServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>SecondServlet</servlet-name>
-		<url-pattern>/servlet/SecondServlet</url-pattern>
+		<servlet-name>Download</servlet-name>
+		<url-pattern>/download</url-pattern>
 	</servlet-mapping>
+	
+	<!-- =============================================================== -->
+
+	<servlet>
+		<servlet-name>loginservlet</servlet-name>
+		<servlet-class>cn.newtouch.session.login.LoginServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>loginservlet</servlet-name>
+		<url-pattern>/loginservlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>coursesservlet</servlet-name>
+		<servlet-class>cn.newtouch.session.login.CoursesServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>coursesservlet</servlet-name>
+		<url-pattern>/coursesservlet</url-pattern>
+	</servlet-mapping>
+	
+	
+	
+	<servlet>
+		<servlet-name>formdealservlet</servlet-name>
+		<servlet-class>cn.newtouch.session.DoNotAgain.FormDealServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>formdealservlet</servlet-name>
+		<url-pattern>/formdealservlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>formgenerateservlet</servlet-name>
+		<servlet-class>cn.newtouch.session.DoNotAgain.FormGenerateServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>formgenerateservlet</servlet-name>
+		<url-pattern>/formgenerateservlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>checkcodeservlet</servlet-name>
+		<servlet-class>cn.newtouch.session.Check.CheckCodeServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>checkcodeservlet</servlet-name>
+		<url-pattern>/checkcodeservlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>loginformservlet</servlet-name>
+		<servlet-class>cn.newtouch.session.Check.LoginFormServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>loginformservlet</servlet-name>
+		<url-pattern>/loginformservlet</url-pattern>
+	</servlet-mapping>
+
+	<jsp-config>
+		<taglib>
+			<taglib-uri>/taglibs/htld</taglib-uri>
+			<taglib-location>/taglibs/htld.tld</taglib-location>
+		</taglib>
+	</jsp-config>
+	
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+		
+	</welcome-file-list>
+
+	<error-page>
+		<error-code>404</error-code>
+		<location>/jsp/common/404.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/jsp/common/500.jsp</location>
+	</error-page>
 </web-app>

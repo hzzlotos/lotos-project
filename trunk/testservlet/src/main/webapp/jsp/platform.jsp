@@ -12,12 +12,5 @@
 			<td>欢迎来到何铮铮创办的论坛!</td>
 		</tr>
 	</table>
-	<form method="post" action="servlet/SecondServlet">
-		<table>
-			<tr>
-				<td><label>用户名正确</label></td>
-			</tr>
-		</table>
-	</form>
 </body>
 </html>
