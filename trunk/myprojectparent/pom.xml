@@ -1,13 +1,34 @@
-﻿<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+﻿<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cn.newtouch</groupId>
 	<artifactId>myprojectparent</artifactId>
 	<version>1.0</version>
 	<packaging>pom</packaging>
+	<repositories>
+		<repository>
+			<id>central</id>
+			<name>Central Repository</name>
+			<url>http://repo.maven.apache.org/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+
+		<repository>
+			<id>offical</id>
+			<name>Maven Official Repository</name>
+			<url>http://repo1.maven.org/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+
+	</repositories>
 	<modules>
 		<module>../architecture</module>
 		<module>../exercise</module>
-		<module>../miniweb</module>		
+		<module>../miniweb</module>
 		<module>../quicksample</module>
 		<module>../ssodemo</module>
 		<module>../ssoserver</module>
@@ -26,7 +47,7 @@
 		<module>../thetest</module>
 	</modules>
 	<name>MyProjectParent</name>
-	<!-- 设置字符集为UTF-8 -->	
+	<!-- 设置字符集为UTF-8 -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -54,15 +75,15 @@
 	</dependencies>
 	<!-- 设置项目使用jdk1.6 -->
 	<build>
-		<plugins>  
-			<plugin>  
-				<groupId>org.apache.maven.plugins</groupId>  
-				<artifactId>maven-compiler-plugin</artifactId>  
-				<version>2.3.2</version>  
-				<configuration>  
-					<source>1.6</source>  
-					<target>1.6</target>  
-				</configuration>  
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -73,5 +94,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 </project>
