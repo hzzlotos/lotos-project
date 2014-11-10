@@ -8,7 +8,7 @@
 		<version>1.0</version>
 		<relativePath>../myprojectparent</relativePath>
 	</parent>
-	<artifactId>servlet</artifactId>
+	<artifactId>testservlet</artifactId>
 	<packaging>war</packaging>
 
 	<!-- 依赖项定义 -->
