@@ -5,26 +5,23 @@ import java.util.Properties;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.tagext.TagSupport;
+import javax.servlet.jsp.tagext.BodyContent;
+import javax.servlet.jsp.tagext.BodyTagSupport;
 
 import cn.newtouch.util.PropertiesUtil;
 
-public class PropertiesTag extends TagSupport
+public class PropertiesTag extends BodyTagSupport
 {
     private static final long serialVersionUID = 1L;
 
-    private String            propName;
-
     private String            attiName;
 
-    public void setPropName(String propName)
-    {
-        this.propName = propName;
-    }
+    private String            propName;
 
-    public void setAttiName(String attiName)
+    @Override
+    public int doAfterBody() throws JspException
     {
-        this.attiName = attiName;
+        return super.doAfterBody();
     }
 
     @Override
@@ -46,8 +43,36 @@ public class PropertiesTag extends TagSupport
     }
 
     @Override
+    public void doInitBody() throws JspException
+    {
+        super.doInitBody();
+    }
+
+    @Override
     public int doStartTag() throws JspException
     {
         return super.doStartTag();
+    }
+
+    @Override
+    public BodyContent getBodyContent()
+    {
+        return super.getBodyContent();
+    }
+
+    public void setAttiName(String attiName)
+    {
+        this.attiName = attiName;
+    }
+
+    @Override
+    public void setBodyContent(BodyContent b)
+    {
+        super.setBodyContent(b);
+    }
+
+    public void setPropName(String propName)
+    {
+        this.propName = propName;
     }
 }
