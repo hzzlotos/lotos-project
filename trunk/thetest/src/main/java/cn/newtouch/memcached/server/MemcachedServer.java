@@ -48,7 +48,7 @@ public class MemcachedServer implements ICacheServer<String, Object>
         if (null == memcachedServer)
         {
             memcachedServer = new MemcachedServer();
-            properties = PropertiesUtil.getProperties("memcached.properties");
+            properties = PropertiesUtil.getProperties("memcached.properties", "properties");
             client = getBuilder().build();
         }
         return memcachedServer;

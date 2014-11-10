@@ -11,7 +11,7 @@ public class PropertiesUtil
 
     private static String path     = "configers";
 
-    public static Properties getProperties(String fileName)
+    public static Properties getProperties(String fileName, String fileType)
     {
         StringBuilder dbConfiger = new StringBuilder(System.getProperty(userhome)).append(File.separator).append(path)
                 .append(File.separator).append(fileName);
@@ -19,7 +19,14 @@ public class PropertiesUtil
         try
         {
             InputStream is = new FileInputStream(dbConfiger.toString());
-            defaults.load(is);
+            if ("xml".equals(fileType))
+            {
+                defaults.loadFromXML(is);
+            }
+            else
+            {
+                defaults.load(is);
+            }
             is.close();
         }
         catch (Exception e)
