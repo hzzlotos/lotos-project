@@ -4,40 +4,15 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>cn.newtouch</groupId>
-		<artifactId>myprojectparent</artifactId>
+		<artifactId>mywebparent</artifactId>
 		<version>1.0</version>
-		<relativePath>../myprojectparent</relativePath>
+		<relativePath>../mywebparent</relativePath>
 	</parent>
 	<artifactId>testservlet</artifactId>
 	<packaging>war</packaging>
 
 	<!-- 依赖项定义 -->
 	<dependencies>
-		<!-- web begin 这里在tomcat容器中都已经部署，不用使用compile -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>  
-    		<groupId>javax.servlet.jsp</groupId>  
-    		<artifactId>jsp-api</artifactId>  
-    		<version>2.0</version>  
-    		<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>taglibs</groupId>
-			<artifactId>standard</artifactId>
-			<version>1.1.2</version>
-			<scope>provided</scope>
-		</dependency>		
-		<!-- web end -->
+		
 	</dependencies>
 </project>

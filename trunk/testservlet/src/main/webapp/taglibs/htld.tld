@@ -6,14 +6,21 @@ Library 1.2//EN"
 	<tlib-version>1.0</tlib-version>
 	<jsp-version>1.1</jsp-version>
 	<short-name>tbl</short-name>
-	
+
 	<tag>
-		<name>message</name>
-		<tag-class>cn.newtouch.tag.MessageTag</tag-class>
+		<name>propertie</name>
+		<tag-class>cn.newtouch.tag.PropertiesTag</tag-class>
 		<body-content>JSP</body-content>
 
 		<attribute>
-			<name>key</name>
+			<name>propName</name>
+			<!-- 是否为可选属性 -->
+			<required>true</required>
+			<!-- 是否接受JSP表达示计算结果 -->
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>attiName</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
