@@ -15,13 +15,10 @@ public class UserServiceTest
     public void testAdd() throws Exception
     {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
-
         UserService service = (UserService) ctx.getBean("us");
-
         User u = new User();
         u.setUsername("zhangsan");
         u.setPassword("zhangsan");
         service.doAdd(u);
     }
-
 }

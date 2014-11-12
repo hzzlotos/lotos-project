@@ -10,19 +10,14 @@ import cn.newtouch.model.User;
 //Inverse of Control
 public class UserServiceTest_ioc
 {
-
     @Test
     public void testAdd() throws Exception
     {
-        ApplicationContext ctx = new ClassPathXmlApplicationContext(
-                "beans_ioc.xml");
-
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("beans_ioc.xml");
         UserService service = (UserService) ctx.getBean("userService");
-
         User u = new User();
         u.setUsername("zhangsan");
         u.setPassword("zhangsan");
         service.doAdd(u);
     }
-
 }
