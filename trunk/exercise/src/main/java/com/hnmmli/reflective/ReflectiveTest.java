@@ -22,6 +22,7 @@ public class ReflectiveTest
         // annoTest();
         // invoke();
         generics();
+        // cla.getClass();//获取的是某个类的Class类的实例
     }
 
     private static void theClass()
