@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="hnml" uri="/taglibs/htld" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,8 +10,8 @@
 </head>
 <body>
 	
-	<h1 align="center" style="color:red;"><hnml:propertie attiName="test" propName="test.properties"></hnml:propertie></h1>
-	<form action="<%=request.getContextPath() %>/firstservlet" method="get">
+	<h1 align="center" style="color:red;"><hnml:propertie attiName="hello" propName="mvc.properties"></hnml:propertie></h1>
+	<form action="<%=request.getContextPath() %>/login/submit" method="post">
 		<table>
 			<tr>
 				<td><label>用户名:</label></td>
@@ -28,6 +29,9 @@
 			</tr>
 		</table>
 	</form>
+	<c:if test="${null!=errorMessage}">
+		<c:out value="${errorMessage}"></c:out>
+	</c:if><br/>
 	-----------------------------------------------------------------------------
 	<form action="<%=request.getContextPath() %>/loginservlet" name="name" method="POST">
 		用户名: <input type="text" name="name" />

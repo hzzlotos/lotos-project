@@ -11,6 +11,11 @@ public class PropertiesUtil
 
     private static String path     = "configers";
 
+    public static Properties getProperties(String fileName)
+    {
+        return getProperties(fileName, "properties");
+    }
+
     public static Properties getProperties(String fileName, String fileType)
     {
 

@@ -5,7 +5,7 @@
 
 	<filter>
 		<filter-name>FilterDispatcher</filter-name>
-		<filter-class>cn.newtouch.filter.FilterDispatcher</filter-class>
+		<filter-class>cn.newtouch.framework.filter.FilterDispatcher</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>FilterDispatcher</filter-name>
@@ -19,22 +19,12 @@
 	</servlet>
 
 	<servlet>
-		<servlet-name>FirstServlet</servlet-name>
-		<servlet-class>cn.newtouch.servlet.FirstServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>FirstServlet</servlet-name>
-		<url-pattern>/firstservlet</url-pattern>
-	</servlet-mapping>
-
-
-	<servlet>
-		<servlet-name>Download</servlet-name>
+		<servlet-name>download</servlet-name>
 		<servlet-class>cn.newtouch.servlet.DownloadServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>Download</servlet-name>
-		<url-pattern>/download</url-pattern>
+		<servlet-name>download</servlet-name>
+		<url-pattern>/downloadservlet</url-pattern>
 	</servlet-mapping>
 	
 	<!-- =============================================================== -->
@@ -104,16 +94,16 @@
 	</session-config>
 
 	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>/jsps/index.jsp</welcome-file>
 		
 	</welcome-file-list>
 
 	<error-page>
 		<error-code>404</error-code>
-		<location>/jsp/common/404.jsp</location>
+		<location>/jsps/common/404.jsp</location>
 	</error-page>
 	<error-page>
 		<error-code>500</error-code>
-		<location>/jsp/common/500.jsp</location>
+		<location>/jsps/common/500.jsp</location>
 	</error-page>
 </web-app>

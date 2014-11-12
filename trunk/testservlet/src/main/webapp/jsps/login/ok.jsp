@@ -11,10 +11,10 @@
 <body>
 	<h1>恭喜你登陆成功!</h1>
 
-	<label><%=userName %></label>
-	<label>-----------------------------------------</label>
-	<label><%=request.getAttribute("userName")%></label>
-	<label><%=request.getAttribute("passWord")%></label>
+	<label>userName=<%=userName %></label><br/>
+	<label>-----------------------------------------</label><br/>
+	<label>request.userName=<%=request.getAttribute("userName")%></label><br/>
+	<label>request.userName=<%=request.getAttribute("passWord")%></label><br/>
 	<a href="<%=request.getContextPath() %>/jsp/platform.jsp">点击此连接进入论坛!</a>
 </body>
 </html>

@@ -9,6 +9,6 @@ public class InitServlet extends HttpServlet
     public InitServlet()
     {
         super();
-        System.out.println("我要初始化了");
+        System.out.println("InitServlet要初始化了");
     }
 }

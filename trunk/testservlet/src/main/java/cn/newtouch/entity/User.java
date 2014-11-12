@@ -1,4 +1,4 @@
-package cn.newtouch.servlet;
+package cn.newtouch.entity;
 
 public class User {
 
