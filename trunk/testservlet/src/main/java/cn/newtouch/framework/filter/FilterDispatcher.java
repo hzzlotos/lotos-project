@@ -2,6 +2,7 @@ package cn.newtouch.framework.filter;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,6 +21,7 @@ import org.apache.commons.lang.StringUtils;
 
 import cn.newtouch.framework.anno.Path;
 import cn.newtouch.framework.context.ActionContext;
+import cn.newtouch.framework.exception.BaseException;
 import cn.newtouch.framework.mappger.ActionMapper;
 import cn.newtouch.framework.mappger.BaseMapper;
 import cn.newtouch.framework.mappger.MethodMapper;
@@ -35,6 +37,9 @@ public class FilterDispatcher implements Filter
     private String                   jspPackage       = PropertiesUtil.getProperties("mvc.properties").getProperty(
                                                               "jsp_package");
 
+    // true：路径严格按照『/类对应名/方法对应名/参数』
+    private boolean                  stipulateMode    = true;
+
     @Override
     public void destroy()
     {
@@ -44,7 +49,6 @@ public class FilterDispatcher implements Filter
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
             ServletException
     {
-        String contextPath = ((HttpServletRequest) request).getContextPath();
         // 获取应用名之后的路径
         String uri = ((HttpServletRequest) request).getRequestURI();
         // 将.jsp/.css/.js/.html等过滤
@@ -56,7 +60,31 @@ public class FilterDispatcher implements Filter
         // 分配url
         try
         {
-            this.distribute(request, response, chain, uri, contextPath);
+            if (this.stipulateMode)
+            {
+                int index = uri.indexOf("/", 1);
+                uri = uri.substring(index + 1, uri.length());
+                String[] uris = uri.split("/");
+                // 给的uris必须是分割好的 1为类路径,2为方法路径
+                this.distribute(request, response, chain, uris);
+            }
+            else
+            {
+                this.distribute(request, response, chain, uri);
+            }
+        }
+        catch (BaseException e)
+        {
+            int key = e.getKey();
+            if (key == 1)
+            {
+                System.out.println("没有找到对应的类！");
+            }
+            else
+            {
+                System.out.println("没有找到对应的方法！");
+            }
+            chain.doFilter(request, response);
         }
         catch (Exception e)
         {
@@ -83,33 +111,43 @@ public class FilterDispatcher implements Filter
         System.out.println("初始化结束了");
     }
 
+    // 根据名称获取对应mapper
     private BaseMapper getMapper(String uri, Set<? extends BaseMapper> mappers)
     {
         BaseMapper defaultMapper = null;
         for (BaseMapper mapper : mappers)
         {
-            if (uri.contains(mapper.getName()))
+            if (this.stipulateMode)
             {
-                return mapper;
+                if (mapper.getName().equals(uri))
+                {
+                    return mapper;
+                }
             }
-            if ("default".equals(mapper.getName()))
+            else
             {
-                defaultMapper = mapper;
+                if (uri.contains(mapper.getName()))
+                {
+                    return mapper;
+                }
+                if ("default".equals(mapper.getName()))
+                {
+                    defaultMapper = mapper;
+                }
             }
         }
         return defaultMapper;
     }
 
-    // 分发请求
-    private void distribute(ServletRequest request, ServletResponse response, FilterChain chain, String uri,
-            String contextPath) throws Exception
+    // 分发请求(不严格要求路径格式匹配，但设置了默认路径以及查找不到的路径都会跳向该action的默认路径)
+    private void distribute(ServletRequest request, ServletResponse response, FilterChain chain, String uri)
+            throws Exception
     {
         ActionMapper am = (ActionMapper) this.getMapper(uri, actionSets);
         // 不在ActionMapper中
         if (null == am)
         {
-            chain.doFilter(request, response);
-            return;
+            throw new BaseException(BaseException.CLASS_NOT_FOUND_KEY);
         }
         String[] mUris = uri.split(am.getName());
         String mUri = "default";
@@ -118,17 +156,38 @@ public class FilterDispatcher implements Filter
             mUri = mUris[1];
         }
         MethodMapper mm = (MethodMapper) this.getMapper(mUri, am.getMethodSets());
+        this.execute(request, response, chain, am, mm);
+    }
+
+    // 分发请求(严格要求路径格式匹配)
+    private void distribute(ServletRequest request, ServletResponse response, FilterChain chain, String[] uris)
+            throws Exception
+    {
+        ActionMapper am = (ActionMapper) this.getMapper(uris[0], actionSets);
+        // 不在ActionMapper中
+        if (null == am)
+        {
+            throw new BaseException(BaseException.CLASS_NOT_FOUND_KEY);
+        }
+        MethodMapper mm = (MethodMapper) this.getMapper(uris[1], am.getMethodSets());
         Method m = mm.getMethod();
         if (null == m)
         {
-            chain.doFilter(request, response);
-            return;
+            throw new BaseException(BaseException.MOTHED_NOT_FOUND_KEY);
         }
+
+        this.execute(request, response, chain, am, mm);
+    }
+
+    // 根据所查找到的class以及method执行
+    private void execute(ServletRequest request, ServletResponse response, FilterChain chain, ActionMapper am,
+            MethodMapper mm) throws Exception
+    {
+        String contextPath = ((HttpServletRequest) request).getContextPath();
         ActionContext.setContext(request, response);
-        Object result = m.invoke(am.getClazz().newInstance());
+        Object result = mm.getMethod().invoke(am.getClazz().newInstance());
         if (null == result)
         {
-            // chain.doFilter(request, response);
             return;
         }
         String resultString = String.valueOf(result);
@@ -140,14 +199,13 @@ public class FilterDispatcher implements Filter
         }
         else
         {
-            // "/" + am.getName()
             RequestDispatcher dispatcher = request.getRequestDispatcher("/" + this.jspPackage + "/" + resultString
                     + ".jsp");
             dispatcher.forward(request, response);
         }
     }
 
-    // 获取本地action类资源
+    // 获取本地action的class资源
     private void getFile(Set<String> fileNames, File file, String pachage)
     {
         if (file.isDirectory())
@@ -167,7 +225,7 @@ public class FilterDispatcher implements Filter
         }
     }
 
-    // 获取本地路径
+    // 获取本地class所处路径
     private File getLocalFile()
     {
         String[] paths = this.classFilePackage.split("\\.");
@@ -199,12 +257,25 @@ public class FilterDispatcher implements Filter
                         Path mAnno = m.getAnnotation(Path.class);
                         if (null != mAnno)
                         {
-                            mSets.add(new MethodMapper(StringUtils.isNotEmpty(mAnno.value()) ? mAnno.value()
-                                    : "default", m, mAnno.type()));
+                            Annotation[][] aaa = m.getParameterAnnotations();
+                            for (Annotation[] zz : aaa)
+                            {
+                                System.out.println(zz.getClass());
+                            }
+
+                            if (this.stipulateMode)
+                            {
+
+                                mSets.add(new MethodMapper(mAnno.value(), m, mAnno.type()));
+                            }
+                            else
+                            {
+                                mSets.add(new MethodMapper(StringUtils.isNotEmpty(mAnno.value()) ? mAnno.value()
+                                        : "default", m, mAnno.type()));
+                            }
                         }
                         am.setMethodSets(mSets);
                     }
-                    mSets.add(new MethodMapper("default", null, null));
                     actionSets.add(am);
                 }
 
