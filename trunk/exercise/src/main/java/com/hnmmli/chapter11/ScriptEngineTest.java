@@ -26,7 +26,7 @@ public class ScriptEngineTest
     private static void call()
     {
         PythonInterpreter interpreter = new PythonInterpreter();
-        interpreter.execfile("G:\\eclipse\\workspace\\pyDevTest\\test\\snippet.py");
+        interpreter.execfile("G:\\eclipse\\workspace\\exercise\\python\\snippet.py");
         PyFunction func = interpreter.get("adder", PyFunction.class);
 
         int a = 2010, b = 2;
