@@ -26,7 +26,7 @@
 
 	</repositories>
 	<modules>
-		<module>../architecture</module>
+		<module>../h_common</module>
 		<module>../mywebparent</module>
 		<module>../tankwar</module>
 		<module>../testhibernate</module>
@@ -36,7 +36,7 @@
 		<module>../testwebservice</module>
 		<module>../thetest</module>
 	</modules>
-	<name>MyProjectParent</name>
+
 	<!-- 设置字符集为UTF-8 -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
