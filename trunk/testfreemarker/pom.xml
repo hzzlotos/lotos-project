@@ -9,7 +9,7 @@
 		<relativePath>../mywebparent</relativePath>
 	</parent>
 	<artifactId>testfreemarker</artifactId>
-	<name>TestFreemarker</name>
+
 	<packaging>war</packaging>
 	<dependencies>
 		<!-- Spring MVC -->
