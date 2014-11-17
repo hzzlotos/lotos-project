@@ -12,7 +12,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>cn.newtouch</groupId>
-			<artifactId>h_common</artifactId>
+			<artifactId>h_transactional</artifactId>
 			<version>1.0</version>
 		</dependency>
 	
