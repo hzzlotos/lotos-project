@@ -1,6 +1,6 @@
 package cn.newtouch.action;
 
-import cn.newtouch.framework.anno.Path;
+import cn.newtouch.annotation.Path;
 
 public class BaseAction
 {

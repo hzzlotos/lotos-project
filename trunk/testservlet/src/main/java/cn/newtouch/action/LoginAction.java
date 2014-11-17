@@ -1,8 +1,8 @@
 package cn.newtouch.action;
 
-import cn.newtouch.framework.anno.Path;
-import cn.newtouch.framework.anno.RequestParam;
-import cn.newtouch.framework.context.ActionContext;
+import cn.newtouch.annotation.Path;
+import cn.newtouch.annotation.RequestParam;
+import cn.newtouch.context.ActionContext;
 
 @Path("login")
 public class LoginAction extends BaseAction

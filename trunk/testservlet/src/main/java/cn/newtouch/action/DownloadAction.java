@@ -5,9 +5,9 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import cn.newtouch.framework.anno.Path;
-import cn.newtouch.framework.anno.PathParam;
-import cn.newtouch.framework.context.ActionContext;
+import cn.newtouch.annotation.Path;
+import cn.newtouch.annotation.PathParam;
+import cn.newtouch.context.ActionContext;
 
 @Path("common")
 public class DownloadAction extends BaseAction

@@ -13,6 +13,10 @@
 
 	<!-- 依赖项定义 -->
 	<dependencies>
-		
+		<dependency>
+			<groupId>cn.newtouch</groupId>
+			<artifactId>h_servlet</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
 </project>

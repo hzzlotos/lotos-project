@@ -5,7 +5,7 @@
 
 	<filter>
 		<filter-name>FilterDispatcher</filter-name>
-		<filter-class>cn.newtouch.framework.filter.FilterDispatcher</filter-class>
+		<filter-class>cn.newtouch.filter.FilterDispatcher</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>FilterDispatcher</filter-name>
