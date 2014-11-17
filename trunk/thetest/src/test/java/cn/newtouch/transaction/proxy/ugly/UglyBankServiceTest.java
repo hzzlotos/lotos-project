@@ -7,8 +7,8 @@ import javax.sql.DataSource;
 import org.junit.Before;
 import org.junit.Test;
 
+import cn.newtouch.common.connection.DataSourceFactory;
 import cn.newtouch.transaction.proxy.InitSQL;
-import cn.newtouch.transaction.proxy.commonutils.connection.general.DataSourceFactory;
 import cn.newtouch.transaction.proxy.ugly.service.BankService;
 import cn.newtouch.transaction.proxy.ugly.service.BankServiceImpl;
 

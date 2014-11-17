@@ -3,7 +3,7 @@ package cn.newtouch.transaction.proxy;
 import java.sql.Connection;
 import java.sql.Statement;
 
-import cn.newtouch.transaction.proxy.commonutils.connection.general.DataSourceFactory;
+import cn.newtouch.common.connection.DataSourceFactory;
 
 public class InitSQL
 {

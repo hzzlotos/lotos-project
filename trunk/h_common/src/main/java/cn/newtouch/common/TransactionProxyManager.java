@@ -1,10 +1,11 @@
-package cn.newtouch.transaction.proxy.commonutils;
+package cn.newtouch.common;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
-import cn.newtouch.transaction.proxy.commonutils.connection.threadlocal.TransactionManager;
+import cn.newtouch.annotation.Transactional;
+import cn.newtouch.common.connection.TransactionManager;
 
 public class TransactionProxyManager
 {

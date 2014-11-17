@@ -8,7 +8,7 @@
 		<relativePath>../myprojectparent</relativePath>
 	</parent>
 	<artifactId>testmybatis</artifactId>
-	<name>TestMyBatis</name>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.mybatis.generator</groupId>

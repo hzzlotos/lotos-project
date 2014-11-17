@@ -1,4 +1,4 @@
-package cn.newtouch.transaction.proxy.commonutils.connection.threadlocal;
+package cn.newtouch.common.connection;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -49,7 +49,7 @@ public class TransactionManager
             connection.setAutoCommit(true);
             connection.setReadOnly(false);
             connection.close();
-            ThreadLocalConnectionManager.removeConnection(this.dataSource);
+            ThreadLocalConnectionFactory.removeConnection(this.dataSource);
         }
         catch (SQLException e)
         {
@@ -59,6 +59,6 @@ public class TransactionManager
 
     private Connection getConnection() throws SQLException
     {
-        return ThreadLocalConnectionManager.getConnection(this.dataSource);
+        return ThreadLocalConnectionFactory.getConnection(this.dataSource);
     }
 }

@@ -1,4 +1,4 @@
-package cn.newtouch.transaction.proxy.commonutils.connection.threadlocal;
+package cn.newtouch.common.connection;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -7,7 +7,7 @@ import java.util.HashMap;
 import javax.sql.DataSource;
 
 //线程安全的取链接的类
-public class ThreadLocalConnectionManager
+public class ThreadLocalConnectionFactory
 {
     private static ThreadLocal<HashMap<DataSource, Connection>> connections = new ThreadLocal<HashMap<DataSource, Connection>>();
 

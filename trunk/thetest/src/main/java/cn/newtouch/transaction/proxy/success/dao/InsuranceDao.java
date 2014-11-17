@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import cn.newtouch.transaction.proxy.commonutils.connection.threadlocal.ThreadLocalConnectionManager;
+import cn.newtouch.common.connection.ThreadLocalConnectionFactory;
 
 public class InsuranceDao
 {
@@ -20,7 +20,7 @@ public class InsuranceDao
 
     public void deposit(int insuranceId, int amount) throws SQLException
     {
-        PreparedStatement selectStatement = ThreadLocalConnectionManager.getConnection(this.dataSource)
+        PreparedStatement selectStatement = ThreadLocalConnectionFactory.getConnection(this.dataSource)
                 .prepareStatement("SELECT INSURANCE_AMOUNT FROM INSURANCE_ACCOUNT WHERE INSURANCE_ID = ?");
         selectStatement.setInt(1, insuranceId);
         ResultSet resultSet = selectStatement.executeQuery();
@@ -30,7 +30,7 @@ public class InsuranceDao
         selectStatement.close();
 
         int newAmount = previousAmount + amount;
-        PreparedStatement updateStatement = ThreadLocalConnectionManager.getConnection(this.dataSource)
+        PreparedStatement updateStatement = ThreadLocalConnectionFactory.getConnection(this.dataSource)
                 .prepareStatement("UPDATE INSURANCE_ACCOUNT SET INSURANCE_AMOUNT = ? WHERE INSURANCE_ID = ?");
         updateStatement.setInt(1, newAmount);
         updateStatement.setInt(2, insuranceId);
@@ -40,7 +40,7 @@ public class InsuranceDao
 
     public int getInsuranceAmount(int insuranceId) throws SQLException
     {
-        PreparedStatement selectStatement = ThreadLocalConnectionManager.getConnection(this.dataSource)
+        PreparedStatement selectStatement = ThreadLocalConnectionFactory.getConnection(this.dataSource)
                 .prepareStatement("SELECT INSURANCE_AMOUNT FROM INSURANCE_ACCOUNT WHERE INSURANCE_ID = ?");
         selectStatement.setInt(1, insuranceId);
         ResultSet resultSet = selectStatement.executeQuery();

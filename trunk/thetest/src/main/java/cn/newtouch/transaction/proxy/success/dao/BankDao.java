@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import cn.newtouch.transaction.proxy.commonutils.connection.threadlocal.ThreadLocalConnectionManager;
+import cn.newtouch.common.connection.ThreadLocalConnectionFactory;
 
 public class BankDao
 {
@@ -19,7 +19,7 @@ public class BankDao
 
     public void withdraw(int bankId, int amount) throws SQLException
     {
-        PreparedStatement selectStatement = ThreadLocalConnectionManager.getConnection(this.dataSource)
+        PreparedStatement selectStatement = ThreadLocalConnectionFactory.getConnection(this.dataSource)
                 .prepareStatement("SELECT BANK_AMOUNT FROM BANK_ACCOUNT WHERE BANK_ID = ?");
         selectStatement.setInt(1, bankId);
         ResultSet resultSet = selectStatement.executeQuery();
@@ -29,7 +29,7 @@ public class BankDao
         selectStatement.close();
 
         int newAmount = previousAmount - amount;
-        PreparedStatement updateStatement = ThreadLocalConnectionManager.getConnection(this.dataSource)
+        PreparedStatement updateStatement = ThreadLocalConnectionFactory.getConnection(this.dataSource)
                 .prepareStatement("UPDATE BANK_ACCOUNT SET BANK_AMOUNT = ? WHERE BANK_ID = ?");
         updateStatement.setInt(1, newAmount);
         updateStatement.setInt(2, bankId);
@@ -39,7 +39,7 @@ public class BankDao
 
     public int getBankAmount(int bankId) throws SQLException
     {
-        PreparedStatement selectStatement = ThreadLocalConnectionManager.getConnection(this.dataSource)
+        PreparedStatement selectStatement = ThreadLocalConnectionFactory.getConnection(this.dataSource)
                 .prepareStatement("SELECT BANK_AMOUNT FROM BANK_ACCOUNT WHERE BANK_ID = ?");
         selectStatement.setInt(1, bankId);
         ResultSet resultSet = selectStatement.executeQuery();

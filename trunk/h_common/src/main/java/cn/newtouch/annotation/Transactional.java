@@ -1,4 +1,4 @@
-package cn.newtouch.transaction.proxy.commonutils;
+package cn.newtouch.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

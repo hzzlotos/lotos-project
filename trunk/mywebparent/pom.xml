@@ -20,7 +20,7 @@
 		<module>../testservlet</module>
 		<module>../teststruts2</module>
 	</modules>
-	<name>MyProjectParent</name>
+
 	<!-- 设置字符集为UTF-8 -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

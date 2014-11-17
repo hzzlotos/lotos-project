@@ -4,8 +4,8 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import cn.newtouch.common.connection.TransactionManager;
 import cn.newtouch.transaction.proxy.BankService;
-import cn.newtouch.transaction.proxy.commonutils.connection.threadlocal.TransactionManager;
 import cn.newtouch.transaction.proxy.success.dao.BankDao;
 import cn.newtouch.transaction.proxy.success.dao.InsuranceDao;
 

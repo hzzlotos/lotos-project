@@ -1,4 +1,4 @@
-package cn.newtouch.transaction.proxy.commonutils.connection.general;
+package cn.newtouch.common.connection;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -6,6 +6,8 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
+
+import cn.newtouch.common.GetProperties;
 
 public final class DataSourceFactory
 {

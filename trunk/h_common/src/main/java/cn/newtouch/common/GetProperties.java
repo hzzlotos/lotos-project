@@ -1,4 +1,4 @@
-package cn.newtouch.transaction.proxy.commonutils.connection.general;
+package cn.newtouch.common;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -7,7 +7,7 @@
 		<relativePath>../myprojectparent</relativePath>
 	</parent>
 	<artifactId>exercise</artifactId>
-	<name>Exercise</name>
+	
 	<dependencies>
 		<dependency>
 			<groupId>commons-codec</groupId>

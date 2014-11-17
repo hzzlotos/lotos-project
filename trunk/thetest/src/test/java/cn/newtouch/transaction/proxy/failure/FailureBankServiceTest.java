@@ -5,9 +5,9 @@ import javax.sql.DataSource;
 import org.junit.Before;
 import org.junit.Test;
 
+import cn.newtouch.common.connection.DataSourceFactory;
 import cn.newtouch.transaction.proxy.BankService;
 import cn.newtouch.transaction.proxy.InitSQL;
-import cn.newtouch.transaction.proxy.commonutils.connection.general.DataSourceFactory;
 import cn.newtouch.transaction.proxy.failure.service.BankServiceImpl;
 
 public class FailureBankServiceTest
