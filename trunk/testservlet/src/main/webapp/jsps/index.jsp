@@ -11,7 +11,7 @@
 <body>
 	
 	<h1 align="center" style="color:red;"><hnml:propertie attiName="hello" propName="mvc.properties"></hnml:propertie></h1>
-	<form action="<%=request.getContextPath() %>/login/submit" method="post">
+	<form action="<%=request.getContextPath() %>/login/submit/1" method="post">
 		<table>
 			<tr>
 				<td><label>用户名:</label></td>
