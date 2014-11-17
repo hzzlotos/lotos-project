@@ -7,7 +7,7 @@
 		<version>1.0</version>
 		<relativePath>../myprojectparent</relativePath>
 	</parent>
-	<artifactId>h_common</artifactId>
+	<artifactId>h_transactional</artifactId>
 
 	<dependencies>
 		<dependency>
