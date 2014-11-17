@@ -23,11 +23,12 @@ public class MethodMapper extends BaseMapper
         this.params = params;
     }
 
-    public MethodMapper(String name, Method method, Path.PATH_TYPE type)
+    public MethodMapper(String name, Method method, Path.PATH_TYPE type, List<ParamMapper> params)
     {
         this.name = name;
         this.method = method;
         this.type = type;
+        this.params = params;
     }
 
     public Method getMethod()

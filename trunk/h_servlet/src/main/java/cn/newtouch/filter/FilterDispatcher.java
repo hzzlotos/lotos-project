@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.Filter;
@@ -20,13 +22,24 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 
 import cn.newtouch.annotation.Path;
+import cn.newtouch.annotation.PathParam;
+import cn.newtouch.annotation.RequestParam;
 import cn.newtouch.context.ActionContext;
 import cn.newtouch.exception.BaseException;
 import cn.newtouch.mappger.ActionMapper;
 import cn.newtouch.mappger.BaseMapper;
 import cn.newtouch.mappger.MethodMapper;
+import cn.newtouch.mappger.ParamMapper;
 import cn.newtouch.util.PropertiesUtil;
 
+//action中@Path的限定
+//类上只有一级目录
+//方法上也只有一级目录，之后的全部归结成参数，参数写法为/{XXX}
+
+//action方法中参数的限定，原因为Java反射中没有取参数名的方法
+//使用@PathParam时，@PathParam参数的顺序严格按照@Path中的顺序
+//使用@RequestParam时，paramName必须要写，与request中的参数名必须一致
+//@PathParam与@RequestParam一起混用，@PathParam写在@RequestParam之前 
 public class FilterDispatcher implements Filter
 {
     private static Set<ActionMapper> actionSets;
@@ -185,7 +198,34 @@ public class FilterDispatcher implements Filter
     {
         String contextPath = ((HttpServletRequest) request).getContextPath();
         ActionContext.setContext(request, response);
-        Object result = mm.getMethod().invoke(am.getClazz().newInstance());
+        Object[] params = null;
+        if (null != mm.getParams() && mm.getParams().size() > 0)
+        {
+            params = new Object[mm.getParams().size()];
+
+            String uri = ((HttpServletRequest) request).getRequestURI();
+            int index = uri.indexOf("/", uri.indexOf("/", uri.indexOf("/", 1) + 1) + 1);
+            String[] pathParams = null;
+            if (index < uri.length())
+            {
+                pathParams = uri.substring(index + 1, uri.length()).split("/");
+            }
+            Object param = null;
+            for (ParamMapper pm : mm.getParams())
+            {
+                if (RequestParam.class.equals(pm.getAnnoType()))
+                {
+                    param = this
+                            .transform(((HttpServletRequest) request).getParameter(pm.getName()), pm.getClassType());
+                }
+                if (PathParam.class.equals(pm.getAnnoType()))
+                {
+                    param = this.transform(pathParams[pm.getIndex()], pm.getClassType());
+                }
+                params[pm.getIndex()] = param;
+            }
+        }
+        Object result = mm.getMethod().invoke(am.getClazz().newInstance(), params);
         if (null == result)
         {
             return;
@@ -241,6 +281,7 @@ public class FilterDispatcher implements Filter
     private void initMapper(Set<String> classNames)
     {
         Set<MethodMapper> mSets = null;
+        List<ParamMapper> pList = null;
         for (String c : classNames)
         {
             try
@@ -257,21 +298,37 @@ public class FilterDispatcher implements Filter
                         Path mAnno = m.getAnnotation(Path.class);
                         if (null != mAnno)
                         {
-                            Annotation[][] aaa = m.getParameterAnnotations();
-                            for (Annotation[] zz : aaa)
+                            if (null != m.getParameterTypes())
                             {
-                                System.out.println(zz.getClass());
+                                pList = new ArrayList<ParamMapper>();
+                                for (Class<?> pc : m.getParameterTypes())
+                                {
+                                    ParamMapper pm = new ParamMapper();
+                                    pm.setClassType(pc);
+                                    pList.add(pm);
+                                }
+                                Annotation[][] pannos = m.getParameterAnnotations();
+                                for (int i = 0; i < pannos.length; i++)
+                                {
+                                    pList.get(i).setIndex(i);
+                                    pList.get(i).setAnnoType(pannos[i][0].annotationType());
+                                    if ((RequestParam.class).equals(pannos[i][0].annotationType()))
+                                    {
+                                        pList.get(i).setRequired(((RequestParam) pannos[i][0]).required());
+                                        pList.get(i).setName(((RequestParam) pannos[i][0]).paramName());
+                                    }
+                                }
                             }
 
                             if (this.stipulateMode)
                             {
 
-                                mSets.add(new MethodMapper(mAnno.value(), m, mAnno.type()));
+                                mSets.add(new MethodMapper(mAnno.value().split("/")[0], m, mAnno.type(), pList));
                             }
                             else
                             {
                                 mSets.add(new MethodMapper(StringUtils.isNotEmpty(mAnno.value()) ? mAnno.value()
-                                        : "default", m, mAnno.type()));
+                                        : "default", m, mAnno.type(), pList));
                             }
                         }
                         am.setMethodSets(mSets);
@@ -285,5 +342,38 @@ public class FilterDispatcher implements Filter
                 e.printStackTrace();
             }
         }
+    }
+
+    private Object transform(String value, Class<?> clazz)
+    {
+        if (Boolean.class.equals(clazz))
+        {
+            return Boolean.valueOf(value);
+        }
+        if (Character.class.equals(clazz))
+        {
+            return Character.valueOf(value.charAt(0));
+        }
+        if (Short.class.equals(clazz))
+        {
+            return Short.valueOf(value);
+        }
+        if (Integer.class.equals(clazz))
+        {
+            return Integer.valueOf(value);
+        }
+        if (Long.class.equals(clazz))
+        {
+            return Long.valueOf(value);
+        }
+        if (Float.class.equals(clazz))
+        {
+            return Float.valueOf(value);
+        }
+        if (Double.class.equals(clazz))
+        {
+            return Double.valueOf(value);
+        }
+        return value;
     }
 }

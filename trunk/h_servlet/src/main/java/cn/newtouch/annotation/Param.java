@@ -7,8 +7,6 @@ import java.lang.annotation.Target;
 
 @Target(value = { ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface RequestParam {
+public @interface Param {
     String paramName() default "";
-
-    boolean required() default false;
 }

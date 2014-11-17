@@ -4,7 +4,9 @@ public class ParamMapper extends BaseMapper
 {
     private int      index;
 
-    private Class<?> type;
+    private Class<?> classType;
+
+    private Class<?> AnnoType;
 
     private Object   value;
 
@@ -20,14 +22,24 @@ public class ParamMapper extends BaseMapper
         this.index = index;
     }
 
-    public Class<?> getType()
+    public Class<?> getClassType()
     {
-        return this.type;
+        return this.classType;
     }
 
-    public void setType(Class<?> type)
+    public void setClassType(Class<?> classType)
     {
-        this.type = type;
+        this.classType = classType;
+    }
+
+    public Class<?> getAnnoType()
+    {
+        return this.AnnoType;
+    }
+
+    public void setAnnoType(Class<?> annoType)
+    {
+        this.AnnoType = annoType;
     }
 
     public Object getValue()
