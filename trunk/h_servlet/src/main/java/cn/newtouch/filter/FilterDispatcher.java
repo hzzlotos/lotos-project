@@ -42,16 +42,16 @@ import cn.newtouch.util.PropertiesUtil;
 //@PathParam与@RequestParam一起混用，@PathParam写在@RequestParam之前 
 public class FilterDispatcher implements Filter
 {
-    private static Set<ActionMapper> actionSets;
+    private Set<ActionMapper> actionSets;
 
-    private String                   classFilePackage = PropertiesUtil.getProperties("mvc.properties").getProperty(
-                                                              "class_file_package");
+    private String            classFilePackage = PropertiesUtil.getProperties("mvc.properties").getProperty(
+                                                       "class_file_package");
 
-    private String                   jspPackage       = PropertiesUtil.getProperties("mvc.properties").getProperty(
-                                                              "jsp_package");
+    private String            jspPackage       = PropertiesUtil.getProperties("mvc.properties").getProperty(
+                                                       "jsp_package");
 
     // true：路径严格按照『/类对应名/方法对应名/参数』
-    private boolean                  stipulateMode    = true;
+    private boolean           stipulateMode    = true;
 
     @Override
     public void destroy()
@@ -109,7 +109,7 @@ public class FilterDispatcher implements Filter
     @Override
     public void init(FilterConfig filterConfig) throws ServletException
     {
-        actionSets = new HashSet<ActionMapper>();
+        this.actionSets = new HashSet<ActionMapper>();
         File classPath = this.getLocalFile();
         Set<String> classNames = new HashSet<String>();
         if (classPath.isFile())
@@ -156,7 +156,7 @@ public class FilterDispatcher implements Filter
     private void distribute(ServletRequest request, ServletResponse response, FilterChain chain, String uri)
             throws Exception
     {
-        ActionMapper am = (ActionMapper) this.getMapper(uri, actionSets);
+        ActionMapper am = (ActionMapper) this.getMapper(uri, this.actionSets);
         // 不在ActionMapper中
         if (null == am)
         {
@@ -176,7 +176,7 @@ public class FilterDispatcher implements Filter
     private void distribute(ServletRequest request, ServletResponse response, FilterChain chain, String[] uris)
             throws Exception
     {
-        ActionMapper am = (ActionMapper) this.getMapper(uris[0], actionSets);
+        ActionMapper am = (ActionMapper) this.getMapper(uris[0], this.actionSets);
         // 不在ActionMapper中
         if (null == am)
         {
@@ -196,8 +196,8 @@ public class FilterDispatcher implements Filter
     private void execute(ServletRequest request, ServletResponse response, FilterChain chain, ActionMapper am,
             MethodMapper mm) throws Exception
     {
-        String contextPath = ((HttpServletRequest) request).getContextPath();
         ActionContext.setContext(request, response);
+        String contextPath = ((HttpServletRequest) request).getContextPath();
         Object[] params = null;
         if (null != mm.getParams() && mm.getParams().size() > 0)
         {
@@ -234,8 +234,10 @@ public class FilterDispatcher implements Filter
         if (resultString.contains("redirect:") || mm.getType().equals(Path.PATH_TYPE.REDIRECT))
         {
             response.setContentType("text/html; charset=UTF-8");
-            ((HttpServletResponse) response).sendRedirect(contextPath + "/"
-                    + resultString.substring("redirect:".length(), resultString.length()));
+            ((HttpServletResponse) response).sendRedirect(contextPath
+                    + "/"
+                    + (resultString.contains("redirect:") ? resultString.substring("redirect:".length(),
+                            resultString.length()) : resultString));
         }
         else
         {
@@ -333,7 +335,7 @@ public class FilterDispatcher implements Filter
                         }
                         am.setMethodSets(mSets);
                     }
-                    actionSets.add(am);
+                    this.actionSets.add(am);
                 }
 
             }

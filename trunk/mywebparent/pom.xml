@@ -29,14 +29,14 @@
 		<!-- web begin 这里在tomcat容器中都已经部署，不用使用compile -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>  
     		<groupId>javax.servlet.jsp</groupId>  
     		<artifactId>jsp-api</artifactId>  
-    		<version>2.0</version>  
+    		<version>2.2</version>  
     		<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -57,5 +57,4 @@
 		
 		</plugins>
 	</build>
-
 </project>

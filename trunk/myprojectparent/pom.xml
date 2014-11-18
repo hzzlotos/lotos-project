@@ -23,8 +23,8 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-
 	</repositories>
+	
 	<modules>
 		<module>../h_transactional</module>
 		<module>../mywebparent</module>
@@ -84,5 +84,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
