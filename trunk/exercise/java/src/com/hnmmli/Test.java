@@ -14,7 +14,7 @@ public class Test
 /*-------------------------------------------------------*/
 /**
 Compiled from "Test.java"
-public class com.hnmmli.Test extends java.lang.Object
+public class javacore.Test extends java.lang.Object
   SourceFile: "Test.java"
   minor version: 0
   major version: 51
@@ -70,7 +70,7 @@ const #48 = Asciz       println;
 const #49 = Asciz       (Ljava/lang/String;)V;
 
 {
-public com.hnmmli.Test();
+public javacore.Test();
   Code:
    Stack=1, Locals=1, Args_size=1
    0:   aload_0

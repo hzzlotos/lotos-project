@@ -1,4 +1,4 @@
-package com.hnmmli.javanative;
+package javacore.javanative;
 
 public class HelloNative
 {

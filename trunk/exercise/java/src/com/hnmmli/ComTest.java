@@ -26,7 +26,7 @@ public class ComTest
             // 在程序中运行test    
             Runtime run = Runtime.getRuntime();
             //必须在同一级classpath下才可以
-            Process p = run.exec("java com.hnmmli.Test");
+            Process p = run.exec("java javacore.Test");
     
             BufferedInputStream in = new BufferedInputStream(p.getInputStream());
     

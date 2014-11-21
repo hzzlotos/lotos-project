@@ -9,7 +9,7 @@ public class ExtTest
 
 /**
 Compiled from "ExtTest.java"
-public class com.hnmmli.ExtTest extends java.lang.Object
+public class javacore.ExtTest extends java.lang.Object
   SourceFile: "ExtTest.java"
   minor version: 0
   major version: 51
@@ -32,7 +32,7 @@ const #15 = Asciz       com/hnmmli/ExtTest;
 const #16 = Asciz       java/lang/Object;
 
 {
-public com.hnmmli.ExtTest();
+public javacore.ExtTest();
   Code:
    Stack=1, Locals=1, Args_size=1
    0:   aload_0

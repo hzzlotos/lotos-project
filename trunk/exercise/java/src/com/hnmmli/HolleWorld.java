@@ -6,7 +6,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 //在src目录下执行 javac -encoding UTF-8 -d G:\eclipse\workspace\exercise\java\target com\hnmmli\HolleWorld.java
-//在target目录下java com.hnmmli.HolleWorld
+//在target目录下java javacore.HolleWorld
 public class HolleWorld
 {
     public static void main(String[] args)
