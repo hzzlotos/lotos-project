@@ -119,7 +119,7 @@ public class ZipUtils
     {
         try
         {
-            zip("F:\\zipTest\\test.zip", "F:\\docs\\张家港");
+            zip("F:\\zipTest\\test.zip", "F:\\物资图片\\工业配件");
             System.out.println("success");
             unzip("F:\\zipTest\\test.zip", "F:\\zipTest\\unzip");
             System.out.println("success");

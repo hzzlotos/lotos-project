@@ -11,8 +11,8 @@ public class ZipStreamTest
 
     public static void main(String[] args)
     {
-        zipInputStream();
-        // scanner();
+        // zipInputStream();
+        scanner();
     }
 
     private static void zipInputStream()
@@ -39,7 +39,7 @@ public class ZipStreamTest
     {
         try
         {
-            ZipInputStream zis = new ZipInputStream(new FileInputStream("E:\\standard-1.1.2 - 副本.zip"));
+            ZipInputStream zis = new ZipInputStream(new FileInputStream("E:\\新建文件夹.zip"));
             Scanner s = new Scanner(zis);
             while (s.hasNextLine())
             {
