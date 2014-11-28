@@ -1,10 +1,11 @@
 package cn.newtouch.action.user;
 
+import cn.newtouch.action.BaseAction;
 import cn.newtouch.annotation.Path;
-import cn.newtouch.annotation.Path.PATH_TYPE;
+import cn.newtouch.enums.PATH_TYPE;
 
 @Path("user")
-public class UserAction
+public class UserAction extends BaseAction
 {
     @Path("submit1")
     public String submit1()
@@ -21,6 +22,6 @@ public class UserAction
     @Path("submit3")
     public String submit3()
     {
-        return "redirect:user/submit1";
+        return defaultPath + "user/submit1";
     }
 }

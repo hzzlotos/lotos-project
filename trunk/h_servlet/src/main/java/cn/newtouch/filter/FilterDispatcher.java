@@ -19,12 +19,11 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
-
 import cn.newtouch.annotation.Path;
 import cn.newtouch.annotation.PathParam;
 import cn.newtouch.annotation.RequestParam;
 import cn.newtouch.context.ActionContext;
+import cn.newtouch.enums.PATH_TYPE;
 import cn.newtouch.exception.BaseException;
 import cn.newtouch.mappger.ActionMapper;
 import cn.newtouch.mappger.BaseMapper;
@@ -39,7 +38,9 @@ import cn.newtouch.util.PropertiesUtil;
 //action方法中参数的限定，原因为Java反射中没有取参数名的方法
 //使用@PathParam时，@PathParam参数的顺序严格按照@Path中的顺序
 //使用@RequestParam时，paramName必须要写，与request中的参数名必须一致
-//@PathParam与@RequestParam一起混用，@PathParam写在@RequestParam之前 
+//@PathParam与@RequestParam一起混用，@PathParam写在@RequestParam之前
+
+//路径严格按照『/类对应名/方法对应名/参数』
 public class FilterDispatcher implements Filter
 {
     private Set<ActionMapper> actionSets;
@@ -50,9 +51,6 @@ public class FilterDispatcher implements Filter
     private String            jspPackage       = PropertiesUtil.getProperties("mvc.properties").getProperty(
                                                        "jsp_package");
 
-    // true：路径严格按照『/类对应名/方法对应名/参数』
-    private boolean           stipulateMode    = true;
-
     @Override
     public void destroy()
     {
@@ -62,8 +60,12 @@ public class FilterDispatcher implements Filter
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
             ServletException
     {
+        HttpServletRequest hRequest = (HttpServletRequest) request;
+        HttpServletResponse hResponse = (HttpServletResponse) response;
         // 获取应用名之后的路径
-        String uri = ((HttpServletRequest) request).getRequestURI();
+        String uri = hRequest.getRequestURI();
+        String contextPath = hRequest.getContextPath() + "/";
+        uri = uri.substring(contextPath.length());
         // 将.jsp/.css/.js/.html等过滤
         if (uri.matches("\\w*\\.\\w*"))
         {
@@ -73,18 +75,9 @@ public class FilterDispatcher implements Filter
         // 分配url
         try
         {
-            if (this.stipulateMode)
-            {
-                int index = uri.indexOf("/", 1);
-                uri = uri.substring(index + 1, uri.length());
-                String[] uris = uri.split("/");
-                // 给的uris必须是分割好的 1为类路径,2为方法路径
-                this.distribute(request, response, chain, uris);
-            }
-            else
-            {
-                this.distribute(request, response, chain, uri);
-            }
+            String[] uris = uri.split("/");
+            // 给的uris必须是分割好的 1为类路径,2为方法路径
+            this.distribute(hRequest, hResponse, chain, uris);
         }
         catch (BaseException e)
         {
@@ -130,30 +123,16 @@ public class FilterDispatcher implements Filter
         BaseMapper defaultMapper = null;
         for (BaseMapper mapper : mappers)
         {
-            if (this.stipulateMode)
+            if (mapper.getName().equals(uri))
             {
-                if (mapper.getName().equals(uri))
-                {
-                    return mapper;
-                }
-            }
-            else
-            {
-                if (uri.contains(mapper.getName()))
-                {
-                    return mapper;
-                }
-                if ("default".equals(mapper.getName()))
-                {
-                    defaultMapper = mapper;
-                }
+                return mapper;
             }
         }
         return defaultMapper;
     }
 
     // 分发请求(不严格要求路径格式匹配，但设置了默认路径以及查找不到的路径都会跳向该action的默认路径)
-    private void distribute(ServletRequest request, ServletResponse response, FilterChain chain, String uri)
+    private void distribute(HttpServletRequest request, HttpServletResponse response, FilterChain chain, String uri)
             throws Exception
     {
         ActionMapper am = (ActionMapper) this.getMapper(uri, this.actionSets);
@@ -173,9 +152,13 @@ public class FilterDispatcher implements Filter
     }
 
     // 分发请求(严格要求路径格式匹配)
-    private void distribute(ServletRequest request, ServletResponse response, FilterChain chain, String[] uris)
+    private void distribute(HttpServletRequest request, HttpServletResponse response, FilterChain chain, String[] uris)
             throws Exception
     {
+        if (null == uris || uris.length == 0)
+        {
+            throw new BaseException(BaseException.CLASS_NOT_FOUND_KEY);
+        }
         ActionMapper am = (ActionMapper) this.getMapper(uris[0], this.actionSets);
         // 不在ActionMapper中
         if (null == am)
@@ -193,17 +176,17 @@ public class FilterDispatcher implements Filter
     }
 
     // 根据所查找到的class以及method执行
-    private void execute(ServletRequest request, ServletResponse response, FilterChain chain, ActionMapper am,
+    private void execute(HttpServletRequest request, HttpServletResponse response, FilterChain chain, ActionMapper am,
             MethodMapper mm) throws Exception
     {
         ActionContext.setContext(request, response);
-        String contextPath = ((HttpServletRequest) request).getContextPath();
+        String contextPath = request.getContextPath();
         Object[] params = null;
         if (null != mm.getParams() && mm.getParams().size() > 0)
         {
             params = new Object[mm.getParams().size()];
 
-            String uri = ((HttpServletRequest) request).getRequestURI();
+            String uri = request.getRequestURI();
             int index = uri.indexOf("/", uri.indexOf("/", uri.indexOf("/", 1) + 1) + 1);
             String[] pathParams = null;
             if (index < uri.length())
@@ -215,8 +198,7 @@ public class FilterDispatcher implements Filter
             {
                 if (RequestParam.class.equals(pm.getAnnoType()))
                 {
-                    param = this
-                            .transform(((HttpServletRequest) request).getParameter(pm.getName()), pm.getClassType());
+                    param = this.transform(request.getParameter(pm.getName()), pm.getClassType());
                 }
                 if (PathParam.class.equals(pm.getAnnoType()))
                 {
@@ -231,10 +213,34 @@ public class FilterDispatcher implements Filter
             return;
         }
         String resultString = String.valueOf(result);
-        if (resultString.contains("redirect:") || mm.getType().equals(Path.PATH_TYPE.REDIRECT))
+        String type = request.getHeader("X-Requested-With");
+        if (null != type)
+        {
+            String contentType = "";
+            switch (mm.getContentType())
+            {
+            case XML:
+                contentType = "text/xml";
+                break;
+            case TEXT:
+                contentType = "text/plain";
+                break;
+            default:
+                contentType = "text/html";
+                break;
+            }
+            response.setContentType(contentType + ";charset=UTF-8");
+            response.setHeader("Pragma", "No-cache");
+            response.setHeader("Cache-Control", "no-cache");
+            response.setDateHeader("Expires", 0);
+            response.getWriter().write(resultString);
+            response.getWriter().flush();
+            return;
+        }
+        if (resultString.contains("redirect:") || mm.getType().equals(PATH_TYPE.REDIRECT))
         {
             response.setContentType("text/html; charset=UTF-8");
-            ((HttpServletResponse) response).sendRedirect(contextPath
+            response.sendRedirect(contextPath
                     + "/"
                     + (resultString.contains("redirect:") ? resultString.substring("redirect:".length(),
                             resultString.length()) : resultString));
@@ -321,17 +327,9 @@ public class FilterDispatcher implements Filter
                                     }
                                 }
                             }
+                            mSets.add(new MethodMapper(mAnno.value().split("/")[0], mAnno.ContentType(), m, pList,
+                                    mAnno.type()));
 
-                            if (this.stipulateMode)
-                            {
-
-                                mSets.add(new MethodMapper(mAnno.value().split("/")[0], m, mAnno.type(), pList));
-                            }
-                            else
-                            {
-                                mSets.add(new MethodMapper(StringUtils.isNotEmpty(mAnno.value()) ? mAnno.value()
-                                        : "default", m, mAnno.type(), pList));
-                            }
                         }
                         am.setMethodSets(mSets);
                     }

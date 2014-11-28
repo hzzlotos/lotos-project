@@ -38,7 +38,7 @@ public class LoginAction extends BaseAction
             {
                 return "login/ok";
             }
-            return "redirect:" + referer.split(contextPath + "/")[1];
+            return defaultPath + referer.split(contextPath + "/")[1];
         }
         ActionContext.getRequest().setAttribute("errorMessage", "帐户密码不正确！");
         return "login/login";

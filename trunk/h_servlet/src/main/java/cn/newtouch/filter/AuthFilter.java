@@ -30,7 +30,7 @@ public class AuthFilter implements Filter
         if (StringUtils.isNotEmpty(this.urlExclusions))
         {
             this.exclusions = new HashSet<String>();
-            this.exclusions.addAll(Arrays.asList(this.urlExclusions.split(",|/\\*,|,/\\*")));
+            this.exclusions.addAll(Arrays.asList(this.urlExclusions.split(",")));
         }
     }
 
@@ -47,10 +47,10 @@ public class AuthFilter implements Filter
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String uri = httpRequest.getRequestURI();
         String contextPath = httpRequest.getContextPath();
+        boolean flag = false;
         if (uri.equals(contextPath) || uri.equals(contextPath + "/"))
         {
-            chain.doFilter(request, response);
-            return;
+            flag = true;
         }
         uri = uri.split(httpRequest.getContextPath())[1];
 
@@ -59,12 +59,50 @@ public class AuthFilter implements Filter
         {
             for (String ex : this.exclusions)
             {
-                if (uri.contains(ex))
+                // 如果包含*
+                if (ex.contains("*"))
                 {
-                    chain.doFilter(request, response);
-                    return;
+                    // 头尾都包含*
+                    if (ex.startsWith("*") && ex.endsWith("*"))
+                    {
+                        if (uri.contains(ex.substring(1, ex.length() - 1)))
+                        {
+                            flag = true;
+                        }
+                    }
+                    else
+                    {
+                        if (uri.length() >= (ex.length() - 1))
+                        {
+                            // 头部包含*
+                            if (ex.startsWith("*")
+                                    && uri.substring(uri.length() - ex.length() - 1, uri.length()).equals(
+                                            ex.substring(1, ex.length())))
+                            {
+                                flag = true;
+                            }
+                            else
+                                // 尾部包含*
+                                if (ex.endsWith("*")
+                                        && uri.substring(0, ex.length() - 1).equals(ex.substring(0, ex.length() - 1)))
+                                {
+                                    flag = true;
+                                }
+                        }
+                    }
                 }
+                else
+                    // 不包含*
+                    if (uri.equals(ex))
+                    {
+                        flag = true;
+                    }
             }
+        }
+        if (flag)
+        {
+            chain.doFilter(request, response);
+            return;
         }
         this.loginCheck(request, response, chain);
     }
