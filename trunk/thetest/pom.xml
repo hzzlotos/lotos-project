@@ -36,7 +36,16 @@
 			<artifactId>im4java</artifactId>
 			<version>1.4.0</version>
 		</dependency>
-		<!-- image -->		
+		<!-- image -->
+		
+		<!-- media -->
+		<dependency>
+			<groupId>com.googlecode.soundlibs</groupId>
+			<artifactId>mp3spi</artifactId>
+			<version>1.9.5-1</version>
+		</dependency>
+		<!-- media -->
+		
 		<!-- memcached -->
 		<dependency>
 			<groupId>com.googlecode.xmemcached</groupId>
