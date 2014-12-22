@@ -8,7 +8,6 @@ import java.util.TimerTask;
 
 public class TimerTest
 {
-
     public static void main(String[] args) throws ParseException
     {
         System.out.println("now===" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
@@ -49,5 +48,4 @@ class MyTimer extends TimerTask
         System.out.println("===" + this.index + "我被执行了！" + "时间是："
                 + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
     }
-
 }

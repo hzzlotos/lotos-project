@@ -9,7 +9,7 @@ public class Sync_CountDownLatchTest
     {
         //
         CountDownLatch begin = new CountDownLatch(1);
-        CountDownLatch end = new CountDownLatch(5);
+        CountDownLatch end = new CountDownLatch(7);
         for (int i = 0; i < 7; i++)
         {
             new Thread(new AWorker(i, begin, end)).start();
@@ -75,5 +75,4 @@ class AWorker implements Runnable
             this.end.countDown();
         }
     }
-
 }
