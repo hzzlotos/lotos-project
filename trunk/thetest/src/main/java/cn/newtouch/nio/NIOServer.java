@@ -46,7 +46,7 @@ public class NIOServer
     }
 
     // 监听
-    private void listen() throws IOException
+    public void listen() throws IOException
     {
         while (true)
         {
@@ -121,15 +121,9 @@ public class NIOServer
                 }
     }
 
-    /**
-     * @param args
-     * @throws IOException
-     */
     public static void main(String[] args) throws IOException
     {
-        // TODO Auto-generated method stub
-        int port = 8888;
-        NIOServer server = new NIOServer(port);
+        NIOServer server = new NIOServer(8888);
         server.listen();
     }
 }
