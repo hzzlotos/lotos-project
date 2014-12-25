@@ -15,7 +15,7 @@ public class MusicPlayer
     {
         try
         {
-            File file = new File("G:\\music\\timo.mp3");
+            File file = new File("F:\\Music\\Gonna Fly Now - 群星.mp3");
 
             // 取得文件输入流
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
