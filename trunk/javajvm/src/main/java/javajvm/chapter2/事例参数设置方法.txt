@@ -1,0 +1,18 @@
+﻿eclipse中设置如下：
+Debug Configurations/Run Configurations->Java Application->Arguments->VM arguments
+填写事例注释中的VM Args
+
+若命令行执行程序，则在java命令后直接书写事例注释中的VM Args即可。例：
+java javajvm/chapter2/HeapOOM -Xms20m -Xmx20m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=g:\dump
+
+使用Eclipse Memory Analyzer分析堆内存方法：
+官网http://www.eclipse.org/mat/downloads.php
+eclipse中升级地址http://download.eclipse.org/mat/1.4/update-site/
+之后windows->Open Perspective->Memory Analysis
+
+生成hprof文件：
+1.使用命令使得堆内存溢出时产生快照
+在启动时添加-Xms20m -Xmx20m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=g:\dump
+2.直接查看进程针对该进程产生快照
+1)首先使用JPS查看pid：jps -mlv
+2)再使用jmap生成文件：jmap -dump:format=b,file=g:/heap.hprof 『pid』

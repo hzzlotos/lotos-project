@@ -1,0 +1,1 @@
+wsimport -keep -d g:/classpath -p com.amaznon.webservices http://webservices.amazon.com/AWSECommerceService/AWSECommerceService.wsdl
