@@ -1,3 +1,0 @@
-<!ELEMENT font (name,size)>
-<!ELEMENT name (#PCDATA)>
-<!ELEMENT size (#PCDATA)>
