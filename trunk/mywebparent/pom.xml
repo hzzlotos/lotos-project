@@ -10,6 +10,7 @@
 	<artifactId>mywebparent</artifactId>
 	<packaging>pom</packaging>
 	<modules>
+		<module>../javajvm</module>
 		<module>../miniweb</module>
 		<module>../quicksample</module>
 		<module>../ssodemo</module>

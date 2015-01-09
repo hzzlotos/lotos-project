@@ -24,9 +24,10 @@
 			</snapshots>
 		</repository>
 	</repositories>
-	
+
 	<modules>
 		<module>../h_transactional</module>
+		<module>../javacore</module>
 		<module>../mywebparent</module>
 		<module>../tankwar</module>
 		<module>../testhibernate</module>
