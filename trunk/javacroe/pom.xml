@@ -38,7 +38,7 @@
 					<appendAssemblyId>false</appendAssemblyId>
 					<archive>
 						<manifest>
-							<mainClass>com.hnmmli.draw.javacore.SplashScreenTest</mainClass>
+							<mainClass>javacore.draw.javacore.SplashScreenTest</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>

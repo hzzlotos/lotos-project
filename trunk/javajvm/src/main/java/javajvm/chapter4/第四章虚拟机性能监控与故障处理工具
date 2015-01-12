@@ -52,6 +52,20 @@ java -XX:+PrintFlagsFinal）查看参数默认值也是一个很好的选择）�
 	示例如图：4_2_6_2.png
 	在JDK1.5中，java.lang.Thread类新增了一个getAllStackTraces()方法用于获取虚拟机中所有线程的StackTraceElement对象。使用这个
 这个方法可以通过简单几行代码就完成了jstack的大部分功能，在实际项目中可以调用该方法做个管理页面随时使用浏览器查看线程堆栈。
+	示例见chapter4/E4_2_6.jsp
+	
+4.2.7 HSDIS：JIT生成代码反汇编
+	（实用性不强）
+
+4.3 JDK的可视化工具
+	两个功能强大的可视化工具：JConsole和VisualVM。
+
+4.3.1 JConsole：Java监视与管理控制台
+	JConsole是一种基于JMX的可视化监视管理工具。管理部分的功能是针对JMX的可视化监视管理工具。它管理部分的功能是针对JMX MBean进行
+管理。
+1.启动JConsole
+	通过JDK/bin目录下的“jconsol.exe”启动JConsole后，将自动搜索出本机运行的所有虚拟机进程，不需要用户自己再使用jps来查询了，双
+击选择其中一个进程即可开始监控，也可以使用下面的“远程进程”功能来连接远程服务器，对远程虚拟机进行监控。
 
 
 
