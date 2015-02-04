@@ -1,6 +1,6 @@
 <beans>
-	<bean id="u" class="cn.newtouch.spring.UserDAOImpl" />
-	<bean id="userService" class="cn.newtouch.spring.UserService" >
+	<bean id="u" class="cn.newtouch.ioc_di.UserDAOImpl" />
+	<bean id="userService" class="cn.newtouch.ioc_di.UserService" >
 		<property name="userDAO" bean="u"/>
 	</bean>
 	
