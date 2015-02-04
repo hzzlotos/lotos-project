@@ -12,8 +12,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
-import javacore.file.FileTest;
-
 public class XmlTest extends TestEntityResolver
 {
     public static void main(String[] args)
@@ -24,7 +22,7 @@ public class XmlTest extends TestEntityResolver
             factory.setValidating(true); // 是否验证DTD
             factory.setIgnoringElementContentWhitespace(true);// children.item(i)不再有空白字符的了如#text
             DocumentBuilder builder = factory.newDocumentBuilder();
-            File f = new File(FileTest.class.getClassLoader().getResource("").getPath() + "test.xml");
+            File f = new File(XmlTest.class.getClassLoader().getResource("").getPath() + "test.xml");
             Document document = builder.parse(f);
             Element root = document.getDocumentElement();
             NodeList children = root.getChildNodes();
