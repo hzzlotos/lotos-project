@@ -3,6 +3,7 @@ package cn.newtouch.filter;
 import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -81,7 +82,7 @@ public class FilterDispatcher implements Filter
         }
         catch (BaseException e)
         {
-            int key = e.getKey();
+            int key = e.getErrorKey();
             if (key == 1)
             {
                 System.out.println("没有找到对应的类！");
@@ -171,7 +172,6 @@ public class FilterDispatcher implements Filter
         {
             throw new BaseException(BaseException.MOTHED_NOT_FOUND_KEY);
         }
-
         this.execute(request, response, chain, am, mm);
     }
 
@@ -207,7 +207,15 @@ public class FilterDispatcher implements Filter
                 params[pm.getIndex()] = param;
             }
         }
-        Object result = mm.getMethod().invoke(am.getClazz().newInstance(), params);
+        Object result;
+        try
+        {
+            result = mm.getMethod().invoke(am.getClazz().newInstance(), params);
+        }
+        catch (InvocationTargetException e)
+        {
+            throw new BaseException(e.getTargetException());
+        }
         if (null == result)
         {
             return;
