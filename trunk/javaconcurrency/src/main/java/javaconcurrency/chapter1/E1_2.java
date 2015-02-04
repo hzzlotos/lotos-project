@@ -1,6 +1,7 @@
 package javaconcurrency.chapter1;
 
-//UnsafeSequence
+//Sequence
+//TheadSafe 线程安全的数值序列生成器
 public class E1_2
 {
     private int value;
