@@ -2,9 +2,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>cn.newtouch</groupId>
-		<artifactId>myprojectparent</artifactId>
+		<artifactId>mywebparent</artifactId>
 		<version>1.0</version>
-		<relativePath>../myprojectparent</relativePath>
+		<relativePath>../mywebparent</relativePath>
 	</parent>
 	<artifactId>javaconcurrency</artifactId>
+	<packaging>war</packaging>
 </project>
