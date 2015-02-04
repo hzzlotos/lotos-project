@@ -1,27 +1,50 @@
 package cn.newtouch.exception;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class BaseException extends Exception
 {
     private static final long serialVersionUID     = 1L;
 
-    private int               key;
+    private int               errorKey;
 
     public static int         CLASS_NOT_FOUND_KEY  = 1;
 
     public static int         MOTHED_NOT_FOUND_KEY = 2;
 
-    public BaseException(int key)
+    public BaseException(Throwable e, int errorKey)
     {
-        this.key = key;
+        super(e);
+        this.errorKey = errorKey;
     }
 
-    public void setKey(int key)
+    public BaseException(Throwable e)
     {
-        this.key = key;
+        super(e);
     }
 
-    public int getKey()
+    public BaseException(int errorKey)
     {
-        return this.key;
+        this.errorKey = errorKey;
+    }
+
+    public int getErrorKey()
+    {
+        return this.errorKey;
+    }
+
+    @Override
+    public Throwable getCause()
+    {
+        return this.getCause(this);
+    }
+
+    private Throwable getCause(Throwable e)
+    {
+        if (e.getClass() == InvocationTargetException.class)
+        {
+            return ((InvocationTargetException) e).getTargetException();
+        }
+        return e.getCause();
     }
 }
