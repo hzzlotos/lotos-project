@@ -1,0 +1,61 @@
+﻿3.6 内存分配和回收策略
+	Java技术体系中所提倡的自动内存管理最终归结为自动化解决了两个问题：给对象自动分配内存以及回收分配给对象的内存。
+	对象内存分配，大方向就是在堆上分配，对象主要分配在新生代的Eden区上，如果启动了本地线程分配缓冲，将按线程优先在TLAB上分配。少
+数情况下也可能会直接分配在老年代中，分配的规则并不是百分之百固定的，其细节取决于当前是使用的是哪一种垃圾收集器组合，还有虚拟机中
+与内存相关的参数的设置。下面的验证代码是在Client模式虚拟机运行，没有手工指定收集器组合，换句话说就是使用的Serial/Serial Old收集
+器（ParNew/Serial Old收集器组合的规则也基本一致）下的内存分配和回收的策略。其他的读者可以自己试。
+
+3.6.1 对象优先在Eden分配（复制算法中使用Eden）
+	大多数情况下，对象在新生代Eden区中分配。当Eden区没有足够空间进行分配时，虚拟机将发起一次Minor GC。虚拟机提供了-XX:PrintGCDetails
+这个收集器日志参数，告诉虚拟机在发生垃圾收集行为时打印内存回收日志，并且在进程退出的时候输出当前的内存各区域分配情况。在实际应用
+中，内存回收日志一般是打印到文件后通过日志工具进行分析。
+	代码E3_6_1_TestAllocation中，尝试分配3个2MB大小和1个4MB大小的对象，在运行时通过-Xms20M，-Xmx20M，Xmn10M这三个参数限制了
+Java堆大小为20MB，不再可扩展，其中10MB分配给老年代。 -XX:SurvivorRatio=8决定了新生代中Eden区与一个Survivor区的空间比例是8：1，
+从输出的结果可以清晰看到“eden space 8192K,   from space 1024K,   to space 1024K”的信息，新生代总可用空间为9216KB（Eden区+1个
+Survivor区的总容量）。执行分配allocation4对象的语句时会发生一次Minor GC，这次GC的结果是新生代6651KB变为148KB，而总内存占用量则
+几乎没有减少（因为allocation1，allocation2，allocation3三个对象都是存活的，虚拟机几乎没有找到可回收的对象）。这次GC发生的原因是
+给allocation4分配内存的时候，发现Eden已经被占用了6MB，剩余空间已不足以分配allocation4所需的4MB内存，因此发生Minor GC。GC期间虚
+拟机又发现已有的3个2MB大小的对象全部无法放入Survivor空间（Survivor空间只有1MB大小），所以只好通过分配担保机制提前转移到老年代去。
+这次GC结束后，4MB的allocation4对象顺利分配在Eden中，因此程序执行完的结果是Eden占用4MB（被allocation4占用），Survivor空闲，老年
+代被占用6MB（被allocation1，allocation2，allocation3占用）。通过GC日志可以证实这一点。
+*新生代GC（Minor GC）：指发生在新生代的垃圾收集动作，因为Java对象大多都具备朝生夕灭的特性，所以Minor GC非常频繁，一般回收速度也
+比较快。
+*老年代GC（Major GC/Full GC）：指发生在老年代的GC，出现了Major GC，经常会伴随至少一次的Minor GC（但非绝对的，在Parallel Scavenge
+收集器的收集策略里就有直接进行Major GC的策略选择过程）。Major GC的速度一般会比Minor GC慢10倍以上。
+
+3.6.2 大对象直接进入老年代
+	所谓的大对象是指需要大量连续空间的Java对象，最典型的大对象就是那种很长的字符串以及数组。大对象对虚拟机的内存分配来说就是a一个
+坏消息（比遇到一个大对象更加坏的消息就是遇到一群“朝生夕灭”的“短命大对象”，写程序一定要避免），经常出现大对象容易导致内存还有不少
+空间时就提前触发垃圾收集以获取足够的连续空间来“安置”它们。虚拟机提供了一个-XX:PretenureSizeThreshold参数，令大于这个设置值的对象
+直接在老年代分配。这样做的目的是避免在Eden区及两个Survivor区之间发生大量的内存复制（新生代采用复制算法收集内存）。代码
+E3_6_2_TestPretenureSizeThreshold中，可以看见Eden几乎没有被使用，而老年代直接被使用了4MB，就是因为PretenureSizeThreshold参数
+被设置为3MB（3145728），因此超过3MB的对象都被直接来老年代分配。
+*注意：PretenureSizeThreshold参数只对Serial和ParNew两款收集器有效，Parallel Scavenge收集器不识别此参数，如需要使用该参数的场
+合，可以考虑ParNew+CMS。
+
+3.6.3 长期存活的对象将进入老年代
+	虚拟机给每个对象定义了一个对象年龄计数器。如果对象在Eden出生并经过第一次Minor GC后仍然存活，并且能被Survivor容纳的话，将被
+移动到Survivor空间中，并且对象年龄设为1。对象在Survivor区中每“熬过”一次Minor GC，年龄就增加1岁，当它的年龄增加到一定程度（默认
+为15岁），那么就会被晋升到老年代中。对象晋升老年代的年龄阀值可以通过参数-XX:MaxTenuringThreshold设置。对于E3_6_3_TestTenuringThreshold
+可以分别设置MaxTenuringThreshold为1与15来测试，allocation1需要256KB内存，Survivor空间可以容纳。所以当MaxTenuringThreshold为1
+时，allocation1对象在第二次GC时进入了老年代，Survivor变为了0KB；而当MaxTenuringThreshold为15时，第二次GC发生后allocation1对象
+还存在于Survivor空间之中。
+
+3.6.4 动态对象年龄判定
+	为了能更好的适应不同程序的内存状况，虚拟机不是永远要求对象的年龄必须达到了MaxTenuringThreshold才能晋升老年代，如果在Survivor
+空间中相同年龄所有对象大小的总和大于Survivor空间的一半，那么年纪大于或等于该年龄的对象就可以直接进入老年代，无需等到MaxTenuringThreshold
+中要求的年龄。
+
+3.6.5 空间分配担保
+	在发生Minor GC之前，虚拟机会先检查老年代最大可用的连续空间是否大于新生代所有对象总空间，如果这个条件成立，那么Minor GC可以
+确保是安全的。如果不成功，则虚拟机会查看HandlePromotionFailure设置值是否允许担保失败。如果允许，那么会继续检查老年代最大可用的
+连续空间是否大于历次晋升到老年代对象的平均大小，如果大于，将尝试着进行一次Minor GC，尽管这次Minor GC是有风险的；如果小于，或者
+HandlePromotionFailure设置不允许冒险，那这时也要改为进行一次Full GC。这里的风险是指，前面提到过新生代使用复制收集算法，但为了
+内存利用率，只使用其中一个Survivor空间来作为轮换备份，因此当出现大量对象在Minor GC后仍然存活的情况（最极端的情况就是内存回收后
+新生代中所有对象都存活），就需要老年代进行分配担保，把Survivor无法容纳的对象直接进入老年代。与生活中的贷款担保类似，老年代要进行
+这样的担保，前提是老年代本身还有容纳这些对象的剩余空间，一共有多少对象会活下来在实际完成内存回收之前是无法明确知道的。所以只好取
+之前一次回收晋升到老年代对象容量的平均大小值作为经验值，与老年代的剩余空间进行比较，决定是否进行Full GC来让老年代腾出更多空间。
+	取平均值进行比较其实仍然是一种动态概率的手段，也就是说，如果某次Minor GC存活后的对象突增，远远高于平均值的话，依然会导致担保
+失败。如果出现了HandlePromotionFailure失败，那就只好在失败后重新发起一次Full GC。虽然担保失败时所执行的流程消耗最大，但大部分
+情况下都还是会将HandlePromotionFailure开关打开，避免Full GC过于频繁。在JDK 6 Update 24之后，HandlePromotionFailure不再会影响
+到虚拟机的空间分配担保策略。
