@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>cn.newtouch</groupId>
@@ -7,7 +8,7 @@
 		<relativePath>../myprojectparent</relativePath>
 	</parent>
 	<artifactId>javacore</artifactId>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>commons-codec</groupId>
@@ -29,6 +30,11 @@
 			<artifactId>cglib-nodep</artifactId>
 			<version>3.1</version>
 		</dependency>
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -45,19 +51,10 @@
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
 				</configuration>
-				<!-- 
-				<executions>
-					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
-						<goals>
-							<goal>assembly</goal>
-						</goals>
-					</execution>
-				</executions>
-				-->
+				<!-- <executions> <execution> <id>make-assembly</id> <phase>package</phase> 
+					<goals> <goal>assembly</goal> </goals> </execution> </executions> -->
 			</plugin>
 		</plugins>
 	</build>
-	
+
 </project>
